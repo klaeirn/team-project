@@ -65,4 +65,5 @@ Team Member Signatures:
 Avyukth Khazanchi
 Harrison Park
 Dennys Ding
+Michelle Zhou
 Shelby Chen
