@@ -1,7 +1,8 @@
-package Entities;
+package entities;
 
 import java.util.List;
-import Entities.*;
+
+import entities.*;
 
 public class User {
 

@@ -1,13 +1,14 @@
 package data_access;
 
-import Entities.User;
-import Entities.UserFactory;
-import Use_cases.login.LoginUserDataAccessInterface;
+import use_cases.login.LoginUserDataAccessInterface;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import entities.User;
+import entities.UserFactory;
 
 public class FileUserDataAccessObject implements LoginUserDataAccessInterface {
 

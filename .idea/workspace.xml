@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="" />
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginInputBoundry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/QuestionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/QuestionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Quiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/QuizFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/QuizFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/UserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/UserFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginUserDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginUserDataAccessInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +27,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -46,13 +60,14 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "15-create-login-usecase",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -89,7 +104,8 @@
       <updated>1762806845975</updated>
       <workItem from="1762806847406" duration="2000" />
       <workItem from="1762806857567" duration="3136000" />
-      <workItem from="1762906040309" duration="3061000" />
+      <workItem from="1762906040309" duration="3578000" />
+      <workItem from="1762920683345" duration="1025000" />
     </task>
     <servers />
   </component>
