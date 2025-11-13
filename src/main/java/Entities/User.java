@@ -1,7 +1,8 @@
-package Entities;
+package entities;
 
 import java.util.List;
-import Entities.*;
+
+import entities.*;
 
 public class User {
 
@@ -18,6 +19,10 @@ public class User {
 
     public String getUserName() {
         return this.user_name;
+    }
+
+    public void setUserName(String user_name) {
+         this.user_name = user_name;
     }
 
     public String getPassword() {

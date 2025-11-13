@@ -1,6 +1,7 @@
-package Entities;
+package entities;
 import java.util.List;
-import Entities.Question;
+
+import entities.Question;
 
 public class Quiz {
     
