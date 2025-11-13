@@ -1,7 +1,7 @@
 package data_access;
 
 import use_cases.login.LoginUserDataAccessInterface;
-
+import use_cases.change_username.ChangeUsernameDataAccessInterface;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -10,7 +10,7 @@ import java.util.Map;
 import entities.User;
 import entities.UserFactory;
 
-public class FileUserDataAccessObject implements LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements LoginUserDataAccessInterface, ChangeUsernameDataAccessInterface {
 
     private final File csvFile;
     private UserFactory userFactory;
@@ -101,6 +101,19 @@ public class FileUserDataAccessObject implements LoginUserDataAccessInterface {
     public void save(User user) {
         this.accounts.put(user.getUserName(), user);
         this.save();
+    }
+
+    public void replace(String username) {
+
+        if (this.accounts.containsKey(username)) {
+            throw new RuntimeException(String.format("username %s is already in use!", username));
+        }
+
+        User account = this.accounts.get(currentUsername);
+        account.setUserName(username);
+
+        save();
+
     }
 
     public boolean existsByName(String username) {

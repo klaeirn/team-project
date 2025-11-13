@@ -5,18 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginInputBoundry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/change_username/ChangeUsernameDataAccessInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/change_username/ChangeUsernameInputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/change_username/ChangeUsernameInputData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/change_username/ChangeUsernameOutputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/change_username/ChangeUsernameOutputData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginInputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/View/ChangeUsernameView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/View/LoggedInView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/change_username/ChangeUsernameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/change_username/ChangeUsernamePresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/change_username/ChangeUsernameState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/change_username/ChangeUsernameViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/logged_in/LoggedInPresenter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Question.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/QuestionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/QuestionFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/Quiz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/QuizFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/QuizFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Entities/UserFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Entities/UserFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginUserDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginUserDataAccessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Use_cases/login/LogInInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Use_cases/login/LogInInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Use_cases/login/LoginInputBoundry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/LabelTextPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/LabelTextPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/login/LoginPresenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +38,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -44,7 +56,8 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/klaeirn/team-project.git&quot;,
     &quot;accountId&quot;: &quot;bbd33b1a-b2ad-4323-96ad-b51d4135637c&quot;
-  }
+  },
+  &quot;editorReviewEnabled&quot;: false
 }</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -54,23 +67,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "15-create-login-usecase",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#16 on 15-create-login-usecase&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.completion&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Avyuk\Documents\CSC207\team_project\src\main\java" />
@@ -106,6 +120,9 @@
       <workItem from="1762806857567" duration="3136000" />
       <workItem from="1762906040309" duration="3578000" />
       <workItem from="1762920683345" duration="1025000" />
+      <workItem from="1762988803379" duration="9838000" />
+      <workItem from="1763009984152" duration="1701000" />
+      <workItem from="1763011720550" duration="6544000" />
     </task>
     <servers />
   </component>

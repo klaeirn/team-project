@@ -4,7 +4,7 @@ import use_cases.login.LoginOutputBoundary;
 import use_cases.login.LoginOutputData;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.logged_in.LoggedInState;;
+import interface_adapter.logged_in.LoggedInState;
 
 public class LoginPresenter implements LoginOutputBoundary{
 
@@ -25,6 +25,7 @@ public class LoginPresenter implements LoginOutputBoundary{
 
         final LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChange();
 
         // and clear everything from the LoginViewModel's state

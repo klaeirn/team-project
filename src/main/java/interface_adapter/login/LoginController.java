@@ -1,13 +1,13 @@
 package interface_adapter.login;
 
-import use_cases.login.LoginInputBoundry;
+import use_cases.login.LoginInputBoundary;
 import use_cases.login.LoginInputData;
 
 public class LoginController {
 
-    private final LoginInputBoundry loginUseCaseInteractor;
+    private final LoginInputBoundary loginUseCaseInteractor;
 
-    public LoginController(LoginInputBoundry loginUseCaseInteractor) {
+    public LoginController(LoginInputBoundary loginUseCaseInteractor) {
         this.loginUseCaseInteractor = loginUseCaseInteractor;
     }
 
