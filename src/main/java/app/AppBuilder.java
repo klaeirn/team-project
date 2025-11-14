@@ -15,6 +15,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quiz_menu.QuizMenuPresenter;
+import interface_adapter.quickstart.QuickstartController;
+import interface_adapter.quickstart.QuickstartPresenter;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -25,6 +27,8 @@ import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
 import use_cases.quiz_menu.QuizMenuInputBoundary;
 import use_cases.quiz_menu.QuizMenuInteractor;
+import use_cases.quickstart.QuickstartInputBoundary;
+import use_cases.quickstart.QuickstartInteractor;
 
 import view.ChangeUsernameView;
 import view.LoggedInView;
@@ -91,6 +95,16 @@ public class AppBuilder {
     public AppBuilder addQuickstartView() {
         quickstartView = new QuickstartView();
         cardPanel.add(quickstartView, quickstartView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addQuickstartUseCase() {
+        final QuickstartPresenter presenter = new QuickstartPresenter(viewManagerModel);
+        final QuickstartInputBoundary interactor = new QuickstartInteractor(presenter);
+        final QuickstartController controller = new QuickstartController(interactor);
+        if (quickstartView != null) {
+            quickstartView.setQuickstartController(controller);
+        }
         return this;
     }
 

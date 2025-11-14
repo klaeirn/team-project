@@ -1,6 +1,9 @@
 package view;
 
+import interface_adapter.quickstart.QuickstartState;
+import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.quickstart.QuickstartController;
 import data_access.QuizApiDatabase;
 
 import javax.swing.*;
@@ -14,6 +17,7 @@ import java.awt.event.ActionListener;
  */
 public class QuickstartView extends JPanel implements ActionListener {
     private final String viewName = "quickstart";
+    private QuickstartController quickstartController;
     private QuizMenuController quizMenuController;
 
     private final JList<String> categoryList;
@@ -116,7 +120,9 @@ public class QuickstartView extends JPanel implements ActionListener {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (quizMenuController != null) {
+                if (quickstartController != null) {
+                    quickstartController.backToQuizMenu();
+                } else if (quizMenuController != null) {
                     quizMenuController.switchToQuizMenu();
                 }
             }
@@ -138,6 +144,10 @@ public class QuickstartView extends JPanel implements ActionListener {
     }
 
     public String getViewName() { return viewName; }
+
+    public void setQuickstartController(QuickstartController quickstartController) {
+        this.quickstartController = quickstartController;
+    }
 
     public void setQuizMenuController(QuizMenuController quizMenuController) {
         this.quizMenuController = quizMenuController;

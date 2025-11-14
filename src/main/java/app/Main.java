@@ -14,6 +14,7 @@ public class Main {
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
+                .addQuickstartUseCase()
                 .addQuizMenuUseCase()
                 .build();
 
