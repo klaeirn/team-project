@@ -30,10 +30,9 @@ public class QuizMenuView extends JPanel implements ActionListener {
         quickstartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(QuizMenuView.this,
-                        "Quickstart not implemented yet.",
-                        "Quickstart",
-                        JOptionPane.INFORMATION_MESSAGE);
+                if (quizMenuController != null) {
+                    quizMenuController.switchToQuickstart();
+                }
             }
         });
 

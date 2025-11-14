@@ -10,6 +10,7 @@ public class Main {
                 .addLoginView()
                 .addLoggedInView()
                 .addQuizMenuView()
+                .addQuickstartView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()

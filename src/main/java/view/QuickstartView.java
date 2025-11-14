@@ -102,7 +102,6 @@ public class QuickstartView extends JPanel implements ActionListener {
                 String difficulty = difficultyList.getSelectedValue();
                 String type = typeList.getSelectedValue();
 
-                // Build the OpenTDB URL using the in-memory database mappings.
                 String url = QuizApiDatabase.buildUrl(category, difficulty, type);
 
                 // For now, just show the URL. A future use case can fetch and start the quiz.

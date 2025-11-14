@@ -17,4 +17,9 @@ public class QuizMenuInteractor implements QuizMenuInputBoundary {
     public void switchToLoggedIn() {
         presenter.showLoggedIn();
     }
+
+    @Override
+    public void switchToQuickstart() {
+        presenter.showQuickstart();
+    }
 }

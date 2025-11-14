@@ -31,6 +31,7 @@ import view.ChangeUsernameView;
 import view.LoggedInView;
 import view.LoginView;
 import view.QuizMenuView;
+import view.QuickstartView;
 import view.ViewManager;
 
 public class AppBuilder {
@@ -50,6 +51,7 @@ public class AppBuilder {
     private ChangeUsernameView changeUsernameView;
     private ChangeUsernameViewModel changeUsernameViewModel;
     private QuizMenuView quizMenuView;
+    private QuickstartView quickstartView;
 
 
     public AppBuilder() {
@@ -87,6 +89,12 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addQuickstartView() {
+        quickstartView = new QuickstartView();
+        cardPanel.add(quickstartView, quickstartView.getViewName());
+        return this;
+    }
+
     public AppBuilder addChangeUsernameView() {
         changeUsernameViewModel = new ChangeUsernameViewModel();
         changeUsernameView = new ChangeUsernameView(changeUsernameViewModel);
@@ -115,6 +123,9 @@ public class AppBuilder {
         }
         if (quizMenuView != null) {
             quizMenuView.setQuizMenuController(quizMenuController);
+        }
+        if (quickstartView != null) {
+            quickstartView.setQuizMenuController(quizMenuController);
         }
         return this;
     }

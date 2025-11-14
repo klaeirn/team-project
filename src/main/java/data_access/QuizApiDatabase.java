@@ -4,13 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Lightweight in-memory "database" for mapping Quickstart selections to
- * OpenTDB API parameters and building the request URL.
- *
- * Amount is always 10, optional parameters are only appended if the user
- * selected a non-"Any" option.
- */
+
 public final class QuizApiDatabase {
 
     private static final Map<String, Integer> CATEGORY_MAP;
@@ -19,7 +13,6 @@ public final class QuizApiDatabase {
 
     static {
         Map<String, Integer> categories = new HashMap<>();
-        // Any Category -> null (omitted param)
         categories.put("Any Category", null);
         categories.put("General Knowledge", 9);
         categories.put("Entertainment: Books", 10);
@@ -45,8 +38,6 @@ public final class QuizApiDatabase {
         categories.put("Science: Gadgets", 30);
         categories.put("Entertainment: Japanese Anime & Manga", 31);
         categories.put("Entertainment: Cartoon & Animations", 32);
-        // Also accept the typo variant present in the spec
-        categories.put("Entertainment: Cartoon & Animatio", 32);
         CATEGORY_MAP = Collections.unmodifiableMap(categories);
 
         Map<String, String> difficulties = new HashMap<>();
