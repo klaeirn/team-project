@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
 import data_access.QuizApiDatabase;
@@ -8,12 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * The Quickstart configuration view. Lets the user choose category, difficulty, and type,
  * then begin or go back to the Quiz Menu.
  */
-public class QuickstartView extends JPanel implements ActionListener {
+public class QuickstartView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "quickstart";
     private QuickstartController quickstartController;
     private QuizMenuController quizMenuController;
@@ -25,7 +28,7 @@ public class QuickstartView extends JPanel implements ActionListener {
     private final JButton beginButton;
     private final JButton backButton;
 
-    public QuickstartView() {
+    public QuickstartView(QuickstartViewModel quickstartViewModel) {
         final JLabel title = new JLabel("Quickstart");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -154,5 +157,10 @@ public class QuickstartView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

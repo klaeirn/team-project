@@ -1,17 +1,20 @@
 package view;
 
 import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * The View for the Quiz Menu after pressing the take quiz button.
  */
-public class QuizMenuView extends JPanel implements ActionListener {
+public class QuizMenuView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "quiz menu";
     private QuizMenuController quizMenuController;
     private SelectExistingQuizController selectExistingQuizController;
@@ -20,7 +23,7 @@ public class QuizMenuView extends JPanel implements ActionListener {
     private final JButton quickstartButton;
     private final JButton backButton;
 
-    public QuizMenuView() {
+    public QuizMenuView(QuizMenuViewModel quizMenuViewModel) {
         final JLabel title = new JLabel("Quiz Menu");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -78,5 +81,10 @@ public class QuizMenuView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

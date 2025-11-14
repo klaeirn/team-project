@@ -13,9 +13,11 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
 import interface_adapter.quickstart.QuickstartPresenter;
+import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 
@@ -54,9 +56,12 @@ public class AppBuilder {
     private ChangeUsernameView changeUsernameView;
     private ChangeUsernameViewModel changeUsernameViewModel;
     private QuizMenuView quizMenuView;
+    private QuizMenuViewModel quizMenuViewModel;
     private QuickstartView quickstartView;
+    private QuickstartViewModel quickStartViewModel;
     private SelectExistingQuizView selectExistingQuizView;
     private SelectExistingQuizViewModel selectExistingQuizViewModel;
+
 
 
     public AppBuilder() {
@@ -89,13 +94,15 @@ public class AppBuilder {
     }
 
     public AppBuilder addQuizMenuView() {
-        quizMenuView = new QuizMenuView();
+        quizMenuViewModel = new QuizMenuViewModel();
+        quizMenuView = new QuizMenuView(quizMenuViewModel);
         cardPanel.add(quizMenuView, quizMenuView.getViewName());
         return this;
     }
 
     public AppBuilder addQuickstartView() {
-        quickstartView = new QuickstartView();
+        quickStartViewModel = new QuickstartViewModel();
+        quickstartView = new QuickstartView(quickStartViewModel);
         cardPanel.add(quickstartView, quickstartView.getViewName());
         return this;
     }
