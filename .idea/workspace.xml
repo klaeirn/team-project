@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="ui">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/ChangeUsernameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ChangeUsernameView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/LabelTextPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LabelTextPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/View/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ViewManager.java" afterDir="false" />
-    </list>
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="checkstyle" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -256,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763162682193</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="checkstyle">
+      <option name="closed" value="true" />
+      <created>1763163002158</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1763163002158</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +291,7 @@
     <MESSAGE value="preview quiz adapter finished" />
     <MESSAGE value="fixed some bugs" />
     <MESSAGE value="ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="ui" />
+    <MESSAGE value="checkstyle" />
+    <option name="LAST_COMMIT_MESSAGE" value="checkstyle" />
   </component>
 </project>
