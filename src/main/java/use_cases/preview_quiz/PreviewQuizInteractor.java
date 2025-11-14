@@ -22,7 +22,7 @@ public class PreviewQuizInteractor implements PreviewQuizInputBoundary {
         final String quizName = previewQuizInputData.getQuizName();
         final String creatorUsername = previewQuizInputData.getCreatorUsername();
 
-        Quiz quiz = quizDataAccess.getQuiz(quizName, creatorUsername);
+        Quiz quiz = quizDataAccessObject.getQuiz(quizName, creatorUsername);
 
         if (quiz == null) {
             previewQuizPresenter.prepareFailView("Quiz \"" + quizName + "\" for user \""
