@@ -11,11 +11,13 @@ public class Main {
                 .addLoggedInView()
                 .addQuizMenuView()
                 .addQuickstartView()
+                .addSelectExistingQuizView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
                 .addQuickstartUseCase()
                 .addQuizMenuController()
+                .addSelectExistingQuizController()
                 .build();
 
         application.pack();

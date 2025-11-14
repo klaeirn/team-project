@@ -16,6 +16,8 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
 import interface_adapter.quickstart.QuickstartPresenter;
+import interface_adapter.select_existing_quiz.SelectExistingQuizController;
+import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -32,6 +34,7 @@ import view.LoggedInView;
 import view.LoginView;
 import view.QuizMenuView;
 import view.QuickstartView;
+import view.SelectExistingQuizView;
 import view.ViewManager;
 
 public class AppBuilder {
@@ -52,6 +55,8 @@ public class AppBuilder {
     private ChangeUsernameViewModel changeUsernameViewModel;
     private QuizMenuView quizMenuView;
     private QuickstartView quickstartView;
+    private SelectExistingQuizView selectExistingQuizView;
+    private SelectExistingQuizViewModel selectExistingQuizViewModel;
 
 
     public AppBuilder() {
@@ -95,6 +100,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addSelectExistingQuizView() {
+        selectExistingQuizViewModel = new SelectExistingQuizViewModel();
+        selectExistingQuizView = new SelectExistingQuizView(selectExistingQuizViewModel);
+        cardPanel.add(selectExistingQuizView, selectExistingQuizView.getViewName());
+        return this;
+    }
+
     public AppBuilder addQuickstartUseCase() {
         final QuickstartPresenter presenter = new QuickstartPresenter(viewManagerModel);
         final QuickstartInputBoundary interactor = new QuickstartInteractor(presenter);
@@ -134,6 +146,20 @@ public class AppBuilder {
         }
         if (quickstartView != null) {
             quickstartView.setQuizMenuController(quizMenuController);
+        }
+        return this;
+    }
+
+    public AppBuilder addSelectExistingQuizController() {
+        final SelectExistingQuizController selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
+        if (selectExistingQuizView != null) {
+            selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
+        }
+        if (quizMenuView != null) {
+            quizMenuView.setSelectExistingQuizController(selectExistingQuizController);
+        }
+        if (selectExistingQuizView != null) {
+            selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
         }
         return this;
     }

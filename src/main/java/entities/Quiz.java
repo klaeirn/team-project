@@ -40,6 +40,22 @@ public class Quiz {
         this.creatorUsername = creatorUsername;
         this.category = category;
         this.questions = questions;
-    }   
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCreatorUsername() {
+        return creatorUsername;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
 
 }

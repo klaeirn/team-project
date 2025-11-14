@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.event.ActionListener;
 public class QuizMenuView extends JPanel implements ActionListener {
     private final String viewName = "quiz menu";
     private QuizMenuController quizMenuController;
+    private SelectExistingQuizController selectExistingQuizController;
 
     private final JButton selectExistingQuizButton;
     private final JButton quickstartButton;
@@ -33,11 +35,9 @@ public class QuizMenuView extends JPanel implements ActionListener {
         selectExistingQuizButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Implement select existing quiz functionality
-                JOptionPane.showMessageDialog(QuizMenuView.this,
-                        "Select existing quiz functionality not yet implemented.",
-                        "Select Existing Quiz",
-                        JOptionPane.INFORMATION_MESSAGE);
+                if (selectExistingQuizController != null) {
+                    selectExistingQuizController.switchToSelectExistingQuiz();
+                }
             }
         });
 
@@ -69,6 +69,10 @@ public class QuizMenuView extends JPanel implements ActionListener {
 
     public void setQuizMenuController(QuizMenuController quizMenuController) {
         this.quizMenuController = quizMenuController;
+    }
+
+    public void setSelectExistingQuizController(SelectExistingQuizController selectExistingQuizController) {
+        this.selectExistingQuizController = selectExistingQuizController;
     }
 
     @Override

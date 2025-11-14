@@ -1,7 +1,5 @@
 package view;
 
-import interface_adapter.quickstart.QuickstartState;
-import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
 import data_access.QuizApiDatabase;
