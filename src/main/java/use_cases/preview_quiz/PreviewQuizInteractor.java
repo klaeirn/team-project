@@ -43,12 +43,7 @@ public class PreviewQuizInteractor implements PreviewQuizInputBoundary {
             );
         }
 
-        PreviewQuizOutputData previewQuizOutputData = new PreviewQuizOutputData(
-                quiz.getName(),
-                quiz.getCreatorUsername(),
-                quiz.getCategory(),
-                questionDataList
-        );
+        PreviewQuizOutputData previewQuizOutputData = new PreviewQuizOutputData(questionDataList);
 
         previewQuizPresenter.prepareSuccessView(previewQuizOutputData);
     }
