@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.change_username.ChangeUsernameController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.quiz_menu.QuizMenuController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -30,6 +31,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton changeUsername;
     private final JButton takeQuizButton;
     private ChangeUsernameController  changeUsernameController;
+    private QuizMenuController quizMenuController;
 
     // , ViewManagerModel viewManagerModel
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
@@ -51,7 +53,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(changeUsername);
 
         changeUsername.addActionListener(this);
-        takeQuizButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -64,16 +65,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                                          }
         );
 
-        // For now, just log a message when Take Quiz is clicked. This can later
-        // be wired to a controller to launch the quiz flow.
+        // Navigate to the Quiz Menu when Take Quiz is clicked.
         takeQuizButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Click: Take Quiz");
-                JOptionPane.showMessageDialog(LoggedInView.this,
-                        "Take Quiz feature coming soon!",
-                        "Take Quiz",
-                        JOptionPane.INFORMATION_MESSAGE);
+                if (quizMenuController != null) {
+                    quizMenuController.switchToQuizMenu();
+                }
             }
         });
 
@@ -122,6 +120,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public void setChangeUsernameController(ChangeUsernameController changeUsernameController) {
         this.changeUsernameController = changeUsernameController;
+    }
+
+    public void setQuizMenuController(QuizMenuController quizMenuController) {
+        this.quizMenuController = quizMenuController;
     }
 
 }

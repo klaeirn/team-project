@@ -14,8 +14,8 @@ import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 //import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.logged_in.LoggedInController;
-import interface_adapter.logged_in.LoggedInPresenter;
+import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.quiz_menu.QuizMenuPresenter;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -24,10 +24,13 @@ import use_cases.login.LoginOutputBoundary;
 import use_cases.change_username.ChangeUsernameInputBoundary;
 import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
+import use_cases.quiz_menu.QuizMenuInputBoundary;
+import use_cases.quiz_menu.QuizMenuInteractor;
 
 import view.ChangeUsernameView;
 import view.LoggedInView;
 import view.LoginView;
+import view.QuizMenuView;
 import view.ViewManager;
 
 public class AppBuilder {
@@ -46,6 +49,7 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private ChangeUsernameView changeUsernameView;
     private ChangeUsernameViewModel changeUsernameViewModel;
+    private QuizMenuView quizMenuView;
 
 
     public AppBuilder() {
@@ -77,6 +81,12 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addQuizMenuView() {
+        quizMenuView = new QuizMenuView();
+        cardPanel.add(quizMenuView, quizMenuView.getViewName());
+        return this;
+    }
+
     public AppBuilder addChangeUsernameView() {
         changeUsernameViewModel = new ChangeUsernameViewModel();
         changeUsernameView = new ChangeUsernameView(changeUsernameViewModel);
@@ -93,6 +103,19 @@ public class AppBuilder {
         changeUsernameView.setChangeUsernameController(changeUsernameController);
         loggedInView.setChangeUsernameController(changeUsernameController);
 
+        return this;
+    }
+
+    public AppBuilder addQuizMenuUseCase() {
+        final QuizMenuPresenter quizMenuPresenter = new QuizMenuPresenter(viewManagerModel);
+        final QuizMenuInputBoundary quizMenuInteractor = new QuizMenuInteractor(quizMenuPresenter);
+        final QuizMenuController quizMenuController = new QuizMenuController(quizMenuInteractor);
+        if (loggedInView != null) {
+            loggedInView.setQuizMenuController(quizMenuController);
+        }
+        if (quizMenuView != null) {
+            quizMenuView.setQuizMenuController(quizMenuController);
+        }
         return this;
     }
     

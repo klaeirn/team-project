@@ -9,9 +9,11 @@ public class Main {
         JFrame application = appBuilder
                 .addLoginView()
                 .addLoggedInView()
+                .addQuizMenuView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
+                .addQuizMenuUseCase()
                 .build();
 
         application.pack();
