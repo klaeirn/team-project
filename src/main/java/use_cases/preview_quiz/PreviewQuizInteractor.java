@@ -30,8 +30,8 @@ public class PreviewQuizInteractor implements PreviewQuizInputBoundary {
             return;
         }
 
-        /// A list of QuestionData objects, each representing one question.
-        /// This is for simplicity, to keep title, options and answer together.
+        // A list of QuestionData objects, each representing one question.
+        // This is for simplicity, to keep title, options and answer together.
         List<PreviewQuizOutputData.QuestionData> questionDataList = new ArrayList<>();
 
         for (Question q: quiz.previewQuestions()) {

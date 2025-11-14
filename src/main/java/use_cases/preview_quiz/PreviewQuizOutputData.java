@@ -13,8 +13,8 @@ public class PreviewQuizOutputData {
     public List<QuestionData> getQuestions() { return questions; }
 
 
-    /// Information of a single question.
-    /// Keep title, options and answer together.
+    // Information of a single question.
+    // Keep title, options and answer together.
     public static class QuestionData {
         private final String title;
         private final List<String> options;

@@ -24,11 +24,14 @@ public class PreviewQuizPresenter implements PreviewQuizOutputBoundary{
         previewQuizState.setCurrentQuestionIndex(0);
 
         previewQuizViewModel.firePropertyChange();
+
+        viewManagerModel.setState(previewQuizViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailView(String previewError) {
-        PreviewQuizState previewQuizState = previewQuizViewModel.getState();
+        final PreviewQuizState previewQuizState = previewQuizViewModel.getState();
         previewQuizState.setPreviewError(previewError);
         previewQuizState.setQuestions(null);
         previewQuizState.setCurrentQuestionIndex(0);
