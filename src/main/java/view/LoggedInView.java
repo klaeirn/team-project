@@ -20,17 +20,18 @@ import interface_adapter.change_username.ChangeUsernameViewModel;
  * The View for when the user is logged into the program.
  */
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
-      private final String viewName = "logged in";
-      private final LoggedInViewModel loggedInViewModel;
-//    private final JLabel passwordErrorField = new JLabel();
+    private final String viewName = "logged in";
+    private final LoggedInViewModel loggedInViewModel;
+    //    private final JLabel passwordErrorField = new JLabel();
     private ChangeUsernameViewModel changeUsernameViewModel = null;
 
 //    private final JLabel username;
 
     private final JButton changeUsername;
+    private final JButton takeQuizButton;
     private ChangeUsernameController  changeUsernameController;
 
-// , ViewManagerModel viewManagerModel
+    // , ViewManagerModel viewManagerModel
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -45,20 +46,36 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         final JPanel buttons = new JPanel();
         this.changeUsername = new JButton("Change Username");
+        this.takeQuizButton = new JButton("Take Quiz");
+        buttons.add(takeQuizButton);
         buttons.add(changeUsername);
 
         changeUsername.addActionListener(this);
+        takeQuizButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         changeUsername.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(changeUsername)) {
-                    changeUsernameController.switchToChangeUsernameView();
-                }
-            }
+                                             public void actionPerformed(ActionEvent evt) {
+                                                 if (evt.getSource().equals(changeUsername)) {
+                                                     changeUsernameController.switchToChangeUsernameView();
+                                                 }
+                                             }
                                          }
         );
+
+        // For now, just log a message when Take Quiz is clicked. This can later
+        // be wired to a controller to launch the quiz flow.
+        takeQuizButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Click: Take Quiz");
+                JOptionPane.showMessageDialog(LoggedInView.this,
+                        "Take Quiz feature coming soon!",
+                        "Take Quiz",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         this.add(title);
 //        this.add(usernameInfo);
