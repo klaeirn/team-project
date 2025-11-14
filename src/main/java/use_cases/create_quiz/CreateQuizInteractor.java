@@ -26,7 +26,7 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
         List<Question> questions = createQuizInputData.getQuestions();
 
         Quiz quiz = quizFactory.createQuiz(quizName, creatorUsername, category, questions);
-        quizDataAccessObject.save(quiz);
+        quizDataAccessObject.saveUserQuiz(quiz);
     }
 }
 
