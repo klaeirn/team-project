@@ -1,24 +1,26 @@
 package interface_adapter.quiz_menu;
 
-import use_cases.quiz_menu.QuizMenuInputBoundary;
-
+import interface_adapter.ViewManagerModel;
 
 public class QuizMenuController {
-    private final QuizMenuInputBoundary inputBoundary;
+    private final ViewManagerModel viewManagerModel;
 
-    public QuizMenuController(QuizMenuInputBoundary inputBoundary) {
-        this.inputBoundary = inputBoundary;
+    public QuizMenuController(ViewManagerModel viewManagerModel) {
+        this.viewManagerModel = viewManagerModel;
     }
 
     public void switchToQuizMenu() {
-        inputBoundary.switchToQuizMenu();
+        viewManagerModel.setState("quiz menu");
+        viewManagerModel.firePropertyChange();
     }
 
     public void switchToLoggedIn() {
-        inputBoundary.switchToLoggedIn();
+        viewManagerModel.setState("logged in");
+        viewManagerModel.firePropertyChange();
     }
 
     public void switchToQuickstart() {
-        inputBoundary.switchToQuickstart();
+        viewManagerModel.setState("quickstart");
+        viewManagerModel.firePropertyChange();
     }
 }

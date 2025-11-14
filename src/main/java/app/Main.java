@@ -15,7 +15,7 @@ public class Main {
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
                 .addQuickstartUseCase()
-                .addQuizMenuUseCase()
+                .addQuizMenuController()
                 .build();
 
         application.pack();

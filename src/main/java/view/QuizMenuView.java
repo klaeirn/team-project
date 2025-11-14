@@ -14,29 +14,32 @@ public class QuizMenuView extends JPanel implements ActionListener {
     private final String viewName = "quiz menu";
     private QuizMenuController quizMenuController;
 
+    private final JButton selectExistingQuizButton;
     private final JButton quickstartButton;
-    private final JButton beginButton;
     private final JButton backButton;
-    private final DefaultListModel<String> quizListModel = new DefaultListModel<>();
-    private final JList<String> quizList = new JList<>(quizListModel);
 
     public QuizMenuView() {
         final JLabel title = new JLabel("Quiz Menu");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Quiz list in a scroll panel (currently empty)
-        quizList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        final JScrollPane quizScroll = new JScrollPane(quizList);
-        quizScroll.setBorder(BorderFactory.createTitledBorder("Existing Quizzes"));
-        quizScroll.setPreferredSize(new Dimension(350, 150));
-
         final JPanel buttons = new JPanel();
+        selectExistingQuizButton = new JButton("Select existing quiz");
         quickstartButton = new JButton("Quickstart");
-        beginButton = new JButton("Begin");
         backButton = new JButton("Back");
+        buttons.add(selectExistingQuizButton);
         buttons.add(quickstartButton);
-        buttons.add(beginButton);
         buttons.add(backButton);
+
+        selectExistingQuizButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: Implement select existing quiz functionality
+                JOptionPane.showMessageDialog(QuizMenuView.this,
+                        "Select existing quiz functionality not yet implemented.",
+                        "Select Existing Quiz",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         quickstartButton.addActionListener(new ActionListener() {
             @Override
@@ -56,30 +59,9 @@ public class QuizMenuView extends JPanel implements ActionListener {
             }
         });
 
-        beginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (quizListModel.isEmpty()) {
-                    JOptionPane.showMessageDialog(QuizMenuView.this,
-                            "No quizzes available yet.",
-                            "Begin Quiz",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                String selected = quizList.getSelectedValue();
-                if (selected == null) {
-                    JOptionPane.showMessageDialog(QuizMenuView.this,
-                            "Please select a quiz from the list.",
-                            "Begin Quiz",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(Box.createVerticalStrut(8));
-        this.add(quizScroll);
         this.add(buttons);
     }
 

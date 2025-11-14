@@ -14,7 +14,6 @@ import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
-import interface_adapter.quiz_menu.QuizMenuPresenter;
 import interface_adapter.quickstart.QuickstartController;
 import interface_adapter.quickstart.QuickstartPresenter;
 
@@ -25,8 +24,6 @@ import use_cases.login.LoginOutputBoundary;
 import use_cases.change_username.ChangeUsernameInputBoundary;
 import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
-import use_cases.quiz_menu.QuizMenuInputBoundary;
-import use_cases.quiz_menu.QuizMenuInteractor;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
 
@@ -127,10 +124,8 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addQuizMenuUseCase() {
-        final QuizMenuPresenter quizMenuPresenter = new QuizMenuPresenter(viewManagerModel);
-        final QuizMenuInputBoundary quizMenuInteractor = new QuizMenuInteractor(quizMenuPresenter);
-        final QuizMenuController quizMenuController = new QuizMenuController(quizMenuInteractor);
+    public AppBuilder addQuizMenuController() {
+        final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
         if (loggedInView != null) {
             loggedInView.setQuizMenuController(quizMenuController);
         }
@@ -142,7 +137,7 @@ public class AppBuilder {
         }
         return this;
     }
-    
+
     public JFrame build() {
         final JFrame application = new JFrame("User Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
