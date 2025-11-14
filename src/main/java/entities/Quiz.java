@@ -48,6 +48,10 @@ public class Quiz {
         this.creatorUsername = creatorUsername;
         this.category = category;
         this.questions = questions;
-    }   
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
 
 }

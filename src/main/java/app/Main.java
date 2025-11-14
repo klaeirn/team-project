@@ -9,9 +9,15 @@ public class Main {
         JFrame application = appBuilder
                 .addLoginView()
                 .addLoggedInView()
+                .addQuizMenuView()
+                .addQuickstartView()
+                .addSelectExistingQuizView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
+                .addQuickstartUseCase()
+                .addQuizMenuController()
+                .addSelectExistingQuizController()
                 .build();
 
         application.pack();
