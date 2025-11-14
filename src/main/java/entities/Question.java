@@ -29,6 +29,8 @@ public class Question {
         return options;
     }
 
+    public String getAnswer() { return answer;}
+
     public void setOptions(List<String> options) {
         this.options = options;
     }
