@@ -3,7 +3,6 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.preview_quiz.PreviewQuizViewModel;
 import interface_adapter.preview_quiz.PreviewQuizState;
-import interface_adapter.preview_quiz.PreviewQuizController;
 import use_cases.preview_quiz.PreviewQuizOutputData;
 
 import javax.swing.*;
@@ -11,15 +10,17 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class PreviewQuizView extends JPanel implements PropertyChangeListener{
+public class PreviewQuizView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final PreviewQuizViewModel viewModel;
+    private final PreviewQuizViewModel previewQuizViewModel;
+    private final String viewName = "preview quiz";
     private final ViewManagerModel viewManagerModel;
-    private final PreviewQuizController controller;
 
     private final JLabel questionTitleLabel = new JLabel();
     private final JPanel optionsPanel = new JPanel();
@@ -29,14 +30,12 @@ public class PreviewQuizView extends JPanel implements PropertyChangeListener{
     private final JButton nextButton = new JButton("Next");
     private final JButton backButton = new JButton("Back to Edit");
 
-    public PreviewQuizView(PreviewQuizViewModel viewModel,
-                           ViewManagerModel viewManagerModel,
-                           PreviewQuizController controller) {
-        this.viewModel = viewModel;
+    public PreviewQuizView(PreviewQuizViewModel previewQuizViewModel,
+                           ViewManagerModel viewManagerModel) {
+        this.previewQuizViewModel = previewQuizViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.controller = controller;
 
-        this.viewModel.addPropertyChangeListener(this);
+        this.previewQuizViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
@@ -68,49 +67,53 @@ public class PreviewQuizView extends JPanel implements PropertyChangeListener{
         add(optionsScrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        addListeners();
-    }
-
-    private void addListeners() {
         // Switch to previous question
-        prevButton.addActionListener(e -> {
-            PreviewQuizState state = viewModel.getState();
-            List<PreviewQuizOutputData.QuestionData> questions = state.getQuestions();
-            if (questions == null || questions.isEmpty()) {
-                return;
-            }
-            int i = state.getCurrentQuestionIndex();
-            if (i > 0) {
-                state.setCurrentQuestionIndex(i - 1);
-                viewModel.firePropertyChange();
+        prevButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PreviewQuizState state = previewQuizViewModel.getState();
+                List<PreviewQuizOutputData.QuestionData> questions = state.getQuestions();
+                if (questions == null || questions.isEmpty()) {
+                    return;
+                }
+                int i = state.getCurrentQuestionIndex();
+                if (i > 0) {
+                    state.setCurrentQuestionIndex(i - 1);
+                    previewQuizViewModel.firePropertyChange();
+                }
             }
         });
 
-        // Switch to next question
-        nextButton.addActionListener(e -> {
-            PreviewQuizState state = viewModel.getState();
-            List<PreviewQuizOutputData.QuestionData> questions = state.getQuestions();
-            if (questions == null || questions.isEmpty()) {
-                return;
-            }
-            int i = state.getCurrentQuestionIndex();
-            if (i < questions.size() - 1) {
-                state.setCurrentQuestionIndex(i + 1);
-                viewModel.firePropertyChange();
+        nextButton.addActionListener(new ActionListener() {
+            // Switch to next question
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PreviewQuizState state = previewQuizViewModel.getState();
+                List<PreviewQuizOutputData.QuestionData> questions = state.getQuestions();
+                if (questions == null || questions.isEmpty()) {
+                    return;
+                }
+                int i = state.getCurrentQuestionIndex();
+                if (i < questions.size() - 1) {
+                    state.setCurrentQuestionIndex(i + 1);
+                    previewQuizViewModel.firePropertyChange();
+                }
             }
         });
 
         // Back to edit page
-        backButton.addActionListener(e -> {
-            // Depending on the name of edit quiz view model
-            viewManagerModel.setState("edit quiz");
-            viewManagerModel.firePropertyChange();
+        prevButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewManagerModel.setState("edit quiz");
+                viewManagerModel.firePropertyChange();
+            }
         });
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        PreviewQuizState state = viewModel.getState();
+        PreviewQuizState state = previewQuizViewModel.getState();
 
         // Error in preview
         if (state.getPreviewError() != null) {
@@ -161,7 +164,9 @@ public class PreviewQuizView extends JPanel implements PropertyChangeListener{
             checkBox.addActionListener(e -> {
                 checkBox.setSelected(option.equals(correct));
             });
-            if (option.equals(correct)) {checkBox.setSelected(true);}
+            if (option.equals(correct)) {
+                checkBox.setSelected(true);
+            }
             checkBox.setBorder(new EmptyBorder(5, 5, 5, 5));
 
             if (option.equals(correct)) {
@@ -175,5 +180,14 @@ public class PreviewQuizView extends JPanel implements PropertyChangeListener{
 
         optionsPanel.revalidate();
         optionsPanel.repaint();
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Click: " + e.getActionCommand());
     }
 }
