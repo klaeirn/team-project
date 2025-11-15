@@ -13,9 +13,6 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.preview_quiz.PreviewQuizController;
-import interface_adapter.preview_quiz.PreviewQuizPresenter;
-import interface_adapter.preview_quiz.PreviewQuizViewModel;
 import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
@@ -23,6 +20,9 @@ import interface_adapter.quickstart.QuickstartPresenter;
 import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
+import interface_adapter.preview_quiz.PreviewQuizController;
+import interface_adapter.preview_quiz.PreviewQuizPresenter;
+import interface_adapter.preview_quiz.PreviewQuizViewModel;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -31,7 +31,6 @@ import use_cases.login.LoginOutputBoundary;
 import use_cases.change_username.ChangeUsernameInputBoundary;
 import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
-
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
 
@@ -39,7 +38,14 @@ import use_cases.preview_quiz.PreviewQuizInputBoundary;
 import use_cases.preview_quiz.PreviewQuizInteractor;
 import use_cases.preview_quiz.PreviewQuizOutputBoundary;
 
-import view.*;
+import view.ChangeUsernameView;
+import view.LoggedInView;
+import view.LoginView;
+import view.QuizMenuView;
+import view.QuickstartView;
+import view.SelectExistingQuizView;
+import view.PreviewQuizView;
+import view.ViewManager;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
