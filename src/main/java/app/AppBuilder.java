@@ -31,6 +31,14 @@ import use_cases.change_username.ChangeUsernameOutputBoundary;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
 
+import interface_adapter.create_quiz.CreateQuizViewModel;
+import interface_adapter.create_quiz.CreateQuizController;
+import interface_adapter.create_quiz.CreateQuizPresenter;
+import use_cases.create_quiz.CreateQuizInputBoundary;
+import use_cases.create_quiz.CreateQuizOutputBoundary;
+import use_cases.create_quiz.CreateQuizInteractor;
+import entities.QuizFactory;
+
 import view.ChangeUsernameView;
 import view.LoggedInView;
 import view.LoginView;
@@ -38,6 +46,7 @@ import view.QuizMenuView;
 import view.QuickstartView;
 import view.SelectExistingQuizView;
 import view.ViewManager;
+import view.CreateQuizView;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -47,6 +56,7 @@ public class AppBuilder {
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     final FileUserDataAccessObject userDataAccessObject = new FileUserDataAccessObject("users.csv", userFactory);
+    final QuizFactory quizFactory = new QuizFactory();
 
 
     private LoginView loginView;
@@ -55,6 +65,10 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private ChangeUsernameView changeUsernameView;
     private ChangeUsernameViewModel changeUsernameViewModel;
+    
+    private CreateQuizView createQuizView;
+    private CreateQuizViewModel createQuizViewModel;
+    private CreateQuizController createQuizController;
     private QuizMenuView quizMenuView;
     private QuizMenuViewModel quizMenuViewModel;
     private QuickstartView quickstartView;
@@ -142,6 +156,26 @@ public class AppBuilder {
 
         return this;
     }
+    
+    public AppBuilder addCreateQuizView() {
+        createQuizViewModel = new CreateQuizViewModel();
+        createQuizView = new CreateQuizView(createQuizViewModel);
+        cardPanel.add(createQuizView, createQuizView.getViewName());
+        return this;
+    }
+    
+    public AppBuilder addCreateQuizUseCase() {
+        final CreateQuizOutputBoundary createQuizOutputBoundary = new CreateQuizPresenter(createQuizViewModel, viewManagerModel);
+        final CreateQuizInputBoundary createQuizInteractor = new CreateQuizInteractor(
+                userDataAccessObject, quizFactory, userDataAccessObject, createQuizOutputBoundary);
+        
+        createQuizController = new CreateQuizController(createQuizInteractor);
+        createQuizView.setCreateQuizController(createQuizController);
+        
+        return this;
+    }
+    
+    
 
     public AppBuilder addQuizMenuController() {
         final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
@@ -181,5 +215,6 @@ public class AppBuilder {
 
         return application;
     }
+    
 
 }

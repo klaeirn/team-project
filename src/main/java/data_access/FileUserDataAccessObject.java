@@ -2,6 +2,8 @@ package data_access;
 
 import use_cases.login.LoginUserDataAccessInterface;
 import use_cases.change_username.ChangeUsernameDataAccessInterface;
+import use_cases.create_quiz.CreateQuizDataAccessInterface; // TODO: remove this import when we have a different dao for quizzes
+import use_cases.create_quiz.UserDataAccessInterface; // TODO: remove this import when we have a different dao for quizzes
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,8 +11,10 @@ import java.util.Map;
 
 import entities.User;
 import entities.UserFactory;
+import entities.Quiz; // TODO: remove this import when we have a different dao for quizzes
 
-public class FileUserDataAccessObject implements LoginUserDataAccessInterface, ChangeUsernameDataAccessInterface {
+public class FileUserDataAccessObject implements LoginUserDataAccessInterface, ChangeUsernameDataAccessInterface, 
+        CreateQuizDataAccessInterface, UserDataAccessInterface { // TODO: remove CreateQuizDataAccessInterface and UserDataAccessInterface when we have a different dao for quizzes
 
     private final File csvFile;
     private UserFactory userFactory;
@@ -123,5 +127,12 @@ public class FileUserDataAccessObject implements LoginUserDataAccessInterface, C
 
     public User get(String username) {
         return this.accounts.get(username);
+    }
+    
+    @Override
+    public void saveUserQuiz(Quiz quiz) {
+        // TODO: implement quiz persistence
+        // for now, this is a temporary implementation
+        // in the future, we will use a different dao for quizzes
     }
 }
