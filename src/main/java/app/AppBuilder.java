@@ -20,6 +20,9 @@ import interface_adapter.quickstart.QuickstartPresenter;
 import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
+import interface_adapter.preview_quiz.PreviewQuizController;
+import interface_adapter.preview_quiz.PreviewQuizPresenter;
+import interface_adapter.preview_quiz.PreviewQuizViewModel;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -31,6 +34,9 @@ import use_cases.change_username.ChangeUsernameOutputBoundary;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
 
+import use_cases.preview_quiz.PreviewQuizInputBoundary;
+import use_cases.preview_quiz.PreviewQuizInteractor;
+import use_cases.preview_quiz.PreviewQuizOutputBoundary;
 import interface_adapter.create_quiz.CreateQuizViewModel;
 import interface_adapter.create_quiz.CreateQuizController;
 import interface_adapter.create_quiz.CreateQuizPresenter;
@@ -38,13 +44,13 @@ import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizOutputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
 import entities.QuizFactory;
-
 import view.ChangeUsernameView;
 import view.LoggedInView;
 import view.LoginView;
 import view.QuizMenuView;
 import view.QuickstartView;
 import view.SelectExistingQuizView;
+import view.PreviewQuizView;
 import view.ViewManager;
 import view.CreateQuizView;
 
@@ -75,6 +81,8 @@ public class AppBuilder {
     private QuickstartViewModel quickStartViewModel;
     private SelectExistingQuizView selectExistingQuizView;
     private SelectExistingQuizViewModel selectExistingQuizViewModel;
+    private PreviewQuizView previewQuizView;
+    private PreviewQuizViewModel previewQuizViewModel;
 
 
 
@@ -204,6 +212,14 @@ public class AppBuilder {
         }
         return this;
     }
+
+    public AppBuilder addPreviewQuizView() {
+        previewQuizViewModel = new PreviewQuizViewModel();
+        previewQuizView = new PreviewQuizView(previewQuizViewModel, viewManagerModel);
+        cardPanel.add(previewQuizView, previewQuizView.getViewName());
+        return this;
+    }
+
 
     public JFrame build() {
         final JFrame application = new JFrame("User Login Example");
