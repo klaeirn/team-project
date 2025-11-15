@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="import classes">
+
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Leaderboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInputData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -32,7 +39,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/klaeirn/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;bbd33b1a-b2ad-4323-96ad-b51d4135637c&quot;
+    &quot;accountId&quot;: &quot;748da5c6-98ca-45e9-8b8f-89127ff68cc0&quot;
   },
   &quot;editorReviewEnabled&quot;: false
 }</component>
@@ -44,18 +51,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
+<component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
     "Application.Main.executor": "Run",
-    "Application.PreviewQuizUITest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "#24 on preview-quiz-usecase1",
+    "git-widget-placeholder": "createquiz",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/yuetongding/IdeaProjects/team-project/src/main/java/interface_adapter",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +67,7 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
+}}</component>
   }
 }]]></component>
   <component name="RecentsManager">
@@ -120,7 +125,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
