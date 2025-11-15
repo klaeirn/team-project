@@ -10,12 +10,20 @@ public class Quiz {
     private String category;
     private List<Question> questions;
 
-    public void addQuestion(Question q) {
-        this.questions.add(q);
-    }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getCreatorUsername() { return creatorUsername; }
+
+    public String getCategory() { return category; }
 
     public List<Question> previewQuestions(){
         return this.questions;
+    }
+
+    public void addQuestion(Question q) {
+        this.questions.add(q);
     }
 
     // @param string of the question to remove
@@ -40,6 +48,10 @@ public class Quiz {
         this.creatorUsername = creatorUsername;
         this.category = category;
         this.questions = questions;
-    }   
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
 
 }

@@ -11,9 +11,15 @@ public class Main {
                 //.addCreateQuizUseCase() uncomment to view create quiz use case
                 .addLoginView()
                 .addLoggedInView()
+                .addQuizMenuView()
+                .addQuickstartView()
+                .addSelectExistingQuizView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
+                .addQuickstartUseCase()
+                .addQuizMenuController()
+                .addSelectExistingQuizController()
                 .build();
 
         application.pack();
