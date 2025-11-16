@@ -1,10 +1,14 @@
 package interface_adapter.quickstart;
 
+import entities.Quiz;
+
 public class QuickstartState {
 
     private String selectedCategory;
     private String selectedDifficulty;
     private String selectedType;
+    private Quiz quiz;
+    private String errorMessage;
 
     public QuickstartState(QuickstartState copy) {
         if (copy != null) {
@@ -48,5 +52,21 @@ public class QuickstartState {
 
     public void setSelectedType(String selectedType) {
         this.selectedType = selectedType;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 import data_access.FileUserDataAccessObject;
+import data_access.QuizApiDataAccessObject;
+import entities.QuestionFactory;
+import entities.QuizFactory;
 import entities.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_username.ChangeUsernameController;
@@ -20,6 +23,9 @@ import interface_adapter.quickstart.QuickstartPresenter;
 import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
+import interface_adapter.take_quiz.TakeQuizController;
+import interface_adapter.take_quiz.TakeQuizPresenter;
+import interface_adapter.take_quiz.TakeQuizViewModel;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -30,6 +36,9 @@ import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
+import use_cases.take_quiz.TakeQuizInputBoundary;
+import use_cases.take_quiz.TakeQuizInteractor;
+import use_cases.take_quiz.TakeQuizOutputBoundary;
 
 import view.ChangeUsernameView;
 import view.LoggedInView;
@@ -37,6 +46,7 @@ import view.LoginView;
 import view.QuizMenuView;
 import view.QuickstartView;
 import view.SelectExistingQuizView;
+import view.TakeQuizView;
 import view.ViewManager;
 
 public class AppBuilder {
@@ -47,6 +57,9 @@ public class AppBuilder {
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     final FileUserDataAccessObject userDataAccessObject = new FileUserDataAccessObject("users.csv", userFactory);
+    final QuestionFactory questionFactory = new QuestionFactory();
+    final QuizFactory quizFactory = new QuizFactory();
+    final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
 
 
     private LoginView loginView;
@@ -61,6 +74,11 @@ public class AppBuilder {
     private QuickstartViewModel quickStartViewModel;
     private SelectExistingQuizView selectExistingQuizView;
     private SelectExistingQuizViewModel selectExistingQuizViewModel;
+    private TakeQuizView takeQuizView;
+    private TakeQuizViewModel takeQuizViewModel;
+    private TakeQuizController takeQuizController;
+    private SelectExistingQuizController selectExistingQuizController;
+    private QuickstartPresenter quickstartPresenter;
 
 
 
@@ -114,13 +132,51 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTakeQuizView() {
+        takeQuizViewModel = new TakeQuizViewModel();
+        takeQuizView = new TakeQuizView(takeQuizViewModel);
+        cardPanel.add(takeQuizView, takeQuizView.getViewName());
+        return this;
+    }
+
     public AppBuilder addQuickstartUseCase() {
-        final QuickstartPresenter presenter = new QuickstartPresenter(viewManagerModel);
-        final QuickstartInputBoundary interactor = new QuickstartInteractor(presenter);
+        quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
+        final QuickstartInputBoundary interactor = new QuickstartInteractor(quickstartPresenter, quizApiDataAccessObject);
         final QuickstartController controller = new QuickstartController(interactor);
         if (quickstartView != null) {
             quickstartView.setQuickstartController(controller);
+            quickStartViewModel.addPropertyChangeListener(quickstartView);
         }
+        return this;
+    }
+
+    public AppBuilder addTakeQuizUseCase() {
+        final TakeQuizOutputBoundary takeQuizPresenter = new TakeQuizPresenter(takeQuizViewModel, viewManagerModel);
+        final TakeQuizInputBoundary takeQuizInteractor = new TakeQuizInteractor(takeQuizPresenter);
+        takeQuizController = new TakeQuizController(takeQuizInteractor);
+
+        if (takeQuizView != null) {
+            takeQuizView.setTakeQuizController(takeQuizController);
+            takeQuizView.setViewManagerModel(viewManagerModel);
+            takeQuizViewModel.addPropertyChangeListener(takeQuizView);
+        }
+
+        return this;
+    }
+
+    public AppBuilder wireControllers() {
+        // Wire TakeQuizController to QuickstartPresenter
+        if (quickstartPresenter != null && takeQuizController != null) {
+            quickstartPresenter.setTakeQuizController(takeQuizController);
+            quickstartPresenter.setUserDataAccessObject(userDataAccessObject);
+        }
+
+        // Wire TakeQuizController to SelectExistingQuizController
+        if (selectExistingQuizController != null && takeQuizController != null) {
+            selectExistingQuizController.setTakeQuizController(takeQuizController);
+            selectExistingQuizController.setUserDataAccessObject(userDataAccessObject);
+        }
+
         return this;
     }
 
@@ -158,7 +214,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addSelectExistingQuizController() {
-        final SelectExistingQuizController selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
+        selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
+
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
         }
@@ -176,6 +233,9 @@ public class AppBuilder {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
+
+        // Set minimum size to ensure content is visible
+        application.setMinimumSize(new Dimension(800, 600));
 
         viewManagerModel.firePropertyChange();
 

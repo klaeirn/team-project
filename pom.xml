@@ -27,6 +27,12 @@
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- JSON library to allow direct use of JSONObject/JSONArray -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
 
     </dependencies>
 
