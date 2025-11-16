@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 import data_access.FileUserDataAccessObject;
-import data_access.QuizApiDataAccessObject;
-import entities.QuestionFactory;
-import entities.QuizFactory;
 import entities.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_username.ChangeUsernameController;
@@ -23,9 +20,9 @@ import interface_adapter.quickstart.QuickstartPresenter;
 import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
-import interface_adapter.take_quiz.TakeQuizController;
-import interface_adapter.take_quiz.TakeQuizPresenter;
-import interface_adapter.take_quiz.TakeQuizViewModel;
+import interface_adapter.preview_quiz.PreviewQuizController;
+import interface_adapter.preview_quiz.PreviewQuizPresenter;
+import interface_adapter.preview_quiz.PreviewQuizViewModel;
 
 import use_cases.login.LoginInputBoundary;
 import use_cases.login.LogInInteractor;
@@ -36,18 +33,26 @@ import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
-import use_cases.take_quiz.TakeQuizInputBoundary;
-import use_cases.take_quiz.TakeQuizInteractor;
-import use_cases.take_quiz.TakeQuizOutputBoundary;
 
+import use_cases.preview_quiz.PreviewQuizInputBoundary;
+import use_cases.preview_quiz.PreviewQuizInteractor;
+import use_cases.preview_quiz.PreviewQuizOutputBoundary;
+import interface_adapter.create_quiz.CreateQuizViewModel;
+import interface_adapter.create_quiz.CreateQuizController;
+import interface_adapter.create_quiz.CreateQuizPresenter;
+import use_cases.create_quiz.CreateQuizInputBoundary;
+import use_cases.create_quiz.CreateQuizOutputBoundary;
+import use_cases.create_quiz.CreateQuizInteractor;
+import entities.QuizFactory;
 import view.ChangeUsernameView;
 import view.LoggedInView;
 import view.LoginView;
 import view.QuizMenuView;
 import view.QuickstartView;
 import view.SelectExistingQuizView;
-import view.TakeQuizView;
+import view.PreviewQuizView;
 import view.ViewManager;
+import view.CreateQuizView;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -57,9 +62,7 @@ public class AppBuilder {
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     final FileUserDataAccessObject userDataAccessObject = new FileUserDataAccessObject("users.csv", userFactory);
-    final QuestionFactory questionFactory = new QuestionFactory();
     final QuizFactory quizFactory = new QuizFactory();
-    final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
 
 
     private LoginView loginView;
@@ -68,17 +71,18 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private ChangeUsernameView changeUsernameView;
     private ChangeUsernameViewModel changeUsernameViewModel;
+    
+    private CreateQuizView createQuizView;
+    private CreateQuizViewModel createQuizViewModel;
+    private CreateQuizController createQuizController;
     private QuizMenuView quizMenuView;
     private QuizMenuViewModel quizMenuViewModel;
     private QuickstartView quickstartView;
     private QuickstartViewModel quickStartViewModel;
     private SelectExistingQuizView selectExistingQuizView;
     private SelectExistingQuizViewModel selectExistingQuizViewModel;
-    private TakeQuizView takeQuizView;
-    private TakeQuizViewModel takeQuizViewModel;
-    private TakeQuizController takeQuizController;
-    private SelectExistingQuizController selectExistingQuizController;
-    private QuickstartPresenter quickstartPresenter;
+    private PreviewQuizView previewQuizView;
+    private PreviewQuizViewModel previewQuizViewModel;
 
 
 
@@ -132,51 +136,13 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addTakeQuizView() {
-        takeQuizViewModel = new TakeQuizViewModel();
-        takeQuizView = new TakeQuizView(takeQuizViewModel);
-        cardPanel.add(takeQuizView, takeQuizView.getViewName());
-        return this;
-    }
-
     public AppBuilder addQuickstartUseCase() {
-        quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
-        final QuickstartInputBoundary interactor = new QuickstartInteractor(quickstartPresenter, quizApiDataAccessObject);
+        final QuickstartPresenter presenter = new QuickstartPresenter(viewManagerModel);
+        final QuickstartInputBoundary interactor = new QuickstartInteractor(presenter);
         final QuickstartController controller = new QuickstartController(interactor);
         if (quickstartView != null) {
             quickstartView.setQuickstartController(controller);
-            quickStartViewModel.addPropertyChangeListener(quickstartView);
         }
-        return this;
-    }
-
-    public AppBuilder addTakeQuizUseCase() {
-        final TakeQuizOutputBoundary takeQuizPresenter = new TakeQuizPresenter(takeQuizViewModel, viewManagerModel);
-        final TakeQuizInputBoundary takeQuizInteractor = new TakeQuizInteractor(takeQuizPresenter);
-        takeQuizController = new TakeQuizController(takeQuizInteractor);
-
-        if (takeQuizView != null) {
-            takeQuizView.setTakeQuizController(takeQuizController);
-            takeQuizView.setViewManagerModel(viewManagerModel);
-            takeQuizViewModel.addPropertyChangeListener(takeQuizView);
-        }
-
-        return this;
-    }
-
-    public AppBuilder wireControllers() {
-        // Wire TakeQuizController to QuickstartPresenter
-        if (quickstartPresenter != null && takeQuizController != null) {
-            quickstartPresenter.setTakeQuizController(takeQuizController);
-            quickstartPresenter.setUserDataAccessObject(userDataAccessObject);
-        }
-
-        // Wire TakeQuizController to SelectExistingQuizController
-        if (selectExistingQuizController != null && takeQuizController != null) {
-            selectExistingQuizController.setTakeQuizController(takeQuizController);
-            selectExistingQuizController.setUserDataAccessObject(userDataAccessObject);
-        }
-
         return this;
     }
 
@@ -198,6 +164,26 @@ public class AppBuilder {
 
         return this;
     }
+    
+    public AppBuilder addCreateQuizView() {
+        createQuizViewModel = new CreateQuizViewModel();
+        createQuizView = new CreateQuizView(createQuizViewModel);
+        cardPanel.add(createQuizView, createQuizView.getViewName());
+        return this;
+    }
+    
+    public AppBuilder addCreateQuizUseCase() {
+        final CreateQuizOutputBoundary createQuizOutputBoundary = new CreateQuizPresenter(createQuizViewModel, viewManagerModel);
+        final CreateQuizInputBoundary createQuizInteractor = new CreateQuizInteractor(
+                userDataAccessObject, quizFactory, userDataAccessObject, createQuizOutputBoundary);
+        
+        createQuizController = new CreateQuizController(createQuizInteractor);
+        createQuizView.setCreateQuizController(createQuizController);
+        
+        return this;
+    }
+    
+    
 
     public AppBuilder addQuizMenuController() {
         final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
@@ -214,8 +200,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addSelectExistingQuizController() {
-        selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
-
+        final SelectExistingQuizController selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
         }
@@ -228,18 +213,24 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addPreviewQuizView() {
+        previewQuizViewModel = new PreviewQuizViewModel();
+        previewQuizView = new PreviewQuizView(previewQuizViewModel, viewManagerModel);
+        cardPanel.add(previewQuizView, previewQuizView.getViewName());
+        return this;
+    }
+
+
     public JFrame build() {
         final JFrame application = new JFrame("User Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
 
-        // Set minimum size to ensure content is visible
-        application.setMinimumSize(new Dimension(800, 600));
-
         viewManagerModel.firePropertyChange();
 
         return application;
     }
+    
 
 }
