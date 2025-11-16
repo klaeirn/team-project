@@ -39,8 +39,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         this.takeQuizViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
-
-        // Title panel
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
         JLabel title = new JLabel("Take Quiz");
@@ -49,30 +47,25 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         titlePanel.add(title);
         titlePanel.add(Box.createVerticalStrut(10));
 
-        // Question label with text wrapping and scrolling
         questionLabel = new JLabel();
         questionLabel.setFont(new Font(questionLabel.getFont().getName(), Font.PLAIN, 14));
         questionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         questionLabel.setVerticalAlignment(SwingConstants.TOP);
         questionLabel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        // Enable HTML for text wrapping
         questionLabel.setVerticalTextPosition(SwingConstants.TOP);
 
-        // Options panel with scrolling
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        optionsPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        optionsPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
         answerGroup = new ButtonGroup();
-        optionButtons = new JRadioButton[4]; // Maximum 4 options for multiple choice
+        optionButtons = new JRadioButton[4];
 
-        // Error label
         errorLabel = new JLabel();
         errorLabel.setForeground(Color.RED);
         errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Buttons panel - aligned to the left
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         previousButton = new JButton("Previous");
         nextButton = new JButton("Next");
         backButton = new JButton("Back");
@@ -105,7 +98,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Navigate back to quiz menu
                 int option = JOptionPane.showConfirmDialog(
                         TakeQuizView.this,
                         "Are you sure you want to go back? Your progress will be lost.",
@@ -114,7 +106,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                         JOptionPane.WARNING_MESSAGE
                 );
                 if (option == JOptionPane.YES_OPTION) {
-                    // Navigate back to quiz menu
                     if (viewManagerModel != null) {
                         viewManagerModel.setState("quiz menu");
                         viewManagerModel.firePropertyChange();
@@ -123,31 +114,35 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
             }
         });
 
+        buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonsPanel.add(previousButton);
         buttonsPanel.add(nextButton);
         buttonsPanel.add(backButton);
 
-        // Main content panel with scrolling for long questions
+
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Question panel with wrapping
         JPanel questionPanel = new JPanel(new BorderLayout());
         questionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        questionPanel.add(questionLabel, BorderLayout.WEST);
-        questionPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        questionLabel.setBorder(BorderFactory.createEmptyBorder(8, 20, 4, 20));
+        questionPanel.add(questionLabel, BorderLayout.CENTER);
+        questionPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 2, 20));
 
         contentPanel.add(questionPanel);
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(2));
         contentPanel.add(optionsPanel);
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(6));
         contentPanel.add(errorLabel);
-        contentPanel.add(Box.createVerticalStrut(20));
+        contentPanel.add(Box.createVerticalStrut(8));
         contentPanel.add(buttonsPanel);
 
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.add(contentPanel, BorderLayout.NORTH);
+
         // Scroll pane for long content
-        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        JScrollPane scrollPane = new JScrollPane(wrapper);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(null);
@@ -168,7 +163,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         }
 
         if (selectedAnswer != null) {
-            // Extract just the answer text (remove "A. ", "B. ", etc.)
             String answerText = selectedAnswer;
             if (selectedAnswer.matches("^[A-D]\\.\\s.*")) {
                 answerText = selectedAnswer.substring(3);
@@ -176,11 +170,9 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                 answerText = selectedAnswer;
             }
 
-            // Update the interactor's answer
             if (takeQuizController != null) {
                 takeQuizController.setAnswer(currentQuestionIndex - 1, answerText);
             }
-            state.setAnswer(currentQuestionIndex - 1, answerText);
         }
     }
 
@@ -190,11 +182,9 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
             return;
         }
 
-        // Update question label
         questionLabel.setText(String.format("Question %d: %s",
                 state.getCurrentQuestionIndex(), question.getTitle()));
 
-        // Clear previous options
         optionsPanel.removeAll();
         answerGroup.clearSelection();
         for (int i = 0; i < optionButtons.length; i++) {
@@ -204,7 +194,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
             }
         }
 
-        // Add new options
         List<String> options = question.getOptions();
         if (options != null && !options.isEmpty()) {
             char label = 'A';
@@ -212,7 +201,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                 String optionText = options.get(i);
                 String displayText;
 
-                // Format based on question type
                 if (options.size() == 2 && (optionText.equalsIgnoreCase("True") ||
                         optionText.equalsIgnoreCase("False"))) {
                     displayText = optionText;
@@ -222,15 +210,13 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
 
                 JRadioButton optionButton = new JRadioButton(displayText);
                 optionButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-                optionButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                optionButton.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
 
-                // Check if this is the previously selected answer
                 String savedAnswer = state.getAnswer(state.getCurrentQuestionIndex() - 1);
                 if (savedAnswer != null && optionText.equals(savedAnswer)) {
                     optionButton.setSelected(true);
                 }
 
-                // Add listener to save answer when selected
                 final int questionIndex = state.getCurrentQuestionIndex() - 1;
                 final String answerText = optionText;
                 optionButton.addActionListener(new ActionListener() {
@@ -240,8 +226,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                             if (takeQuizController != null) {
                                 takeQuizController.setAnswer(questionIndex, answerText);
                             }
-                            TakeQuizState currentState = takeQuizViewModel.getState();
-                            currentState.setAnswer(questionIndex, answerText);
                         }
                     }
                 });
@@ -253,7 +237,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
             }
         }
 
-        // Update button states
         previousButton.setEnabled(state.getCurrentQuestionIndex() > 1);
         nextButton.setEnabled(!state.isLastQuestion());
         nextButton.setText("Next");
@@ -286,11 +269,9 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
             currentQuestionIndex = state.getCurrentQuestionIndex();
 
             if (state.getCurrentQuestion() != null) {
-                // Update question display
                 updateQuestionDisplay(state);
             }
 
-            // Update error message
             String error = state.getErrorMessage();
             if (error != null && !error.isEmpty()) {
                 errorLabel.setText(error);

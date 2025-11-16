@@ -97,8 +97,6 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface {
         return quizFactory.createQuiz("Quickstart Quiz", "System", "Quickstart", questions);
     }
 
-    // All manual JSON parsing helpers removed in favor of org.json
-
     /**
      * Decodes HTML entities in the text (e.g., &quot; -> ", &#039; -> ')
      */

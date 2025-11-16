@@ -54,7 +54,25 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
     }
 
     public void setAnswer(int questionIndex, String answer) {
+        if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
+            return;
+        }
+
+        if (questionIndex < 0 || questionIndex >= quiz.getQuestions().size()) {
+            return;
+        }
+
+        Question q = quiz.getQuestions().get(questionIndex);
+        List<String> options = q.getOptions();
+        if (options == null || !options.contains(answer)) {
+            return;
+        }
+
         userAnswers.put(questionIndex, answer);
+
+        if (questionIndex == currentQuestionIndex) {
+            showCurrentQuestion();
+        }
     }
 
     private void showCurrentQuestion() {

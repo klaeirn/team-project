@@ -24,7 +24,6 @@ public class TakeQuizPresenter implements TakeQuizOutputBoundary {
         state.setScore(null);
         state.setErrorMessage(null);
 
-        // Set the currently selected answer for this question
         String currentAnswer = outputData.getUserAnswers().get(outputData.getCurrentQuestionIndex() - 1);
         state.setSelectedAnswer(currentAnswer);
 
