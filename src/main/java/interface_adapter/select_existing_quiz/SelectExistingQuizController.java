@@ -2,16 +2,17 @@ package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
 import entities.Quiz;
-import interface_adapter.take_quiz.TakeQuizController;
-import data_access.FileUserDataAccessObject;
+import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
+import use_cases.select_existing_quiz.SelectExistingQuizInputData;
 
 public class SelectExistingQuizController {
     private final ViewManagerModel viewManagerModel;
-    private TakeQuizController takeQuizController;
-    private FileUserDataAccessObject userDataAccessObject;
+    private final SelectExistingQuizInputBoundary inputBoundary;
 
-    public SelectExistingQuizController(ViewManagerModel viewManagerModel) {
+    public SelectExistingQuizController(ViewManagerModel viewManagerModel,
+                                        SelectExistingQuizInputBoundary inputBoundary) {
         this.viewManagerModel = viewManagerModel;
+        this.inputBoundary = inputBoundary;
     }
 
     public void switchToSelectExistingQuiz() {
@@ -25,28 +26,8 @@ public class SelectExistingQuizController {
     }
 
     public void beginQuiz(Quiz quiz) {
-        // If wired, kick off the take-quiz flow; otherwise just navigate
-        if (takeQuizController != null) {
-            String username = null;
-            if (userDataAccessObject != null) {
-                username = userDataAccessObject.getCurrentUsername();
-            }
-            if (username == null || username.isEmpty()) {
-                username = "Guest";
-            }
-            takeQuizController.execute(quiz, username);
-        }
-        viewManagerModel.setState("take quiz");
-        viewManagerModel.firePropertyChange();
-    }
-
-    // Wiring methods used by AppBuilder
-    public void setTakeQuizController(TakeQuizController takeQuizController) {
-        this.takeQuizController = takeQuizController;
-    }
-
-    public void setUserDataAccessObject(FileUserDataAccessObject userDataAccessObject) {
-        this.userDataAccessObject = userDataAccessObject;
+        // Delegate to the Select Existing Quiz use case; username resolved in interactor
+        inputBoundary.execute(new SelectExistingQuizInputData(quiz, null));
     }
 }
 

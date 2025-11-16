@@ -2,27 +2,25 @@ package use_cases.quickstart;
 
 import entities.Quiz;
 
+/**
+ * Output data for Quickstart flow: carries the generated Quiz and the username of the taker.
+ * Errors are reported via the OutputBoundary's prepareFailView(String), so no error fields here.
+ */
 public class QuickstartOutputData {
     private final Quiz quiz;
-    private final boolean success;
-    private final String errorMessage;
+    private final String username;
 
-    public QuickstartOutputData(Quiz quiz, boolean success, String errorMessage) {
+    public QuickstartOutputData(Quiz quiz, String username) {
         this.quiz = quiz;
-        this.success = success;
-        this.errorMessage = errorMessage;
+        this.username = username;
     }
 
     public Quiz getQuiz() {
         return quiz;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getUsername() {
+        return username;
     }
 }
 

@@ -9,11 +9,14 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
 
     private final QuickstartOutputBoundary presenter;
     private final QuickstartDataAccessInterface dataAccessObject;
+    private final QuickstartUserDataAccessInterface currentUserProvider;
 
     public QuickstartInteractor(QuickstartOutputBoundary presenter,
-                                QuickstartDataAccessInterface dataAccessObject) {
+                                QuickstartDataAccessInterface dataAccessObject,
+                                QuickstartUserDataAccessInterface currentUserProvider) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
+        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -34,8 +37,11 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
             // Fetch quiz from API
             Quiz quiz = dataAccessObject.fetchQuizFromUrl(url);
 
-            // Prepare success view
-            QuickstartOutputData outputData = new QuickstartOutputData(quiz, true, null);
+            // Resolve current username (taker). Always present per specification.
+            String username = currentUserProvider.getCurrentUsername();
+
+            // Prepare success view with quiz and username
+            QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);
             presenter.prepareSuccessView(outputData);
         } catch (IOException e) {
             presenter.prepareFailView("Failed to fetch quiz: " + e.getMessage());

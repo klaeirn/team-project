@@ -22,6 +22,7 @@ import interface_adapter.quickstart.QuickstartController;
 import interface_adapter.quickstart.QuickstartPresenter;
 import interface_adapter.quiz_menu.QuizMenuViewModel;
 import interface_adapter.select_existing_quiz.SelectExistingQuizController;
+import interface_adapter.select_existing_quiz.SelectExistingQuizPresenter;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 import interface_adapter.take_quiz.TakeQuizController;
 import interface_adapter.take_quiz.TakeQuizPresenter;
@@ -39,6 +40,8 @@ import use_cases.quickstart.QuickstartInteractor;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
+import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
+import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
 
 import view.ChangeUsernameView;
 import view.LoggedInView;
@@ -79,6 +82,7 @@ public class AppBuilder {
     private TakeQuizController takeQuizController;
     private SelectExistingQuizController selectExistingQuizController;
     private QuickstartPresenter quickstartPresenter;
+    private SelectExistingQuizPresenter selectExistingQuizPresenter;
 
 
 
@@ -141,7 +145,11 @@ public class AppBuilder {
 
     public AppBuilder addQuickstartUseCase() {
         quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
-        final QuickstartInputBoundary interactor = new QuickstartInteractor(quickstartPresenter, quizApiDataAccessObject);
+        final QuickstartInputBoundary interactor = new QuickstartInteractor(
+                quickstartPresenter,
+                quizApiDataAccessObject,
+                userDataAccessObject // implements SelectExistingQuizDataAccessInterface for current username
+        );
         final QuickstartController controller = new QuickstartController(interactor);
         if (quickstartView != null) {
             quickstartView.setQuickstartController(controller);
@@ -167,12 +175,10 @@ public class AppBuilder {
     public AppBuilder wireControllers() {
         if (quickstartPresenter != null && takeQuizController != null) {
             quickstartPresenter.setTakeQuizController(takeQuizController);
-            quickstartPresenter.setUserDataAccessObject(userDataAccessObject);
         }
 
-        if (selectExistingQuizController != null && takeQuizController != null) {
-            selectExistingQuizController.setTakeQuizController(takeQuizController);
-            selectExistingQuizController.setUserDataAccessObject(userDataAccessObject);
+        if (selectExistingQuizPresenter != null && takeQuizController != null) {
+            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
         }
 
         return this;
@@ -212,10 +218,17 @@ public class AppBuilder {
     }
 
     public AppBuilder addSelectExistingQuizController() {
-        selectExistingQuizController = new SelectExistingQuizController(viewManagerModel);
+        // Build Select Existing Quiz use case stack
+        selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, viewManagerModel);
+        final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
+                userDataAccessObject,
+                selectExistingQuizPresenter);
+
+        selectExistingQuizController = new SelectExistingQuizController(viewManagerModel, selectInteractor);
 
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
+            selectExistingQuizViewModel.addPropertyChangeListener(selectExistingQuizView);
         }
         if (quizMenuView != null) {
             quizMenuView.setSelectExistingQuizController(selectExistingQuizController);
