@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-
     <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/FileQuizDataAccessObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/quizzes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileUserDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Leaderboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -39,7 +35,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/klaeirn/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;748da5c6-98ca-45e9-8b8f-89127ff68cc0&quot;
+    &quot;accountId&quot;: &quot;bbd33b1a-b2ad-4323-96ad-b51d4135637c&quot;
   },
   &quot;editorReviewEnabled&quot;: false
 }</component>
@@ -51,60 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
     "Application.Main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "createquiz",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
-}}</component>
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/interface_adapter" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Avyuk\Documents\CSC207\team_project\src\main\java" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PreviewQuizUITest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="app.Main" />
-      <module name="TeamProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PreviewQuizUITest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="view.PreviewQuizUITest" />
-      <module name="TeamProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,17 +80,12 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.PreviewQuizUITest" />
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -142,51 +103,11 @@
       <workItem from="1762988803379" duration="9838000" />
       <workItem from="1763009984152" duration="1701000" />
       <workItem from="1763011720550" duration="6544000" />
+      <workItem from="1763250828121" duration="2619000" />
     </task>
-    <task id="LOCAL-00001" summary="ui">
-      <option name="closed" value="true" />
-      <created>1763171646299</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1763171646299</updated>
-    </task>
-    <task id="LOCAL-00002" summary="import classes">
-      <option name="closed" value="true" />
-      <created>1763173077953</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1763173077953</updated>
-    </task>
-    <task id="LOCAL-00003" summary="import classes">
-      <option name="closed" value="true" />
-      <created>1763173121513</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1763173121513</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="ui" />
-    <MESSAGE value="import classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="import classes" />
   </component>
 </project>
