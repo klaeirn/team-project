@@ -4,6 +4,8 @@ import use_cases.login.LoginUserDataAccessInterface;
 import use_cases.change_username.ChangeUsernameDataAccessInterface;
 import use_cases.create_quiz.CreateQuizDataAccessInterface; // TODO: remove this import when we have a different dao for quizzes
 import use_cases.create_quiz.UserDataAccessInterface; // TODO: remove this import when we have a different dao for quizzes
+import use_cases.quickstart.QuickstartUserDataAccessInterface;
+import use_cases.select_existing_quiz.SelectExistingQuizDataAccessInterface;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -14,7 +16,7 @@ import entities.UserFactory;
 import entities.Quiz; // TODO: remove this import when we have a different dao for quizzes
 
 public class FileUserDataAccessObject implements LoginUserDataAccessInterface, ChangeUsernameDataAccessInterface, 
-        CreateQuizDataAccessInterface, UserDataAccessInterface { // TODO: remove CreateQuizDataAccessInterface and UserDataAccessInterface when we have a different dao for quizzes
+        CreateQuizDataAccessInterface, UserDataAccessInterface, SelectExistingQuizDataAccessInterface, QuickstartUserDataAccessInterface { // TODO: remove CreateQuizDataAccessInterface and UserDataAccessInterface when we have a different dao for quizzes
 
     private final File csvFile;
     private UserFactory userFactory;

@@ -2,12 +2,17 @@ package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
 import entities.Quiz;
+import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
+import use_cases.select_existing_quiz.SelectExistingQuizInputData;
 
 public class SelectExistingQuizController {
     private final ViewManagerModel viewManagerModel;
+    private final SelectExistingQuizInputBoundary inputBoundary;
 
-    public SelectExistingQuizController(ViewManagerModel viewManagerModel) {
+    public SelectExistingQuizController(ViewManagerModel viewManagerModel,
+                                        SelectExistingQuizInputBoundary inputBoundary) {
         this.viewManagerModel = viewManagerModel;
+        this.inputBoundary = inputBoundary;
     }
 
     public void switchToSelectExistingQuiz() {
@@ -21,9 +26,8 @@ public class SelectExistingQuizController {
     }
 
     public void beginQuiz(Quiz quiz) {
-        // TODO: When use case is created, call the use case interactor here
-        // This will start the selected quiz
-        // For now, this is a placeholder that can be extended
+        // Delegate to the Select Existing Quiz use case; username resolved in interactor
+        inputBoundary.execute(new SelectExistingQuizInputData(quiz, null));
     }
 }
 

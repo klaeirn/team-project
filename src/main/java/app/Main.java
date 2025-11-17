@@ -14,12 +14,15 @@ public class Main {
                 .addQuizMenuView()
                 .addQuickstartView()
                 .addSelectExistingQuizView()
+                .addTakeQuizView()
                 .addChangeUsernameView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
                 .addQuickstartUseCase()
+                .addTakeQuizUseCase()
                 .addQuizMenuController()
                 .addSelectExistingQuizController()
+                .wireControllers()
                 .build();
 
         application.pack();

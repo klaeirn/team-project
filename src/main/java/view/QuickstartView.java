@@ -1,9 +1,9 @@
 package view;
 
 import interface_adapter.quickstart.QuickstartViewModel;
+import interface_adapter.quickstart.QuickstartState;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
-import data_access.QuizApiDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -107,14 +107,9 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
                 String difficulty = difficultyList.getSelectedValue();
                 String type = typeList.getSelectedValue();
 
-                String url = QuizApiDatabase.buildUrl(category, difficulty, type);
-
-                // For now, just show the URL. A future use case can fetch and start the quiz.
-                JOptionPane.showMessageDialog(QuickstartView.this,
-                        "Request URL:\n" + url,
-                        "Quickstart",
-                        JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Request URL: " + url);
+                if (quickstartController != null) {
+                    quickstartController.execute(category, difficulty, type);
+                }
             }
         });
 
@@ -150,6 +145,10 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
         this.quickstartController = quickstartController;
     }
 
+    public QuickstartController getQuickstartController() {
+        return quickstartController;
+    }
+
     public void setQuizMenuController(QuizMenuController quizMenuController) {
         this.quizMenuController = quizMenuController;
     }
@@ -161,6 +160,17 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        QuickstartState state = (QuickstartState) evt.getNewValue();
+        if (state != null) {
+            // Quiz generation is handled by the presenter - it will navigate directly to take quiz view
+            // No dialog needed - quiz starts automatically
+            if (state.getErrorMessage() != null && !state.getErrorMessage().isEmpty()) {
+                // Only show error messages
+                JOptionPane.showMessageDialog(QuickstartView.this,
+                        state.getErrorMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

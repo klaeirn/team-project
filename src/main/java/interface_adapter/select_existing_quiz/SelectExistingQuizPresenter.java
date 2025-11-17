@@ -1,10 +1,14 @@
 package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.take_quiz.TakeQuizController;
+import use_cases.select_existing_quiz.SelectExistingQuizOutputBoundary;
+import use_cases.select_existing_quiz.SelectExistingQuizOutputData;
 
-public class SelectExistingQuizPresenter {
+public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoundary {
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
     private final ViewManagerModel viewManagerModel;
+    private TakeQuizController takeQuizController; // wired in AppBuilder
 
     public SelectExistingQuizPresenter(SelectExistingQuizViewModel selectExistingQuizViewModel,
                                        ViewManagerModel viewManagerModel) {
@@ -12,11 +16,23 @@ public class SelectExistingQuizPresenter {
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void prepareSuccessView() {
-        // TODO: When use case is created, handle success case
-        // This might switch to a quiz taking view or show success message
+    public void setTakeQuizController(TakeQuizController takeQuizController) {
+        this.takeQuizController = takeQuizController;
     }
 
+    @Override
+    public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
+        // Navigate to Take Quiz view
+        viewManagerModel.setState("take quiz");
+        viewManagerModel.firePropertyChange();
+
+        // Start the take-quiz flow
+        if (takeQuizController != null) {
+            takeQuizController.execute(outputData.getQuiz(), outputData.getUsername());
+        }
+    }
+
+    @Override
     public void prepareFailView(String error) {
         final SelectExistingQuizState state = selectExistingQuizViewModel.getState();
         state.setErrorMessage(error);
