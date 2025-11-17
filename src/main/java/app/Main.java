@@ -7,8 +7,8 @@ public class Main {
 
         AppBuilder appBuilder = new AppBuilder();
         JFrame application = appBuilder
-                //.addCreateQuizView() uncomment to view create quiz view
-                //.addCreateQuizUseCase() uncomment to view create quiz use case
+                //.addCreateQuizView()
+                //.addCreateQuizUseCase()
                 .addLoginView()
                 .addLoggedInView()
                 .addQuizMenuView()
