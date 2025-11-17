@@ -2,6 +2,7 @@ package data_access;
 
 import entities.Quiz;
 import org.json.JSONObject;
+import use_cases.share_quiz.ShareQuizDataAccessInterface;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,9 +12,9 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class HashtoQuizDataAccessObject {
+public class HashtoQuizDataAccessObject implements ShareQuizDataAccessInterface {
 
-    private final FileQuizDataAccessObject fileQuizDataAccessObject =  new FileQuizDataAccessObject();
+    private final FileQuizDataAccessObject fileQuizDataAccessObject =  new FileQuizDataAccessObject("quizzes.json");
     private final Path hashPath = Path.of("hashtoquiz.json");
 
     public String makeHash(Quiz quiz) {

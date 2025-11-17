@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_username.ChangeUsernameController;
+import interface_adapter.create_quiz.CreateQuizController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
@@ -30,8 +31,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     private final JButton changeUsername;
     private final JButton takeQuizButton;
+    private final JButton createQuizButton;
     private ChangeUsernameController  changeUsernameController;
     private QuizMenuController quizMenuController;
+    private CreateQuizController createQuizController;
 
     // , ViewManagerModel viewManagerModel
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
@@ -49,8 +52,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         final JPanel buttons = new JPanel();
         this.changeUsername = new JButton("Change Username");
         this.takeQuizButton = new JButton("Take Quiz");
+        this.createQuizButton = new JButton("Create Quiz");
         buttons.add(takeQuizButton);
         buttons.add(changeUsername);
+        buttons.add(createQuizButton);
 
         changeUsername.addActionListener(this);
 
@@ -74,6 +79,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 }
             }
         });
+        createQuizButton.addActionListener(new ActionListener() {
+                                             public void actionPerformed(ActionEvent evt) {
+                                                 if (evt.getSource().equals(createQuizButton)) {
+                                                     createQuizController.switchToCreateQuizView();
+                                                 }
+                                             }
+                                         }
+        );
 
         this.add(title);
 //        this.add(usernameInfo);
@@ -124,6 +137,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public void setQuizMenuController(QuizMenuController quizMenuController) {
         this.quizMenuController = quizMenuController;
+    }
+
+    public void setCreateQuizController(CreateQuizController createQuizController) {
+        this.createQuizController = createQuizController;
     }
 
 }

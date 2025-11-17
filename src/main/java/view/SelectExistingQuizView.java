@@ -4,6 +4,7 @@ import interface_adapter.select_existing_quiz.SelectExistingQuizController;
 import interface_adapter.select_existing_quiz.SelectExistingQuizState;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.share_quiz.ShareQuizController;
 import entities.Quiz;
 
 import javax.swing.*;
@@ -22,11 +23,13 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
     private SelectExistingQuizController selectExistingQuizController;
     private QuizMenuController quizMenuController;
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
+    private ShareQuizController shareQuizController;
 
     private final JList<String> quizList;
     private final JScrollPane quizScrollPane;
     private final JButton beginButton;
     private final JButton backButton;
+    private final JButton shareButton;
     private final JLabel errorLabel;
     private List<Quiz> quizzes;
 
@@ -53,14 +56,24 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         final JPanel buttons = new JPanel();
         beginButton = new JButton("Begin");
         backButton = new JButton("Back");
-        buttons.add(beginButton);
-        buttons.add(backButton);
+        shareButton = new JButton("Share Quiz");
+
+        JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftButtons.add(beginButton);
+        leftButtons.add(backButton);
+
+        JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightButtons.add(shareButton);
+
+        buttons.add(leftButtons, BorderLayout.WEST);
+        buttons.add(rightButtons, BorderLayout.EAST);
 
         beginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = quizList.getSelectedIndex();
-                if (selectedIndex >= 0 && quizzes != null && selectedIndex < quizzes.size()) {
+                boolean exactlyOneSelected = selectedIndex != -1 && quizzes != null && selectedIndex < quizzes.size();
+                if (exactlyOneSelected) {
                     Quiz selectedQuiz = quizzes.get(selectedIndex);
                     if (selectExistingQuizController != null) {
                         selectExistingQuizController.beginQuiz(selectedQuiz);
@@ -84,6 +97,29 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
                 }
             }
         });
+        shareButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = quizList.getSelectedIndex();
+                boolean exactlyOneSelected = selectedIndex != -1 && quizzes != null && selectedIndex < quizzes.size();
+                if (exactlyOneSelected) {
+                    Quiz selectedQuiz = quizzes.get(selectedIndex);
+                    if (shareQuizController != null) {
+                        shareQuizController.execute(selectedQuiz);
+                    } else {
+                        JOptionPane.showMessageDialog(SelectExistingQuizView.this,
+                                "Sharing is not available right now.",
+                                "Share Quiz",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(SelectExistingQuizView.this,
+                            "Please select a quiz to share.",
+                            "No Quiz Selected",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -101,6 +137,10 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
 
     public void setSelectExistingQuizController(SelectExistingQuizController controller) {
         this.selectExistingQuizController = controller;
+    }
+
+    public void setShareQuizController(ShareQuizController controller) {
+        this.shareQuizController = controller;
     }
 
     public void setQuizMenuController(QuizMenuController controller) {

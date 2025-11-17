@@ -45,5 +45,14 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
         CreateQuizOutputData outputData = new CreateQuizOutputData(quizName, category, creatorUsername);
         createQuizPresenter.prepareSuccessView(outputData);
     }
+
+    @Override
+    public void switchToCreateQuizView() {
+        createQuizPresenter.switchToCreateQuizView();
+    }
+
+    public void switchToLoggedInView() {
+        createQuizPresenter.switchToLoggedInView();
+    }
 }
 

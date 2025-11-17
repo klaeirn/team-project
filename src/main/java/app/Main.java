@@ -7,8 +7,6 @@ public class Main {
 
         AppBuilder appBuilder = new AppBuilder();
         JFrame application = appBuilder
-                //.addCreateQuizView()
-                //.addCreateQuizUseCase()
                 .addLoginView()
                 .addLoggedInView()
                 .addQuizMenuView()
@@ -16,10 +14,13 @@ public class Main {
                 .addSelectExistingQuizView()
                 .addTakeQuizView()
                 .addChangeUsernameView()
+                .addShareQuizView()
+                .addCreateQuizView()
                 .addLoginUseCase()
                 .addChangeUsernameUseCase()
                 .addQuickstartUseCase()
                 .addTakeQuizUseCase()
+                .addCreateQuizUseCase()
                 .addQuizMenuController()
                 .addSelectExistingQuizController()
                 .wireControllers()

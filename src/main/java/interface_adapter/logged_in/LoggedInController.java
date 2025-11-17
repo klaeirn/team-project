@@ -4,16 +4,13 @@ import use_cases.change_username.ChangeUsernameInputData;
 
 public class LoggedInController {
 
-    private final ChangeUsernameInputBoundary changeUsernameUsecaseInteractor;
-
-    public LoggedInController(ChangeUsernameInputBoundary changeUsernameInputBoundary) {
-        this.changeUsernameUsecaseInteractor = changeUsernameInputBoundary;
+    public LoggedInController() {
+        return;
     }
 
-    public void execute(String username){
-        final ChangeUsernameInputData changeUsernameInputData = new ChangeUsernameInputData(username);
-
-        changeUsernameUsecaseInteractor.execute(changeUsernameInputData);
+    public void switchToLoggedInView(){
+        System.out.println("Switching to logged in");
     }
+
 
 }

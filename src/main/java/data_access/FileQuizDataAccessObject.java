@@ -22,7 +22,15 @@ import java.util.List;
 
 public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface {
 
-    private final Path quizPath = Path.of("quizzes.json");
+    private final Path quizPath;
+    private final QuizFactory quizFactory;
+
+    public FileQuizDataAccessObject(String quizPath) {
+        this.quizPath = Path.of(quizPath);
+        this.quizFactory = new QuizFactory();
+
+    }
+
 
     @Override
     public void saveUserQuiz(Quiz quiz) {
@@ -53,7 +61,6 @@ public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface {
     }
 
     public Quiz getQuiz(String quizName, String username) {
-        QuizFactory quizFactory = new QuizFactory();
 
         try {
             String jsonStr = Files.readString(quizPath);

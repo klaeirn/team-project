@@ -43,4 +43,5 @@ public class ChangeUsernamePresenter implements ChangeUsernameOutputBoundary{
         viewManagerModel.setState(changeUsernameViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
+
 }

@@ -3,6 +3,7 @@ package view;
 import interface_adapter.create_quiz.CreateQuizController;
 import interface_adapter.create_quiz.CreateQuizState;
 import interface_adapter.create_quiz.CreateQuizViewModel;
+import interface_adapter.logged_in.LoggedInController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -98,7 +99,14 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
                 }
         );
         
-        returnHome.addActionListener(this);
+        returnHome.addActionListener(new ActionListener() {
+                                          public void actionPerformed(ActionEvent evt) {
+                                              if (evt.getSource().equals(returnHome)) {
+                                                  createQuizController.switchToLoggedInView();
+                                              }
+                                          }
+                                      }
+        );
 
         quizTitleField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
@@ -262,5 +270,6 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
     public void setCreateQuizController(CreateQuizController createQuizController) {
         this.createQuizController = createQuizController;
     }
+
 }
 

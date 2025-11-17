@@ -19,5 +19,13 @@ public class CreateQuizController {
 
         createQuizUseCaseInteractor.execute(createQuizInputData);
     }
+
+    public void switchToCreateQuizView() {
+        createQuizUseCaseInteractor.switchToCreateQuizView();
+    }
+
+    public void switchToLoggedInView() {
+        createQuizUseCaseInteractor.switchToLoggedInView();
+    }
 }
 
