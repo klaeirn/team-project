@@ -36,6 +36,9 @@ import interface_adapter.share_quiz.ShareQuizViewModel;
 import interface_adapter.take_quiz.TakeQuizController;
 import interface_adapter.take_quiz.TakeQuizPresenter;
 import interface_adapter.take_quiz.TakeQuizViewModel;
+import interface_adapter.view_results.ViewResultsController;
+import interface_adapter.view_results.ViewResultsPresenter;
+import interface_adapter.view_results.ViewResultsViewModel;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
@@ -58,6 +61,10 @@ import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
+import use_cases.view_results.ViewResultsDataAccessInterface;
+import use_cases.view_results.ViewResultsInputBoundary;
+import use_cases.view_results.ViewResultsInteractor;
+import use_cases.view_results.ViewResultsOutputBoundary;
 
 import view.*;
 
@@ -99,6 +106,9 @@ public class AppBuilder {
     private ShareQuizPresenter shareQuizPresenter;
     private CreateQuizViewModel createQuizViewModel;
     private CreateQuizView createQuizView;
+    private ViewResultsViewModel viewResultsViewModel;
+    private ResultsView resultsView;
+    private ViewResultsController viewResultsController;
 
 
     public AppBuilder() {
@@ -158,6 +168,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addResultsView() {
+        viewResultsViewModel = new ViewResultsViewModel();
+        resultsView = new ResultsView(viewResultsViewModel);
+        cardPanel.add(resultsView, resultsView.getViewName());
+        return this;
+    }
+
     public AppBuilder addQuickstartUseCase() {
         quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
         final QuickstartInputBoundary interactor = new QuickstartInteractor(
@@ -187,6 +204,25 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addViewResultsUseCase() {
+        final ViewResultsOutputBoundary viewResultsPresenter = new ViewResultsPresenter(viewResultsViewModel, viewManagerModel);
+        // TODO Add compatibility with existing quiz DAO (FileQuizDataAccessObject) so that we can view results for existing quizzes too.
+        final ViewResultsDataAccessInterface viewResultsDAO = quizApiDataAccessObject;
+
+        final ViewResultsInputBoundary viewResultsInteractor =
+                new ViewResultsInteractor(viewResultsPresenter, viewResultsDAO);
+
+        viewResultsController = new ViewResultsController(viewResultsInteractor);
+
+        if (resultsView != null) {
+            resultsView.setViewResultsController(viewResultsController);
+            resultsView.setViewManagerModel(viewManagerModel);
+            viewResultsViewModel.addPropertyChangeListener(resultsView);
+        }
+
+        return this;
+    }
+
     public AppBuilder wireControllers() {
         if (quickstartPresenter != null && takeQuizController != null) {
             quickstartPresenter.setTakeQuizController(takeQuizController);
@@ -194,6 +230,9 @@ public class AppBuilder {
 
         if (selectExistingQuizPresenter != null && takeQuizController != null) {
             selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
+        }
+        if (takeQuizView != null && viewResultsController != null) {
+            takeQuizView.setViewResultsController(viewResultsController);
         }
 
         return this;

@@ -27,5 +27,8 @@ public class TakeQuizController {
     public void setAnswer(int questionIndex, String answer) {
         takeQuizUseCaseInteractor.setAnswer(questionIndex, answer);
     }
+    public void submitQuiz() {
+        takeQuizUseCaseInteractor.submitQuiz();
+    }
 }
 

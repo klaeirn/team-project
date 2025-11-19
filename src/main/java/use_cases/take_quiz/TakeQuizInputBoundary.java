@@ -5,5 +5,6 @@ public interface TakeQuizInputBoundary {
     void nextQuestion();
     void previousQuestion();
     void setAnswer(int questionIndex, String answer);
+    void submitQuiz();
 }
 

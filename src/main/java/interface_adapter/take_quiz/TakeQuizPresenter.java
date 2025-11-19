@@ -24,6 +24,14 @@ public class TakeQuizPresenter implements TakeQuizOutputBoundary {
         state.setScore(null);
         state.setErrorMessage(null);
 
+        // Store quiz and username if not already set (first question)
+        if (state.getQuiz() == null && outputData.getQuiz() != null) {
+            state.setQuiz(outputData.getQuiz());
+        }
+        if (state.getUsername() == null && outputData.getUsername() != null) {
+            state.setUsername(outputData.getUsername());
+        }
+
         String currentAnswer = outputData.getUserAnswers().get(outputData.getCurrentQuestionIndex() - 1);
         state.setSelectedAnswer(currentAnswer);
 

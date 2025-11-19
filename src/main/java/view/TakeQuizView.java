@@ -23,6 +23,7 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
     private TakeQuizController takeQuizController;
     private final TakeQuizViewModel takeQuizViewModel;
     private ViewManagerModel viewManagerModel;
+    private interface_adapter.view_results.ViewResultsController viewResultsController;
 
     private final JLabel questionLabel;
     private final JPanel optionsPanel;
@@ -86,9 +87,16 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                 if (takeQuizController != null) {
                     saveCurrentAnswer();
                     TakeQuizState state = takeQuizViewModel.getState();
-                    // Submit functionality will be implemented later
-                    // For now, just navigate to next question if available
-                    if (!state.isLastQuestion()) {
+                    if (state.isLastQuestion()) {
+                        // Submit quiz and navigate to results view
+                        takeQuizController.submitQuiz();
+                        // Call ViewResultsController to show results
+                        if (viewResultsController != null && state.getQuiz() != null && state.getUsername() != null) {
+                            String quizName = state.getQuiz().getName();
+                            String creatorUsername = state.getQuiz().getCreatorUsername();
+                            viewResultsController.execute(quizName, creatorUsername, state.getUsername(), state.getUserAnswers());
+                        }
+                    } else {
                         takeQuizController.nextQuestion();
                     }
                 }
@@ -238,8 +246,14 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         }
 
         previousButton.setEnabled(state.getCurrentQuestionIndex() > 1);
-        nextButton.setEnabled(!state.isLastQuestion());
-        nextButton.setText("Next");
+
+        if (state.isLastQuestion()) {
+            nextButton.setEnabled(true);
+            nextButton.setText("Submit");
+        } else {
+            nextButton.setEnabled(true);
+            nextButton.setText("Next");
+        }
 
         optionsPanel.revalidate();
         optionsPanel.repaint();
@@ -255,6 +269,10 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
 
     public void setViewManagerModel(ViewManagerModel viewManagerModel) {
         this.viewManagerModel = viewManagerModel;
+    }
+
+    public void setViewResultsController(interface_adapter.view_results.ViewResultsController viewResultsController) {
+        this.viewResultsController = viewResultsController;
     }
 
     @Override
