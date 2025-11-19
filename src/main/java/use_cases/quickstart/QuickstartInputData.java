@@ -4,11 +4,13 @@ public class QuickstartInputData {
     private final String category;
     private final String difficulty;
     private final String type;
+    private final String username;
 
-    public QuickstartInputData(String category, String difficulty, String type) {
+    public QuickstartInputData(String category, String difficulty, String type, String username) {
         this.category = category;
         this.difficulty = difficulty;
         this.type = type;
+        this.username = username;
     }
 
     public String getCategory() {
@@ -21,6 +23,10 @@ public class QuickstartInputData {
 
     public String getType() {
         return type;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
 

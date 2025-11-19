@@ -74,10 +74,6 @@ public class QuizMenuView extends JPanel implements ActionListener, PropertyChan
         this.quizMenuController = quizMenuController;
     }
 
-    public void setSelectExistingQuizController(SelectExistingQuizController selectExistingQuizController) {
-        this.selectExistingQuizController = selectExistingQuizController;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());

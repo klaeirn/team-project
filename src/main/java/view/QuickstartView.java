@@ -4,6 +4,7 @@ import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quickstart.QuickstartState;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
     private final String viewName = "quickstart";
     private QuickstartController quickstartController;
     private QuizMenuController quizMenuController;
+    private LoggedInViewModel loggedInViewModel;
 
     private final JList<String> categoryList;
     private final JList<String> difficultyList;
@@ -106,9 +108,13 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
                 String category = categoryList.getSelectedValue();
                 String difficulty = difficultyList.getSelectedValue();
                 String type = typeList.getSelectedValue();
+                String username = null;
+                if (loggedInViewModel != null && loggedInViewModel.getState() != null) {
+                    username = loggedInViewModel.getState().getUsername();
+                }
 
                 if (quickstartController != null) {
-                    quickstartController.execute(category, difficulty, type);
+                    quickstartController.execute(category, difficulty, type, username);
                 }
             }
         });
@@ -153,6 +159,10 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
         this.quizMenuController = quizMenuController;
     }
 
+    public void setLoggedInViewModel(LoggedInViewModel loggedInViewModel) {
+        this.loggedInViewModel = loggedInViewModel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());
@@ -162,10 +172,7 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         QuickstartState state = (QuickstartState) evt.getNewValue();
         if (state != null) {
-            // Quiz generation is handled by the presenter - it will navigate directly to take quiz view
-            // No dialog needed - quiz starts automatically
             if (state.getErrorMessage() != null && !state.getErrorMessage().isEmpty()) {
-                // Only show error messages
                 JOptionPane.showMessageDialog(QuickstartView.this,
                         state.getErrorMessage(),
                         "Error",

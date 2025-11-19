@@ -7,12 +7,9 @@ import java.util.List;
 
 public class SelectExistingQuizInteractor implements SelectExistingQuizInputBoundary {
 
-    private final SelectExistingQuizDataAccessInterface currentUserProvider;
     private final SelectExistingQuizOutputBoundary presenter;
 
-    public SelectExistingQuizInteractor(SelectExistingQuizDataAccessInterface currentUserProvider,
-                                        SelectExistingQuizOutputBoundary presenter) {
-        this.currentUserProvider = currentUserProvider;
+    public SelectExistingQuizInteractor(SelectExistingQuizOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
@@ -31,8 +28,9 @@ public class SelectExistingQuizInteractor implements SelectExistingQuizInputBoun
         }
 
         String username = inputData.getUsername();
-        if (username == null) {
-            username = currentUserProvider.getCurrentUsername();
+        if (username == null || username.isEmpty()) {
+            presenter.prepareFailView("No username available. Please log in again.");
+            return;
         }
 
         presenter.prepareSuccessView(new SelectExistingQuizOutputData(quiz, username));

@@ -4,7 +4,12 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.take_quiz.TakeQuizController;
 import interface_adapter.take_quiz.TakeQuizState;
 import interface_adapter.take_quiz.TakeQuizViewModel;
+import interface_adapter.quickstart.QuickstartViewModel;
+import interface_adapter.quickstart.QuickstartState;
+import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
+import interface_adapter.select_existing_quiz.SelectExistingQuizState;
 import entities.Question;
+import entities.Quiz;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +28,8 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
     private TakeQuizController takeQuizController;
     private final TakeQuizViewModel takeQuizViewModel;
     private ViewManagerModel viewManagerModel;
+    private QuickstartViewModel quickstartViewModel;
+    private SelectExistingQuizViewModel selectExistingQuizViewModel;
 
     private final JLabel questionLabel;
     private final JPanel optionsPanel;
@@ -86,8 +93,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                 if (takeQuizController != null) {
                     saveCurrentAnswer();
                     TakeQuizState state = takeQuizViewModel.getState();
-                    // Submit functionality will be implemented later
-                    // For now, just navigate to next question if available
                     if (!state.isLastQuestion()) {
                         takeQuizController.nextQuestion();
                     }
@@ -141,7 +146,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.add(contentPanel, BorderLayout.NORTH);
 
-        // Scroll pane for long content
         JScrollPane scrollPane = new JScrollPane(wrapper);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -255,6 +259,14 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
 
     public void setViewManagerModel(ViewManagerModel viewManagerModel) {
         this.viewManagerModel = viewManagerModel;
+    }
+
+    public void setQuickstartViewModel(QuickstartViewModel quickstartViewModel) {
+        this.quickstartViewModel = quickstartViewModel;
+    }
+
+    public void setSelectExistingQuizViewModel(SelectExistingQuizViewModel selectExistingQuizViewModel) {
+        this.selectExistingQuizViewModel = selectExistingQuizViewModel;
     }
 
     @Override

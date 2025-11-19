@@ -14,8 +14,8 @@ public class QuickstartController {
         inputBoundary.backToQuizMenu();
     }
 
-    public void execute(String category, String difficulty, String type) {
-        QuickstartInputData inputData = new QuickstartInputData(category, difficulty, type);
+    public void execute(String category, String difficulty, String type, String username) {
+        QuickstartInputData inputData = new QuickstartInputData(category, difficulty, type, username);
         inputBoundary.execute(inputData);
     }
 
