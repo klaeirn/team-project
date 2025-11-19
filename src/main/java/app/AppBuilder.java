@@ -186,11 +186,13 @@ public class AppBuilder {
             takeQuizViewModel.addPropertyChangeListener(takeQuizView);
         }
 
-        // Allow Quickstart flow to immediately start the Take Quiz use case upon success
         if (quickstartPresenter != null) {
             quickstartPresenter.setTakeQuizController(takeQuizController);
         }
 
+        if (selectExistingQuizPresenter != null) {
+            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
+        }
         return this;
     }
 

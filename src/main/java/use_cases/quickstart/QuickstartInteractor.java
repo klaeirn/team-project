@@ -30,10 +30,8 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
                     inputData.getType()
             );
 
-            // Username is provided by the input data now
             String username = inputData.getUsername();
 
-            // Prepare success view with quiz and username
             QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);
             presenter.prepareSuccessView(outputData);
         } catch (IOException e) {

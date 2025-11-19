@@ -32,7 +32,6 @@ public class QuickstartPresenter implements QuickstartOutputBoundary {
         quickstartViewModel.setState(state);
         quickstartViewModel.firePropertyChange();
 
-        // Initialize the Take Quiz flow immediately with the fetched quiz
         if (takeQuizController != null) {
             takeQuizController.execute(outputData.getQuiz(), outputData.getUsername());
         }
