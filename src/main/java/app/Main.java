@@ -21,9 +21,8 @@ public class Main {
                 .addQuickstartUseCase()
                 .addTakeQuizUseCase()
                 .addCreateQuizUseCase()
-                .addQuizMenuController()
-                .addSelectExistingQuizController()
-                .wireControllers()
+                .addQuizMenuUseCase()
+                .addSelectExistingQuizUsecase()
                 .build();
 
         application.pack();

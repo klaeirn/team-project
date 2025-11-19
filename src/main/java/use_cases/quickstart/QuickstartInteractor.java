@@ -1,6 +1,5 @@
 package use_cases.quickstart;
 
-import data_access.QuizApiDatabase;
 import entities.Quiz;
 
 import java.io.IOException;
@@ -9,14 +8,11 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
 
     private final QuickstartOutputBoundary presenter;
     private final QuickstartDataAccessInterface dataAccessObject;
-    private final QuickstartUserDataAccessInterface currentUserProvider;
 
     public QuickstartInteractor(QuickstartOutputBoundary presenter,
-                                QuickstartDataAccessInterface dataAccessObject,
-                                QuickstartUserDataAccessInterface currentUserProvider) {
+                                QuickstartDataAccessInterface dataAccessObject) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
-        this.currentUserProvider = currentUserProvider;
     }
 
     @Override
@@ -27,18 +23,15 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     @Override
     public void execute(QuickstartInputData inputData) {
         try {
-            // Build the URL from the input data
-            String url = QuizApiDatabase.buildUrl(
+            // Fetch quiz from API using category, difficulty, and type
+            Quiz quiz = dataAccessObject.fetchQuiz(
                     inputData.getCategory(),
                     inputData.getDifficulty(),
                     inputData.getType()
             );
 
-            // Fetch quiz from API
-            Quiz quiz = dataAccessObject.fetchQuizFromUrl(url);
-
-            // Resolve current username (taker). Always present per specification.
-            String username = currentUserProvider.getCurrentUsername();
+            // Username is provided by the input data now
+            String username = inputData.getUsername();
 
             // Prepare success view with quiz and username
             QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);

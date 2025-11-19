@@ -25,9 +25,8 @@ public class SelectExistingQuizController {
         viewManagerModel.firePropertyChange();
     }
 
-    public void beginQuiz(Quiz quiz) {
-        // Delegate to the Select Existing Quiz use case; username resolved in interactor
-        inputBoundary.execute(new SelectExistingQuizInputData(quiz, null));
+    public void beginQuiz(Quiz quiz, String username) {
+        inputBoundary.execute(new SelectExistingQuizInputData(quiz, username));
     }
 }
 

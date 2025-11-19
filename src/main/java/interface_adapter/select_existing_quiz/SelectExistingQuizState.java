@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class SelectExistingQuizState {
     private List<Quiz> availableQuizzes = new ArrayList<>();
     private Quiz selectedQuiz;
+    private String username;
     private String errorMessage;
 
     public List<Quiz> getAvailableQuizzes() {
@@ -23,6 +24,14 @@ public class SelectExistingQuizState {
 
     public void setSelectedQuiz(Quiz quiz) {
         this.selectedQuiz = quiz;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getErrorMessage() {

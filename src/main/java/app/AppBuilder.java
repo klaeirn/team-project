@@ -162,13 +162,13 @@ public class AppBuilder {
         quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
         final QuickstartInputBoundary interactor = new QuickstartInteractor(
                 quickstartPresenter,
-                quizApiDataAccessObject,
-                userDataAccessObject // implements SelectExistingQuizDataAccessInterface for current username
+                quizApiDataAccessObject
         );
         final QuickstartController controller = new QuickstartController(interactor);
         if (quickstartView != null) {
             quickstartView.setQuickstartController(controller);
             quickStartViewModel.addPropertyChangeListener(quickstartView);
+            quickstartView.setLoggedInViewModel(loggedInViewModel);
         }
         return this;
     }
@@ -181,19 +181,14 @@ public class AppBuilder {
         if (takeQuizView != null) {
             takeQuizView.setTakeQuizController(takeQuizController);
             takeQuizView.setViewManagerModel(viewManagerModel);
+            takeQuizView.setQuickstartViewModel(quickStartViewModel);
+            takeQuizView.setSelectExistingQuizViewModel(selectExistingQuizViewModel);
             takeQuizViewModel.addPropertyChangeListener(takeQuizView);
         }
 
-        return this;
-    }
-
-    public AppBuilder wireControllers() {
-        if (quickstartPresenter != null && takeQuizController != null) {
+        // Allow Quickstart flow to immediately start the Take Quiz use case upon success
+        if (quickstartPresenter != null) {
             quickstartPresenter.setTakeQuizController(takeQuizController);
-        }
-
-        if (selectExistingQuizPresenter != null && takeQuizController != null) {
-            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
         }
 
         return this;
@@ -247,7 +242,7 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addQuizMenuController() {
+    public AppBuilder addQuizMenuUseCase() {
         final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
         if (loggedInView != null) {
             loggedInView.setQuizMenuController(quizMenuController);
@@ -268,11 +263,9 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addSelectExistingQuizController() {
-        // Build Select Existing Quiz use case stack
+    public AppBuilder addSelectExistingQuizUsecase() {
         selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, viewManagerModel);
         final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
-                userDataAccessObject,
                 selectExistingQuizPresenter);
 
         ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
@@ -284,19 +277,13 @@ public class AppBuilder {
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
             selectExistingQuizViewModel.addPropertyChangeListener(selectExistingQuizView);
-        }
-        if (quizMenuView != null) {
-            quizMenuView.setSelectExistingQuizController(selectExistingQuizController);
-        }
-        if (selectExistingQuizView != null) {
-            selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
-            selectExistingQuizView.setShareQuizController(shareQuizController);
+            selectExistingQuizView.setLoggedInViewModel(loggedInViewModel);
         }
         return this;
     }
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Trivia Quiz Application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

@@ -1,14 +1,15 @@
 package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.take_quiz.TakeQuizController;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputData;
+import entities.Quiz;
+
+import java.util.List;
 
 public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoundary {
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
     private final ViewManagerModel viewManagerModel;
-    private TakeQuizController takeQuizController; // wired in AppBuilder
 
     public SelectExistingQuizPresenter(SelectExistingQuizViewModel selectExistingQuizViewModel,
                                        ViewManagerModel viewManagerModel) {
@@ -16,20 +17,15 @@ public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoun
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void setTakeQuizController(TakeQuizController takeQuizController) {
-        this.takeQuizController = takeQuizController;
-    }
-
     @Override
     public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
-        // Navigate to Take Quiz view
+        final SelectExistingQuizState state = selectExistingQuizViewModel.getState();
+        state.setSelectedQuiz(outputData.getQuiz());
+        state.setUsername(outputData.getUsername());
+        selectExistingQuizViewModel.firePropertyChange();
+
         viewManagerModel.setState("take quiz");
         viewManagerModel.firePropertyChange();
-
-        // Start the take-quiz flow
-        if (takeQuizController != null) {
-            takeQuizController.execute(outputData.getQuiz(), outputData.getUsername());
-        }
     }
 
     @Override
@@ -39,7 +35,7 @@ public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoun
         selectExistingQuizViewModel.firePropertyChange();
     }
 
-    public void prepareQuizzesView(java.util.List<entities.Quiz> quizzes) {
+    public void prepareQuizzesView(List<Quiz> quizzes) {
         final SelectExistingQuizState state = selectExistingQuizViewModel.getState();
         state.setAvailableQuizzes(quizzes);
         state.setErrorMessage(null);

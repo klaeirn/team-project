@@ -30,7 +30,8 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface {
     }
 
     @Override
-    public Quiz fetchQuizFromUrl(String urlString) throws IOException {
+    public Quiz fetchQuiz(String categoryDisplay, String difficultyDisplay, String typeDisplay) throws IOException {
+        String urlString = QuizApiDatabase.buildUrl(categoryDisplay, difficultyDisplay, typeDisplay);
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();

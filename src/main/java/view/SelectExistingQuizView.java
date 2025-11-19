@@ -5,6 +5,7 @@ import interface_adapter.select_existing_quiz.SelectExistingQuizState;
 import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.share_quiz.ShareQuizController;
+import interface_adapter.logged_in.LoggedInViewModel;
 import entities.Quiz;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
     private QuizMenuController quizMenuController;
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
     private ShareQuizController shareQuizController;
+    private LoggedInViewModel loggedInViewModel;
 
     private final JList<String> quizList;
     private final JScrollPane quizScrollPane;
@@ -40,7 +42,6 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         final JLabel title = new JLabel("Select Existing Quiz");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Initialize quiz list with JScrollPane
         quizList = new JList<>(new String[]{"No quizzes available"});
         quizList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         quizList.setVisibleRowCount(10);
@@ -76,7 +77,11 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
                 if (exactlyOneSelected) {
                     Quiz selectedQuiz = quizzes.get(selectedIndex);
                     if (selectExistingQuizController != null) {
-                        selectExistingQuizController.beginQuiz(selectedQuiz);
+                        String username = null;
+                        if (loggedInViewModel != null && loggedInViewModel.getState() != null) {
+                            username = loggedInViewModel.getState().getUsername();
+                        }
+                        selectExistingQuizController.beginQuiz(selectedQuiz, username);
                     }
                 } else {
                     JOptionPane.showMessageDialog(SelectExistingQuizView.this,
@@ -145,6 +150,10 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
 
     public void setQuizMenuController(QuizMenuController controller) {
         this.quizMenuController = controller;
+    }
+
+    public void setLoggedInViewModel(LoggedInViewModel loggedInViewModel) {
+        this.loggedInViewModel = loggedInViewModel;
     }
 
     @Override

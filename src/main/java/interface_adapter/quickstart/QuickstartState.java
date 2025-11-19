@@ -8,6 +8,7 @@ public class QuickstartState {
     private String selectedDifficulty;
     private String selectedType;
     private Quiz quiz;
+    private String username;
     private String errorMessage;
 
     public QuickstartState(QuickstartState copy) {
@@ -60,6 +61,14 @@ public class QuickstartState {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getErrorMessage() {
