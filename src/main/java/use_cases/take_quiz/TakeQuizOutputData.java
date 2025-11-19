@@ -1,6 +1,7 @@
 package use_cases.take_quiz;
 
 import entities.Question;
+import entities.Quiz;
 import java.util.Map;
 
 public class TakeQuizOutputData {
@@ -11,10 +12,13 @@ public class TakeQuizOutputData {
     private final boolean isLastQuestion;
     private final Integer score;
     private final String errorMessage;
+    private final Quiz quiz;
+    private final String username;
 
     public TakeQuizOutputData(Question currentQuestion, int currentQuestionIndex, 
-                             int totalQuestions, Map<Integer, String> userAnswers, 
-                             boolean isLastQuestion, Integer score, String errorMessage) {
+                             int totalQuestions, Map<Integer, String> userAnswers,
+                              boolean isLastQuestion, Integer score, String errorMessage,
+                              Quiz quiz, String username) {
         this.currentQuestion = currentQuestion;
         this.currentQuestionIndex = currentQuestionIndex;
         this.totalQuestions = totalQuestions;
@@ -22,6 +26,8 @@ public class TakeQuizOutputData {
         this.isLastQuestion = isLastQuestion;
         this.score = score;
         this.errorMessage = errorMessage;
+        this.quiz = quiz;
+        this.username = username;
     }
 
     public Question getCurrentQuestion() {
@@ -50,6 +56,14 @@ public class TakeQuizOutputData {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
 
