@@ -1,7 +1,5 @@
 package use_cases.take_shared_quiz;
 
-import entities.Quiz;
-
 
 public class TakeSharedQuizInputData {
     private final String hash;
