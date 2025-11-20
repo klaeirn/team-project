@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="added data access interface and boundary and input data for take shared quiz">
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case">
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/take_shared_quiz/TakeSharedQuizOutputData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763642222900</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case">
+      <option name="closed" value="true" />
+      <created>1763656269258</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763656269258</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +140,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added data access interface and boundary and input data for take shared quiz" />
-    <option name="LAST_COMMIT_MESSAGE" value="added data access interface and boundary and input data for take shared quiz" />
+    <MESSAGE value="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case" />
+    <option name="LAST_COMMIT_MESSAGE" value="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case" />
   </component>
 </project>
