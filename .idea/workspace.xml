@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case">
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizViewModel.java" afterDir="false" />
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="presenter, controller...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +129,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763656269258</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1">
+      <option name="closed" value="true" />
+      <created>1763659413018</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763659413018</updated>
+    </task>
+    <task id="LOCAL-00005" summary="presenter, controller...">
+      <option name="closed" value="true" />
+      <created>1763721621145</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763721621145</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +154,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added data access interface and boundary and input data for take shared quiz" />
     <MESSAGE value="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case" />
-    <option name="LAST_COMMIT_MESSAGE" value="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case" />
+    <MESSAGE value="1" />
+    <MESSAGE value="presenter, controller..." />
+    <option name="LAST_COMMIT_MESSAGE" value="presenter, controller..." />
   </component>
 </project>
