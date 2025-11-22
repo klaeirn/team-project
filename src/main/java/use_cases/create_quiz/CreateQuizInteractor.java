@@ -24,10 +24,28 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
     public void execute(CreateQuizInputData createQuizInputData) {
         String quizName = createQuizInputData.getQuizName();
         String category = createQuizInputData.getCategory();
-        String creatorUsername = userDataAccessObject.getCurrentUsername();
         List<List<String>> questionsDetails = createQuizInputData.getQuestionsDetails();
         List<String> correctAnswers = createQuizInputData.getCorrectAnswers();
         
+        if (quizName == null || quizName.trim().isEmpty()) {
+            createQuizPresenter.prepareFailView("Quiz title cannot be empty.");
+            return;
+        }
+        
+        if (category == null || category.trim().isEmpty()) {
+            createQuizPresenter.prepareFailView("Category cannot be empty.");
+            return;
+        }
+        
+        if (questionsDetails == null || questionsDetails.size() != 10) {
+            int count = questionsDetails == null ? 0 : questionsDetails.size();
+            createQuizPresenter.prepareFailView(
+                "Quiz must have exactly 10 questions. Current count: " + count
+            );
+            return;
+        }
+        
+        String creatorUsername = userDataAccessObject.getCurrentUsername();
         List<Question> questions = new ArrayList<>();
         for (int i = 0; i < questionsDetails.size(); i++) {
             List<String> questionDetails = questionsDetails.get(i);
@@ -42,7 +60,7 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
         Quiz quiz = quizFactory.createQuiz(quizName, creatorUsername, category, questions);
         quizDataAccessObject.saveUserQuiz(quiz);
 
-        CreateQuizOutputData outputData = new CreateQuizOutputData(quizName, category, creatorUsername);
+        CreateQuizOutputData outputData = new CreateQuizOutputData();
         createQuizPresenter.prepareSuccessView(outputData);
     }
 

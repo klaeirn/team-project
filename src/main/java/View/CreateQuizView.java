@@ -1,9 +1,14 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.create_quiz.CreateQuizController;
 import interface_adapter.create_quiz.CreateQuizState;
 import interface_adapter.create_quiz.CreateQuizViewModel;
-import interface_adapter.logged_in.LoggedInController;
+
+// importing validate question view model and state bc it needs to know about the question that is being edited
+// does not violate clean architecture because its a view and not a use case
+import interface_adapter.validate_question.ValidateQuestionViewModel;
+import interface_adapter.validate_question.ValidateQuestionState;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -32,6 +37,8 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
     private final JButton returnHome;
     
     private CreateQuizController createQuizController = null;
+    private ViewManagerModel viewManagerModel;
+    private ValidateQuestionViewModel validateQuestionViewModel;
 
     private final JPanel questionsPanel = new JPanel();
     private final List<JPanel> questionPanels = new ArrayList<>();
@@ -63,7 +70,6 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
         
         addQuestion = new JButton("Add Question");
         addQuestion.setBackground(Color.RED);
-        addQuestion.setForeground(Color.WHITE);
         addQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         reorderQuestions = new JButton("Reorder Questions");
@@ -80,33 +86,8 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
 
         addQuestion.addActionListener(this);
         reorderQuestions.addActionListener(this);
-        saveQuiz.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(saveQuiz)) {
-                            final CreateQuizState currentState = createQuizViewModel.getState();
-                            
-                            if (createQuizController != null) {
-                                createQuizController.execute(
-                                        currentState.getQuizName(),
-                                        currentState.getCategory(),
-                                        currentState.getQuestionsDetails(),
-                                        currentState.getCorrectAnswers()
-                                );
-                            }
-                        }
-                    }
-                }
-        );
-        
-        returnHome.addActionListener(new ActionListener() {
-                                          public void actionPerformed(ActionEvent evt) {
-                                              if (evt.getSource().equals(returnHome)) {
-                                                  createQuizController.switchToLoggedInView();
-                                              }
-                                          }
-                                      }
-        );
+        saveQuiz.addActionListener(this);
+        returnHome.addActionListener(this);
 
         quizTitleField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
@@ -182,14 +163,35 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource().equals(addQuestion)) {
-            // TODO: still need to implement dialog to add a new question
-            System.out.println("Add Question clicked");
+        if (evt.getSource().equals(saveQuiz)) {
+            final CreateQuizState currentState = createQuizViewModel.getState();
+
+            if (createQuizController != null) {
+                createQuizController.execute(
+                        currentState.getQuizName(),
+                        currentState.getCategory(),
+                        currentState.getQuestionsDetails(),
+                        currentState.getCorrectAnswers()
+                );
+
+            }
+        } else if (evt.getSource().equals(addQuestion)) {
+            CreateQuizState currentState = createQuizViewModel.getState();
+            currentState.setEditingQuestionIndex(null);
+            createQuizViewModel.firePropertyChange();
+            
+            if (validateQuestionViewModel != null) {
+                validateQuestionViewModel.setState(new ValidateQuestionState());
+                validateQuestionViewModel.firePropertyChange();
+            }
+            
+            viewManagerModel.setState("validate question");
+            viewManagerModel.firePropertyChange();
         } else if (evt.getSource().equals(reorderQuestions)) {
             // TODO: still need to implement reorder functionality
             System.out.println("Reorder Questions clicked");
         } else if (evt.getSource().equals(returnHome)) {
-            // TODO: still need to implement navigation back to home/logged in view
+            createQuizController.switchToLoggedInView();
             System.out.println("Return Home clicked");
         }
     }
@@ -238,12 +240,38 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
                 
                 JButton editQuestionButton = new JButton("Edit Question");
                 editQuestionButton.setBackground(Color.GREEN);
-                editQuestionButton.setForeground(Color.WHITE);
                 final int questionIndex = i;
                 editQuestionButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Edit Question " + (questionIndex + 1) + " clicked");
+                        if (e.getSource().equals(editQuestionButton)) {
+                            CreateQuizState createQuizState = createQuizViewModel.getState();
+                            List<List<String>> questionsDetails = createQuizState.getQuestionsDetails();
+                            List<String> correctAnswers = createQuizState.getCorrectAnswers();
+                            
+                            if (questionIndex < questionsDetails.size() && questionIndex < correctAnswers.size()) {
+                                createQuizState.setEditingQuestionIndex(questionIndex);
+
+                                List<String> questionDetails = questionsDetails.get(questionIndex);
+                                String correctAnswer = correctAnswers.get(questionIndex);
+
+                                ValidateQuestionState validateState = new ValidateQuestionState();
+                                if (!questionDetails.isEmpty()) {
+                                    validateState.setTitle(questionDetails.get(0));
+                                    if (questionDetails.size() > 1) {
+                                        validateState.setOptions(new ArrayList<>(questionDetails.subList(1, questionDetails.size())));
+                                    }
+                                }
+                                validateState.setAnswer(correctAnswer);
+                                validateState.setEditingIndex(questionIndex);
+
+                                validateQuestionViewModel.setState(validateState);
+                                validateQuestionViewModel.firePropertyChange();
+                                
+                                viewManagerModel.setState("validate question");
+                                viewManagerModel.firePropertyChange();
+                            }
+                        }
                     }
                 });
                 
@@ -269,6 +297,14 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
 
     public void setCreateQuizController(CreateQuizController createQuizController) {
         this.createQuizController = createQuizController;
+    }
+
+    public void setViewManagerModel(ViewManagerModel viewManagerModel) {
+        this.viewManagerModel = viewManagerModel;
+    }
+
+    public void setValidateQuestionViewModel(ValidateQuestionViewModel validateQuestionViewModel) {
+        this.validateQuestionViewModel = validateQuestionViewModel;
     }
 
 }
