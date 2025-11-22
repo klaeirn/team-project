@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="presenter, controller...">
+    <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="take shared quiz view">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/take_shared_quiz/TakeSharedQuizController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +146,23 @@
       <option name="project" value="LOCAL" />
       <updated>1763721621145</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="presenter, controller, state, viewmodel">
+      <option name="closed" value="true" />
+      <created>1763726037856</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763726037856</updated>
+    </task>
+    <task id="LOCAL-00007" summary="take shared quiz view">
+      <option name="closed" value="true" />
+      <created>1763852492741</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763852492741</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +173,8 @@
     <MESSAGE value="added data access interface and boundary and input data for take shared quiz 2. added the rest of the use case" />
     <MESSAGE value="1" />
     <MESSAGE value="presenter, controller..." />
-    <option name="LAST_COMMIT_MESSAGE" value="presenter, controller..." />
+    <MESSAGE value="presenter, controller, state, viewmodel" />
+    <MESSAGE value="take shared quiz view" />
+    <option name="LAST_COMMIT_MESSAGE" value="take shared quiz view" />
   </component>
 </project>

@@ -18,7 +18,8 @@ public class TakeSharedQuizController {
         takeSharedQuizInputBoundary.execute(inputData);
     }
 
-    public void switchtoTakeSharedQuizView (){
-        viewManagerModel.setState("take_shared_quiz");
+    public void switchToTakeSharedQuizView (){
+        viewManagerModel.setState("take shared quiz");
+        viewManagerModel.firePropertyChange();
     }
 }

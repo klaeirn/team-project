@@ -36,6 +36,9 @@ import interface_adapter.share_quiz.ShareQuizViewModel;
 import interface_adapter.take_quiz.TakeQuizController;
 import interface_adapter.take_quiz.TakeQuizPresenter;
 import interface_adapter.take_quiz.TakeQuizViewModel;
+import interface_adapter.take_shared_quiz.TakeSharedQuizController;
+import interface_adapter.take_shared_quiz.TakeSharedQuizPresenter;
+import interface_adapter.take_shared_quiz.TakeSharedQuizViewModel;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
@@ -56,6 +59,10 @@ import use_cases.share_quiz.ShareQuizInteractor;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInteractor;
+import use_cases.take_shared_quiz.TakeSharedQuizDataAccessInterface;
+import use_cases.take_shared_quiz.TakeSharedQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
 
@@ -99,6 +106,11 @@ public class AppBuilder {
     private ShareQuizPresenter shareQuizPresenter;
     private CreateQuizViewModel createQuizViewModel;
     private CreateQuizView createQuizView;
+    private TakeSharedQuizView takeSharedQuizView;
+    private TakeSharedQuizPresenter takeSharedQuizPresenter;
+    private TakeSharedQuizViewModel takeSharedQuizViewModel;
+    private TakeSharedQuizController takeSharedQuizController;
+
 
 
     public AppBuilder() {
@@ -158,6 +170,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTakeSharedQuizView() {
+        takeSharedQuizViewModel = new TakeSharedQuizViewModel();
+        takeSharedQuizView = new TakeSharedQuizView(takeSharedQuizViewModel);
+        cardPanel.add(takeSharedQuizView, takeSharedQuizView.getViewName());
+        return this;
+    }
+
     public AppBuilder addQuickstartUseCase() {
         quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
         final QuickstartInputBoundary interactor = new QuickstartInteractor(
@@ -185,6 +204,10 @@ public class AppBuilder {
         }
 
         return this;
+    }
+
+    public AppBuilder addTakeSharedQuizUseCase() {
+
     }
 
     public AppBuilder wireControllers() {
