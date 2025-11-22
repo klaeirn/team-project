@@ -19,14 +19,8 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateQuizOutputData outputData) {
-        final CreateQuizState state = createQuizViewModel.getState();
-        state.setQuizName(outputData.getQuizName());
-        state.setCategory(outputData.getCategory());
-        this.createQuizViewModel.setState(state);
-        this.createQuizViewModel.firePropertyChange();
-        
-        // rn, this will make it stay on the same view
-        // may be changed later so that it goes to the logged in view
+        this.viewManagerModel.setState(loggedInViewModel.getViewName());
+        this.viewManagerModel.firePropertyChange();
     }
 
     @Override

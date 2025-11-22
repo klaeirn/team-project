@@ -9,6 +9,7 @@ public class CreateQuizState {
     private List<List<String>> questionsDetails = new ArrayList<>();
     private List<String> correctAnswers = new ArrayList<>();
     private String createError;
+    private Integer editingQuestionIndex = null;
 
     public String getQuizName() {
         return quizName;
@@ -49,5 +50,9 @@ public class CreateQuizState {
     public void setCreateError(String createError) {
         this.createError = createError;
     }
+
+    public Integer getEditingQuestionIndex() {return editingQuestionIndex;}
+
+    public void setEditingQuestionIndex(Integer editingQuestionIndex){this.editingQuestionIndex = editingQuestionIndex;}
 }
 
