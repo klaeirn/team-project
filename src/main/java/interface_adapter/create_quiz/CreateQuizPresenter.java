@@ -19,6 +19,9 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateQuizOutputData outputData) {
+        this.createQuizViewModel.setState(new CreateQuizState());
+        this.createQuizViewModel.firePropertyChange();
+
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChange();
     }
@@ -32,11 +35,17 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void switchToCreateQuizView() {
+        createQuizViewModel.setState(new CreateQuizState());
+        createQuizViewModel.firePropertyChange();
+
         viewManagerModel.setState(createQuizViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
 
     public void switchToLoggedInView() {
+        this.createQuizViewModel.setState(new CreateQuizState());
+        this.createQuizViewModel.firePropertyChange();
+
         viewManagerModel.setState(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }

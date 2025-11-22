@@ -85,7 +85,6 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
                 public void actionPerformed(ActionEvent e) {
                     if (optionCheckboxes[index].isSelected()) {
                         if (optionFields[index].getText().trim().isEmpty()) {
-                            // Don't allow selecting empty option
                             optionCheckboxes[index].setSelected(false);
                         }
                     }
@@ -104,7 +103,6 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
         deleteButton.addActionListener(this);
         saveButton.addActionListener(this);
 
-        // error label
         errorLabel.setForeground(Color.RED);
         errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 

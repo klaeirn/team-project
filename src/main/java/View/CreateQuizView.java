@@ -173,7 +173,6 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
                         currentState.getQuestionsDetails(),
                         currentState.getCorrectAnswers()
                 );
-
             }
         } else if (evt.getSource().equals(addQuestion)) {
             CreateQuizState currentState = createQuizViewModel.getState();
