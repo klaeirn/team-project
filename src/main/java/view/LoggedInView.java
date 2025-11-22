@@ -6,6 +6,7 @@ import interface_adapter.create_quiz.CreateQuizController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
+import interface_adapter.take_shared_quiz.TakeSharedQuizController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -32,9 +33,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JButton changeUsername;
     private final JButton takeQuizButton;
     private final JButton createQuizButton;
+    private final JButton takeSharedQuizButton;
     private ChangeUsernameController  changeUsernameController;
     private QuizMenuController quizMenuController;
     private CreateQuizController createQuizController;
+    private TakeSharedQuizController takeSharedQuizController;
 
     // , ViewManagerModel viewManagerModel
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
@@ -53,9 +56,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.changeUsername = new JButton("Change Username");
         this.takeQuizButton = new JButton("Take Quiz");
         this.createQuizButton = new JButton("Create Quiz");
+        this.takeSharedQuizButton = new JButton("Take Shared Quiz");
         buttons.add(takeQuizButton);
         buttons.add(changeUsername);
         buttons.add(createQuizButton);
+        buttons.add(takeSharedQuizButton);
 
         changeUsername.addActionListener(this);
 
@@ -79,6 +84,16 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 }
             }
         });
+
+        takeSharedQuizButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (takeSharedQuizController != null) {
+                    takeSharedQuizController.switchToTakeSharedQuizView();
+                }
+            }
+        });
+
         createQuizButton.addActionListener(new ActionListener() {
                                              public void actionPerformed(ActionEvent evt) {
                                                  if (evt.getSource().equals(createQuizButton)) {
@@ -141,6 +156,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public void setCreateQuizController(CreateQuizController createQuizController) {
         this.createQuizController = createQuizController;
+    }
+
+    public void setTakeSharedQuizController(TakeSharedQuizController takeSharedQuizController) {
+        this.takeSharedQuizController = takeSharedQuizController;
     }
 
 }
