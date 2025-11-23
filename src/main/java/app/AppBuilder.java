@@ -59,10 +59,7 @@ import use_cases.share_quiz.ShareQuizInteractor;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
-import use_cases.take_shared_quiz.TakeSharedQuizInputBoundary;
-import use_cases.take_shared_quiz.TakeSharedQuizInteractor;
-import use_cases.take_shared_quiz.TakeSharedQuizDataAccessInterface;
-import use_cases.take_shared_quiz.TakeSharedQuizOutputBoundary;
+import use_cases.take_shared_quiz.*;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
 
@@ -207,7 +204,20 @@ public class AppBuilder {
     }
 
     public AppBuilder addTakeSharedQuizUseCase() {
+        takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
+        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
+        takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
 
+        if (takeSharedQuizView != null) {
+            takeSharedQuizView.setController(takeSharedQuizController);
+            takeSharedQuizView.setViewManagerModel(viewManagerModel);
+            takeSharedQuizViewModel.addPropertyChangeListener(takeSharedQuizView);
+        }
+        if (loggedInView != null) {
+            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+        }
+        return this;
     }
 
     public AppBuilder wireControllers() {
@@ -217,6 +227,10 @@ public class AppBuilder {
 
         if (selectExistingQuizPresenter != null && takeQuizController != null) {
             selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
+        }
+
+        if (takeSharedQuizPresenter != null && takeQuizController != null) {
+            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
         }
 
         return this;
