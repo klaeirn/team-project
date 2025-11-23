@@ -10,6 +10,7 @@ import java.util.Map;
 public class TakeQuizInteractor implements TakeQuizInputBoundary {
     private final TakeQuizOutputBoundary presenter;
     private Quiz quiz;
+    private String username;
     private int currentQuestionIndex;
     private Map<Integer, String> userAnswers;
 
@@ -24,6 +25,7 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
         this.quiz = inputData.getQuiz();
         this.currentQuestionIndex = 0;
         this.userAnswers = new HashMap<>();
+        this.username = inputData.getUsername();
 
         if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
             presenter.prepareFailView("No quiz available to take.");
@@ -82,7 +84,8 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
 
         TakeQuizOutputData outputData = new TakeQuizOutputData(
                 currentQuestion, currentQuestionIndex + 1, questions.size(),
-                userAnswers, isLastQuestion, null, null
+                userAnswers, isLastQuestion, null, null,
+                quiz, username
         );
         presenter.prepareQuestionView(outputData);
     }
@@ -94,5 +97,22 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
     public Map<Integer, String> getUserAnswers() {
         return new HashMap<>(userAnswers);
     }
+
+    @Override
+    public void submitQuiz() {
+        // This method will be called when the quiz is completed
+        // The actual submission logic (calculating results) will be handled by ViewResultsInteractor
+        // This method exists to signal that the quiz is complete
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }
+
+
 

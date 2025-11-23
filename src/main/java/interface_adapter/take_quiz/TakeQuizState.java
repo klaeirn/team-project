@@ -1,6 +1,7 @@
 package interface_adapter.take_quiz;
 
 import entities.Question;
+import entities.Quiz;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -13,6 +14,8 @@ public class TakeQuizState {
     private Integer score;
     private String errorMessage;
     private String selectedAnswer;
+    private Quiz quiz;
+    private String username;
 
     public Question getCurrentQuestion() {
         return currentQuestion;
@@ -84,6 +87,22 @@ public class TakeQuizState {
 
     public void setSelectedAnswer(String selectedAnswer) {
         this.selectedAnswer = selectedAnswer;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

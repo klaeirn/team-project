@@ -5,6 +5,7 @@ import entities.QuestionFactory;
 import entities.Quiz;
 import entities.QuizFactory;
 import use_cases.quickstart.QuickstartDataAccessInterface;
+import use_cases.view_results.ViewResultsDataAccessInterface;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,15 +19,22 @@ import java.time.Duration;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class QuizApiDataAccessObject implements QuickstartDataAccessInterface {
+public class QuizApiDataAccessObject implements QuickstartDataAccessInterface, ViewResultsDataAccessInterface {
     private final QuestionFactory questionFactory;
     private final QuizFactory quizFactory;
+    private final Map<String, Quiz> quizCache = new HashMap<>();
 
     public QuizApiDataAccessObject(QuestionFactory questionFactory, QuizFactory quizFactory) {
         this.questionFactory = questionFactory;
         this.quizFactory = quizFactory;
+    }
+
+    private String getCacheKey(String quizName, String creatorUsername) {
+        return quizName + "|" + creatorUsername;
     }
 
     @Override
@@ -94,7 +102,19 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface {
         }
 
         // Create a quiz with a default name
-        return quizFactory.createQuiz("Quickstart Quiz", "System", "Quickstart", questions);
+        Quiz quiz = quizFactory.createQuiz("Quickstart Quiz", "System", "Quickstart", questions);
+
+        // Store the quiz in cache so it can be retrieved later
+        String cacheKey = getCacheKey(quiz.getName(), quiz.getCreatorUsername());
+        quizCache.put(cacheKey, quiz);
+
+        return quiz;
+    }
+
+    @Override
+    public Quiz getQuiz(String quizName, String creatorUsername) {
+        String cacheKey = getCacheKey(quizName, creatorUsername);
+        return quizCache.get(cacheKey);
     }
 
     /**
