@@ -42,6 +42,9 @@ import interface_adapter.view_results.ViewResultsViewModel;
 import interface_adapter.validate_question.ValidateQuestionController;
 import interface_adapter.validate_question.ValidateQuestionPresenter;
 import interface_adapter.validate_question.ValidateQuestionViewModel;
+import interface_adapter.take_shared_quiz.TakeSharedQuizController;
+import interface_adapter.take_shared_quiz.TakeSharedQuizPresenter;
+import interface_adapter.take_shared_quiz.TakeSharedQuizViewModel;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
@@ -62,6 +65,10 @@ import use_cases.share_quiz.ShareQuizInteractor;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInteractor;
+import use_cases.take_shared_quiz.TakeSharedQuizDataAccessInterface;
+import use_cases.take_shared_quiz.TakeSharedQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
 import use_cases.view_results.ViewResultsDataAccessInterface;
@@ -117,6 +124,10 @@ public class AppBuilder {
     private ViewResultsController viewResultsController;
     private ValidateQuestionViewModel validateQuestionViewModel;
     private ValidateQuestionView validateQuestionView;
+    private TakeSharedQuizView takeSharedQuizView;
+    private TakeSharedQuizPresenter takeSharedQuizPresenter;
+    private TakeSharedQuizViewModel takeSharedQuizViewModel;
+    private TakeSharedQuizController takeSharedQuizController;
 
 
     public AppBuilder() {
@@ -176,6 +187,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTakeSharedQuizView() {
+        takeSharedQuizViewModel = new TakeSharedQuizViewModel();
+        takeSharedQuizView = new TakeSharedQuizView(takeSharedQuizViewModel);
+        cardPanel.add(takeSharedQuizView, takeSharedQuizView.getViewName());
+        return this;
+    }
+
     public AppBuilder addResultsView() {
         viewResultsViewModel = new ViewResultsViewModel();
         resultsView = new ResultsView(viewResultsViewModel);
@@ -212,6 +230,23 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTakeSharedQuizUseCase() {
+        takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
+        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
+        takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
+
+        if (takeSharedQuizView != null) {
+            takeSharedQuizView.setController(takeSharedQuizController);
+            takeSharedQuizView.setViewManagerModel(viewManagerModel);
+            takeSharedQuizViewModel.addPropertyChangeListener(takeSharedQuizView);
+        }
+        if (loggedInView != null) {
+            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+        }
+        return this;
+    }
+
     public AppBuilder addViewResultsUseCase() {
         final ViewResultsOutputBoundary viewResultsPresenter = new ViewResultsPresenter(viewResultsViewModel, viewManagerModel);
         // TODO Add compatibility with existing quiz DAO (FileQuizDataAccessObject) so that we can view results for existing quizzes too.
@@ -241,6 +276,10 @@ public class AppBuilder {
         }
         if (takeQuizView != null && viewResultsController != null) {
             takeQuizView.setViewResultsController(viewResultsController);
+        }
+
+        if (takeSharedQuizPresenter != null && takeQuizController != null) {
+            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
         }
 
         return this;
