@@ -115,6 +115,11 @@ public class FileUserDataAccessObject implements LoginUserDataAccessInterface, C
             throw new RuntimeException(String.format("username %s is already in use!", username));
         }
 
+        if (!username.matches(".*[A-Za-z0-9].*") || username.equals("System")) {
+            throw new RuntimeException(String.format("Invalid username!"));
+
+        }
+
         User account = this.accounts.get(currentUsername);
         account.setUserName(username);
 
