@@ -36,6 +36,9 @@ import interface_adapter.share_quiz.ShareQuizViewModel;
 import interface_adapter.take_quiz.TakeQuizController;
 import interface_adapter.take_quiz.TakeQuizPresenter;
 import interface_adapter.take_quiz.TakeQuizViewModel;
+import interface_adapter.validate_question.ValidateQuestionController;
+import interface_adapter.validate_question.ValidateQuestionPresenter;
+import interface_adapter.validate_question.ValidateQuestionViewModel;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
@@ -58,6 +61,9 @@ import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
+import use_cases.validate_question.ValidateQuestionInputBoundary;
+import use_cases.validate_question.ValidateQuestionInteractor;
+import use_cases.validate_question.ValidateQuestionOutputBoundary;
 
 import view.*;
 
@@ -99,6 +105,8 @@ public class AppBuilder {
     private ShareQuizPresenter shareQuizPresenter;
     private CreateQuizViewModel createQuizViewModel;
     private CreateQuizView createQuizView;
+    private ValidateQuestionViewModel validateQuestionViewModel;
+    private ValidateQuestionView validateQuestionView;
 
 
     public AppBuilder() {
@@ -222,6 +230,7 @@ public class AppBuilder {
 //        LoggedInController loggedInController = new LoggedInController();
 //        createQuizView.setLoggedInController(loggedInController);
         createQuizView.setCreateQuizController(createQuizController);
+        createQuizView.setViewManagerModel(viewManagerModel);
         loggedInView.setCreateQuizController(createQuizController);
 
         return this;
@@ -292,6 +301,39 @@ public class AppBuilder {
             selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
             selectExistingQuizView.setShareQuizController(shareQuizController);
         }
+        return this;
+    }
+
+    public AppBuilder addValidateQuestionView() {
+        validateQuestionViewModel = new ValidateQuestionViewModel();
+        validateQuestionView = new ValidateQuestionView(validateQuestionViewModel);
+        cardPanel.add(validateQuestionView, validateQuestionView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addValidateQuestionUseCase() {
+        final ValidateQuestionOutputBoundary validateQuestionOutputBoundary = 
+            new ValidateQuestionPresenter(validateQuestionViewModel, createQuizViewModel, viewManagerModel);
+        final ValidateQuestionInputBoundary validateQuestionInteractor = 
+            new ValidateQuestionInteractor(null, validateQuestionOutputBoundary);
+
+        ValidateQuestionController validateQuestionController = 
+            new ValidateQuestionController(validateQuestionInteractor);
+        
+        if (validateQuestionView != null) {
+            validateQuestionView.setValidateQuestionController(validateQuestionController);
+            validateQuestionView.setViewManagerModel(viewManagerModel);
+            validateQuestionViewModel.addPropertyChangeListener(validateQuestionView);
+        }
+        
+        if (createQuizView != null) {
+            createQuizView.setValidateQuestionViewModel(validateQuestionViewModel);
+        }
+        
+        if (validateQuestionView != null && createQuizViewModel != null) {
+            validateQuestionView.setCreateQuizViewModel(createQuizViewModel);
+        }
+
         return this;
     }
 

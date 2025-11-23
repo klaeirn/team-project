@@ -34,8 +34,8 @@ public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface {
 
     @Override
     public void saveUserQuiz(Quiz quiz) {
-        JSONObject quizJson = new JSONObject();
         try {
+            JSONObject quizJson = new JSONObject();
             quizJson.put("quizName", quiz.getName());
             quizJson.put("quizCreator", quiz.getCreatorUsername());
             quizJson.put("category", quiz.getCategory());
@@ -54,7 +54,22 @@ public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface {
 
             quizJson.put("questions", questions);
 
-        } catch (JSONException e) {
+            // read existing quizzes from file (or create empty array if file doesn't exist)
+            JSONArray quizArray;
+            if (Files.exists(quizPath) && Files.size(quizPath) > 0) {
+                String jsonStr = Files.readString(quizPath);
+                if (jsonStr.trim().isEmpty()) {
+                    quizArray = new JSONArray();
+                } else {
+                    quizArray = new JSONArray(jsonStr);
+                }
+            } else {
+                quizArray = new JSONArray();
+            }
+            quizArray.put(quizJson);
+            Files.writeString(quizPath, quizArray.toString(2));
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
