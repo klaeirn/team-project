@@ -118,8 +118,9 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         if (state == null) {
             return;
         }
-
-        hashInputField.setText(state.getHash());
+        if (!hashInputField.getText().equals(state.getHash())) {
+            hashInputField.setText(state.getHash());
+        }
 
         String error = state.getErrorMessage();
         if (error == null) {
