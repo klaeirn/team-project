@@ -235,8 +235,7 @@ public class AppBuilder {
 
 
 
-        CreateQuizController createQuizController = new CreateQuizController(createQuizInteractor,
-                createQuizViewModel, viewManagerModel);
+        CreateQuizController createQuizController = new CreateQuizController(createQuizInteractor);
 //        LoggedInController loggedInController = new LoggedInController();
 //        createQuizView.setLoggedInController(loggedInController);
         createQuizView.setCreateQuizController(createQuizController);

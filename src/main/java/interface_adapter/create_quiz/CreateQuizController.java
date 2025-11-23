@@ -2,21 +2,14 @@ package interface_adapter.create_quiz;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInputData;
-import interface_adapter.ViewManagerModel;
 
 import java.util.List;
 
 public class CreateQuizController {
     private final CreateQuizInputBoundary createQuizUseCaseInteractor;
-    private final CreateQuizViewModel createQuizViewModel;
-    private final ViewManagerModel viewManagerModel;
 
-    public CreateQuizController(CreateQuizInputBoundary createQuizUseCaseInteractor,
-                                CreateQuizViewModel createQuizViewModel,
-                                ViewManagerModel viewManagerModel) {
+    public CreateQuizController(CreateQuizInputBoundary createQuizUseCaseInteractor) {
         this.createQuizUseCaseInteractor = createQuizUseCaseInteractor;
-        this.createQuizViewModel = createQuizViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
     public void execute(String quizName, String category, 
@@ -27,19 +20,8 @@ public class CreateQuizController {
         createQuizUseCaseInteractor.execute(createQuizInputData);
     }
 
-    /**
-     * Switches to the Create Quiz view and passes the current user's name.
-     * @param username The username of the logged-in user.
-     */
     public void switchToCreateQuizView(String username) {
-        CreateQuizState state = createQuizViewModel.getState();
-        state.setUsername(username);
-        state.setQuizName("");
-        state.setCategory("");
-        createQuizViewModel.setState(state);
-        createQuizViewModel.firePropertyChange();
-        viewManagerModel.setState(createQuizViewModel.getViewName());
-        viewManagerModel.firePropertyChange();
+        createQuizUseCaseInteractor.switchToCreateQuizView(username);
     }
 
     public void switchToLoggedInView() {

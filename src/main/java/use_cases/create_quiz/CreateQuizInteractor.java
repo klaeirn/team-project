@@ -65,8 +65,8 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
     }
 
     @Override
-    public void switchToCreateQuizView() {
-        createQuizPresenter.switchToCreateQuizView();
+    public void switchToCreateQuizView(String username) {
+        createQuizPresenter.switchToCreateQuizView(username);
     }
 
     public void switchToLoggedInView() {

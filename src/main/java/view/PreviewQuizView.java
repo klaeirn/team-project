@@ -158,20 +158,11 @@ public class PreviewQuizView extends JPanel implements ActionListener, PropertyC
         for (String option : options) {
             JCheckBox checkBox = new JCheckBox(letter + ". " + option);
             // Demonstration only. Clicking the checkbox will not change answer.
-            checkBox.setEnabled(true);
+            boolean isCorrect = option.equals(correct);
+            checkBox.setSelected(isCorrect);
+            checkBox.addActionListener(e -> checkBox.setSelected(isCorrect));
             checkBox.setFocusable(false);
-            checkBox.setRequestFocusEnabled(false);
-            checkBox.addActionListener(e -> {
-                checkBox.setSelected(option.equals(correct));
-            });
-            if (option.equals(correct)) {
-                checkBox.setSelected(true);
-            }
             checkBox.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-            if (option.equals(correct)) {
-                checkBox.setSelected(true); // checked for the correct answer
-            }
 
             optionsPanel.add(checkBox);
             optionsPanel.add(Box.createVerticalStrut(5));
