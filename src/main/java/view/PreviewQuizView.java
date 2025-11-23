@@ -102,10 +102,10 @@ public class PreviewQuizView extends JPanel implements ActionListener, PropertyC
         });
 
         // Back to edit page
-        prevButton.addActionListener(new ActionListener() {
+        backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                viewManagerModel.setState("edit quiz");
+                viewManagerModel.setState("create quiz");
                 viewManagerModel.firePropertyChange();
             }
         });

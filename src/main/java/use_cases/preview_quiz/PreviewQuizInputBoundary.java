@@ -3,7 +3,7 @@ package use_cases.preview_quiz;
 public interface PreviewQuizInputBoundary {
     /**
      * Executes the preview use case.
-     * @param previewInputData the input data
+     * @param previewQuizInputData the input data
      */
-    void execute(PreviewQuizInputData previewInputData);
+    void execute(PreviewQuizInputData previewQuizInputData);
 }

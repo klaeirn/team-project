@@ -7,13 +7,15 @@ public class CreateQuizInputData {
     private final String category;
     private final List<List<String>> questionsDetails;
     private final List<String> correctAnswers;
+    private final String username;
 
     public CreateQuizInputData(String quizName, String category, 
-    List<List<String>> questionsDetails, List<String> correctAnswers) {
+    List<List<String>> questionsDetails, List<String> correctAnswers, String username) {
         this.quizName = quizName;
         this.category = category;
         this.questionsDetails = questionsDetails;
         this.correctAnswers = correctAnswers;
+        this.username = username;
     }
 
     public String getQuizName() {
@@ -31,4 +33,6 @@ public class CreateQuizInputData {
     public List<String> getCorrectAnswers() {
         return correctAnswers;
     }
+
+    public String getUsername() { return username; }
 }
