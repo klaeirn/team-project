@@ -47,7 +47,7 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         final JLabel title = new JLabel("Select Existing Quiz");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Initialize quiz list with JScrollPane
+        // Initialize quiz list with JScrollPane, quizzes.json
         quizList = new JList<>(new String[]{"No quizzes available"});
         quizList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         quizList.setVisibleRowCount(10);

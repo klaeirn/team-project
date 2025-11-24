@@ -3,6 +3,7 @@ package view;
 import interface_adapter.change_username.ChangeUsernameController;
 import interface_adapter.change_username.ChangeUsernameState;
 import interface_adapter.change_username.ChangeUsernameViewModel;
+import interface_adapter.logged_in.LoggedInController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -14,11 +15,13 @@ import java.beans.PropertyChangeListener;
 
 public class ChangeUsernameView extends JPanel implements ActionListener, PropertyChangeListener {
     private ChangeUsernameController changeUsernameController = null;
+    private final LoggedInController  loggedInController = new LoggedInController();
     private final String viewName = "change username";
     private final ChangeUsernameViewModel changeUsernameViewModel;
 
     private final JTextField usernameField = new JTextField(15);
     private final JButton changeUsernameButton;
+    private final JButton backButton;
 
     public ChangeUsernameView(ChangeUsernameViewModel changeUsernameViewModel) {
         this.changeUsernameViewModel = changeUsernameViewModel;
@@ -41,7 +44,19 @@ public class ChangeUsernameView extends JPanel implements ActionListener, Proper
                 }
         );
 
+        backButton = new JButton("Back");
+        backButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(backButton)) {
+                            changeUsernameController.switchToLoggedInView();
+                        }
+                    }
+                }
+        );
+
         this.add(changeUsernameButton);
+        this.add(backButton);
 
         usernameField.getDocument().addDocumentListener( new DocumentListener() {
             private void documentListenerHelper() {

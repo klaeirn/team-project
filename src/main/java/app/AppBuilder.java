@@ -284,7 +284,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addChangeUsernameUseCase() {
-        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel, viewManagerModel);
+        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel,
+                viewManagerModel,loggedInViewModel);
         final ChangeUsernameInputBoundary changeUsernameInteractor = new ChangeUsernameInteractor(
                 userDataAccessObject, changeUsernameOutputBoundary);
 
