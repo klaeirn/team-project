@@ -82,7 +82,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         createQuizButton.addActionListener(new ActionListener() {
                                              public void actionPerformed(ActionEvent evt) {
                                                  if (evt.getSource().equals(createQuizButton)) {
-                                                     createQuizController.switchToCreateQuizView();
+                                                     LoggedInState state = loggedInViewModel.getState();
+                                                     String username = state.getUsername();
+                                                     createQuizController.switchToCreateQuizView(username);
                                                  }
                                              }
                                          }

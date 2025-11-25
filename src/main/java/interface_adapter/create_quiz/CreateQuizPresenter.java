@@ -34,8 +34,13 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
     }
 
     @Override
-    public void switchToCreateQuizView() {
-        createQuizViewModel.setState(new CreateQuizState());
+    public void switchToCreateQuizView(String username) {
+        CreateQuizState state = createQuizViewModel.getState();
+        state.setUsername(username);
+        state.setQuizName("");
+        state.setCategory("");
+
+        createQuizViewModel.setState(state);
         createQuizViewModel.firePropertyChange();
 
         viewManagerModel.setState(createQuizViewModel.getViewName());
