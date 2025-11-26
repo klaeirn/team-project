@@ -29,6 +29,8 @@ public class Main {
                 .addValidateQuestionUseCase()
                 .addQuizMenuController()
                 .addSelectExistingQuizController()
+                .addPreviewQuizView()
+                .addPreviewQuizUseCase()
                 .wireControllers()
                 .build();
 

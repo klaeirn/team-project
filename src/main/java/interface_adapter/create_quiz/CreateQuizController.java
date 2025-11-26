@@ -13,15 +13,15 @@ public class CreateQuizController {
     }
 
     public void execute(String quizName, String category, 
-                       List<List<String>> questionsDetails, List<String> correctAnswers) {
+                       List<List<String>> questionsDetails, List<String> correctAnswers, String username) {
         final CreateQuizInputData createQuizInputData = new CreateQuizInputData(
-                quizName, category, questionsDetails, correctAnswers);
+                quizName, category, questionsDetails, correctAnswers, username);
 
         createQuizUseCaseInteractor.execute(createQuizInputData);
     }
 
-    public void switchToCreateQuizView() {
-        createQuizUseCaseInteractor.switchToCreateQuizView();
+    public void switchToCreateQuizView(String username) {
+        createQuizUseCaseInteractor.switchToCreateQuizView(username);
     }
 
     public void switchToLoggedInView() {

@@ -22,6 +22,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.preview_quiz.PreviewQuizViewModel;
 import interface_adapter.quickstart.QuickstartViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.quickstart.QuickstartController;
@@ -45,6 +46,9 @@ import interface_adapter.validate_question.ValidateQuestionViewModel;
 import interface_adapter.take_shared_quiz.TakeSharedQuizController;
 import interface_adapter.take_shared_quiz.TakeSharedQuizPresenter;
 import interface_adapter.take_shared_quiz.TakeSharedQuizViewModel;
+import interface_adapter.preview_quiz.PreviewQuizViewModel;
+import interface_adapter.preview_quiz.PreviewQuizPresenter;
+import interface_adapter.preview_quiz.PreviewQuizController;
 
 import use_cases.create_quiz.CreateQuizInputBoundary;
 import use_cases.create_quiz.CreateQuizInteractor;
@@ -57,6 +61,9 @@ import use_cases.login.LoginOutputBoundary;
 import use_cases.change_username.ChangeUsernameInputBoundary;
 import use_cases.change_username.ChangeUsernameInteractor;
 import use_cases.change_username.ChangeUsernameOutputBoundary;
+import use_cases.preview_quiz.PreviewQuizInputBoundary;
+import use_cases.preview_quiz.PreviewQuizInteractor;
+import use_cases.preview_quiz.PreviewQuizOutputBoundary;
 import use_cases.quickstart.QuickstartInputBoundary;
 import use_cases.quickstart.QuickstartInteractor;
 import use_cases.share_quiz.ShareQuizDataAccessInterface;
@@ -128,6 +135,8 @@ public class AppBuilder {
     private TakeSharedQuizPresenter takeSharedQuizPresenter;
     private TakeSharedQuizViewModel takeSharedQuizViewModel;
     private TakeSharedQuizController takeSharedQuizController;
+    private PreviewQuizView previewQuizView;
+    private PreviewQuizViewModel previewQuizViewModel;
 
 
     public AppBuilder() {
@@ -323,7 +332,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addChangeUsernameUseCase() {
-        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel, viewManagerModel);
+        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel,
+                viewManagerModel,loggedInViewModel);
         final ChangeUsernameInputBoundary changeUsernameInteractor = new ChangeUsernameInteractor(
                 userDataAccessObject, changeUsernameOutputBoundary);
 
@@ -412,6 +422,24 @@ public class AppBuilder {
             validateQuestionView.setCreateQuizViewModel(createQuizViewModel);
         }
 
+        return this;
+    }
+
+    public AppBuilder addPreviewQuizView() {
+        previewQuizViewModel = new PreviewQuizViewModel();
+        previewQuizView = new PreviewQuizView(previewQuizViewModel, viewManagerModel);
+        cardPanel.add(previewQuizView, previewQuizView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addPreviewQuizUseCase() {
+        final PreviewQuizOutputBoundary previewPresenter = new PreviewQuizPresenter(viewManagerModel, previewQuizViewModel);
+        final PreviewQuizInputBoundary previewInteractor = new PreviewQuizInteractor(quizFileDataAccessObject,
+                previewPresenter, quizFactory);
+        final PreviewQuizController previewController = new PreviewQuizController(previewInteractor);
+        if (createQuizView != null) {
+            createQuizView.setPreviewQuizController(previewController);
+        }
         return this;
     }
 

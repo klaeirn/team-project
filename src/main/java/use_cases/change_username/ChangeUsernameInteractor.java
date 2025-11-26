@@ -31,4 +31,6 @@ public class ChangeUsernameInteractor implements ChangeUsernameInputBoundary{
     }
 
     public void switchToChangeUsernameView() {changeUsernamePresenter.switchToChangeUsernameView(); }
+
+    public void switchToLoggedInView() {changeUsernamePresenter.switchToLoggedInView();}
 }

@@ -6,6 +6,8 @@ import interface_adapter.select_existing_quiz.SelectExistingQuizViewModel;
 import interface_adapter.quiz_menu.QuizMenuController;
 import interface_adapter.share_quiz.ShareQuizController;
 import entities.Quiz;
+import entities.Question;
+import entities.QuizFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * The View for selecting an existing quiz from a list.
@@ -40,7 +47,7 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         final JLabel title = new JLabel("Select Existing Quiz");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Initialize quiz list with JScrollPane
+        // Initialize quiz list with JScrollPane, quizzes.json
         quizList = new JList<>(new String[]{"No quizzes available"});
         quizList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         quizList.setVisibleRowCount(10);
@@ -129,6 +136,77 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         this.add(errorLabel);
         this.add(Box.createVerticalStrut(10));
         this.add(buttons);
+
+        loadQuizzesFromFile();
+    }
+
+    private void loadQuizzesFromFile() {
+        try {
+            Path quizPath = Path.of("src/quizzes.json");
+            if (!Files.exists(quizPath) || Files.size(quizPath) == 0) {
+                quizList.setListData(new String[]{"No quizzes available"});
+                return;
+            }
+
+            String jsonStr = Files.readString(quizPath);
+            if (jsonStr.trim().isEmpty()) {
+                quizList.setListData(new String[]{"No quizzes available"});
+                return;
+            }
+
+            JSONArray quizArray = new JSONArray(jsonStr);
+            quizzes = new ArrayList<>();
+            QuizFactory quizFactory = new QuizFactory();
+
+            for (int i = 0; i < quizArray.length(); i++) {
+                JSONObject quizJson = quizArray.getJSONObject(i);
+
+                String name = quizJson.getString("quizName");
+                String creator = quizJson.getString("quizCreator");
+                String category = quizJson.getString("category");
+
+                JSONArray questionsJson = quizJson.getJSONArray("questions");
+                List<Question> questionList = new ArrayList<>();
+
+                for (int j = 0; j < questionsJson.length(); j++) {
+                    JSONObject qJson = questionsJson.getJSONObject(j);
+
+                    String questionName = qJson.getString("questionName");
+                    String answer = qJson.getString("answer");
+
+                    JSONArray optionsJson = qJson.getJSONArray("options");
+                    List<String> options = new ArrayList<>();
+
+                    for (int k = 0; k < optionsJson.length(); k++) {
+                        options.add(optionsJson.getString(k));
+                    }
+
+                    questionList.add(new Question(questionName, options, answer));
+                }
+
+                quizzes.add(quizFactory.createQuiz(name, creator, category, questionList));
+            }
+
+            if (!quizzes.isEmpty()) {
+                String[] quizNames = new String[quizzes.size()];
+                for (int i = 0; i < quizzes.size(); i++) {
+                    Quiz quiz = quizzes.get(i);
+                    String name = quiz.getName() != null ? quiz.getName() : "Unnamed Quiz";
+                    String category = quiz.getCategory() != null ? quiz.getCategory() : "No Category";
+                    String creator = quiz.getCreatorUsername() != null ? quiz.getCreatorUsername() : "Unknown";
+                    int questionCount = quiz.getQuestions() != null ? quiz.getQuestions().size() : 0;
+                    quizNames[i] = String.format("%s (%s) - Created by: %s - %d questions",
+                            name, category, creator, questionCount);
+                }
+                quizList.setListData(quizNames);
+            } else {
+                quizList.setListData(new String[]{"No quizzes available"});
+            }
+
+        } catch (Exception e) {
+            errorLabel.setText("Error loading quizzes: " + e.getMessage());
+            quizList.setListData(new String[]{"No quizzes available"});
+        }
     }
 
     public String getViewName() {

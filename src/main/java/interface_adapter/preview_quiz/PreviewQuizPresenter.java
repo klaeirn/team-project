@@ -37,5 +37,8 @@ public class PreviewQuizPresenter implements PreviewQuizOutputBoundary{
         previewQuizState.setCurrentQuestionIndex(0);
 
         previewQuizViewModel.firePropertyChange();
+
+        viewManagerModel.setState(previewQuizViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }
