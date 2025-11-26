@@ -25,7 +25,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     //    private final JLabel passwordErrorField = new JLabel();
-    private ChangeUsernameViewModel changeUsernameViewModel = null;
 
 //    private final JLabel username;
 

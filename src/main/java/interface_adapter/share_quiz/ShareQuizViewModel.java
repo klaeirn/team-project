@@ -5,7 +5,7 @@ import interface_adapter.share_quiz.ShareQuizState;
 
 public class ShareQuizViewModel extends ViewModel<ShareQuizState> {
     public ShareQuizViewModel() {
-        super("share quiz");
+        super("share quiz view");
         setState(new ShareQuizState());
     }
 }
