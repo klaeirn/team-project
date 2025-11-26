@@ -15,6 +15,7 @@ public class Main {
                 .addTakeQuizView()
                 .addTakeSharedQuizView()
                 .addResultsView()
+                .addLeaderboardView()
                 .addChangeUsernameView()
                 .addShareQuizView()
                 .addCreateQuizView()

@@ -40,6 +40,8 @@ import interface_adapter.take_quiz.TakeQuizViewModel;
 import interface_adapter.view_results.ViewResultsController;
 import interface_adapter.view_results.ViewResultsPresenter;
 import interface_adapter.view_results.ViewResultsViewModel;
+import interface_adapter.leaderboard.LeaderboardController;
+import interface_adapter.leaderboard.LeaderboardViewModel;
 import interface_adapter.validate_question.ValidateQuestionController;
 import interface_adapter.validate_question.ValidateQuestionPresenter;
 import interface_adapter.validate_question.ValidateQuestionViewModel;
@@ -129,6 +131,9 @@ public class AppBuilder {
     private ViewResultsViewModel viewResultsViewModel;
     private ResultsView resultsView;
     private ViewResultsController viewResultsController;
+    private LeaderboardViewModel leaderboardViewModel;
+    private LeaderboardView leaderboardView;
+    private LeaderboardController leaderboardController;
     private ValidateQuestionViewModel validateQuestionViewModel;
     private ValidateQuestionView validateQuestionView;
     private TakeSharedQuizView takeSharedQuizView;
@@ -210,6 +215,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addLeaderboardView() {
+        leaderboardViewModel = new LeaderboardViewModel();
+        leaderboardView = new LeaderboardView(leaderboardViewModel);
+        cardPanel.add(leaderboardView, leaderboardView.getViewName());
+        return this;
+    }
+
     public AppBuilder addQuickstartUseCase() {
         quickstartPresenter = new QuickstartPresenter(viewManagerModel, quickStartViewModel);
         final QuickstartInputBoundary interactor = new QuickstartInteractor(
@@ -287,6 +299,10 @@ public class AppBuilder {
             takeQuizView.setViewResultsController(viewResultsController);
         }
 
+        if (leaderboardView != null) {
+            leaderboardController = new LeaderboardController(viewManagerModel);
+            leaderboardView.setLeaderboardController(leaderboardController);
+            leaderboardView.setViewManagerModel(viewManagerModel);
         if (takeSharedQuizPresenter != null && takeQuizController != null) {
             takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
         }
