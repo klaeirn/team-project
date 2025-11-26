@@ -9,4 +9,6 @@ public interface ChangeUsernameInputBoundary {
     void execute(ChangeUsernameInputData changeUsernameInputBoundary);
 
     void switchToChangeUsernameView();
+
+    void switchToLoggedInView();
 }
