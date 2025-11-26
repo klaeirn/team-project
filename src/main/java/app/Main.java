@@ -13,6 +13,7 @@ public class Main {
                 .addQuickstartView()
                 .addSelectExistingQuizView()
                 .addTakeQuizView()
+                .addTakeSharedQuizView()
                 .addResultsView()
                 .addLeaderboardView()
                 .addChangeUsernameView()
@@ -23,11 +24,14 @@ public class Main {
                 .addChangeUsernameUseCase()
                 .addQuickstartUseCase()
                 .addTakeQuizUseCase()
+                .addTakeSharedQuizUseCase()
                 .addViewResultsUseCase()
                 .addCreateQuizUseCase()
                 .addValidateQuestionUseCase()
                 .addQuizMenuController()
                 .addSelectExistingQuizController()
+                .addPreviewQuizView()
+                .addPreviewQuizUseCase()
                 .wireControllers()
                 .build();
 
