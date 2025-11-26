@@ -6,6 +6,7 @@ import java.util.List;
 public class CreateQuizState {
     private String quizName = "";
     private String category = "";
+    private String username = "";
     private List<List<String>> questionsDetails = new ArrayList<>();
     private List<String> correctAnswers = new ArrayList<>();
     private String createError;
@@ -26,6 +27,10 @@ public class CreateQuizState {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getUsername() { return username; }
+
+    public void setUsername(String username) { this.username = username; }
 
     public List<List<String>> getQuestionsDetails() {
         return questionsDetails;

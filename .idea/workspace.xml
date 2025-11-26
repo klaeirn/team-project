@@ -17,6 +17,13 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SelectExistingQuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SelectExistingQuizView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/quizzes.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/quizzes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/users.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashtoquiz.json" beforeDir="false" afterPath="$PROJECT_DIR$/hashtoquiz.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/share_quiz/ShareQuizViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/share_quiz/ShareQuizInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/share_quiz/ShareQuizInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoggedInView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/ShareQuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ShareQuizView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

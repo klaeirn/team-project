@@ -7,6 +7,7 @@ import interface_adapter.create_quiz.CreateQuizViewModel;
 
 // importing validate question view model and state bc it needs to know about the question that is being edited
 // does not violate clean architecture because its a view and not a use case
+import interface_adapter.preview_quiz.PreviewQuizController;
 import interface_adapter.validate_question.ValidateQuestionViewModel;
 import interface_adapter.validate_question.ValidateQuestionState;
 
@@ -35,10 +36,13 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
     private final JButton reorderQuestions;
     private final JButton saveQuiz;
     private final JButton returnHome;
+    private final JButton previewQuiz;
     
     private CreateQuizController createQuizController = null;
     private ViewManagerModel viewManagerModel;
     private ValidateQuestionViewModel validateQuestionViewModel;
+
+    private PreviewQuizController previewQuizController;
 
     private final JPanel questionsPanel = new JPanel();
     private final List<JPanel> questionPanels = new ArrayList<>();
@@ -84,10 +88,15 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
         returnHome.setBackground(new Color(173, 216, 230)); 
         returnHome.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        previewQuiz = new JButton("Preview Quiz");
+        previewQuiz.setBackground(new Color(173, 216, 230));
+        previewQuiz.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         addQuestion.addActionListener(this);
         reorderQuestions.addActionListener(this);
         saveQuiz.addActionListener(this);
         returnHome.addActionListener(this);
+        previewQuiz.addActionListener(this);
 
         quizTitleField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
@@ -152,6 +161,8 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
         actionButtons.add(Box.createVerticalStrut(5));
         actionButtons.add(reorderQuestions);
         actionButtons.add(Box.createVerticalStrut(5));
+        actionButtons.add(previewQuiz);
+        actionButtons.add(Box.createVerticalStrut(5));
         actionButtons.add(saveQuiz);
         actionButtons.add(Box.createVerticalStrut(5));
         actionButtons.add(returnHome);
@@ -171,7 +182,8 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
                         currentState.getQuizName(),
                         currentState.getCategory(),
                         currentState.getQuestionsDetails(),
-                        currentState.getCorrectAnswers()
+                        currentState.getCorrectAnswers(),
+                        currentState.getUsername()
                 );
             }
         } else if (evt.getSource().equals(addQuestion)) {
@@ -192,6 +204,21 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
         } else if (evt.getSource().equals(returnHome)) {
             createQuizController.switchToLoggedInView();
             System.out.println("Return Home clicked");
+
+        } else if (evt.getSource().equals(previewQuiz)) {
+            CreateQuizState state = createQuizViewModel.getState();
+
+            String quizName = state.getQuizName();
+            String username = state.getUsername();
+            String category = state.getCategory();
+            List<List<String>> questions = state.getQuestionsDetails();
+            List<String> answers = state.getCorrectAnswers();
+
+            if (previewQuizController != null) {
+                previewQuizController.execute(quizName, username, category, questions, answers);
+            } else {
+                System.out.println("Error: Preview Controller not set.");
+            }
         }
     }
 
@@ -296,6 +323,10 @@ public class CreateQuizView extends JPanel implements ActionListener, PropertyCh
 
     public void setCreateQuizController(CreateQuizController createQuizController) {
         this.createQuizController = createQuizController;
+    }
+
+    public void setPreviewQuizController(PreviewQuizController controller) {
+        this.previewQuizController = controller;
     }
 
     public void setViewManagerModel(ViewManagerModel viewManagerModel) {

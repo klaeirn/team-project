@@ -6,7 +6,7 @@ public interface CreateQuizOutputBoundary {
 
     void prepareFailView(String errorMessage);
 
-    void switchToCreateQuizView();
+    void switchToCreateQuizView(String username);
 
     void switchToLoggedInView();
 }
