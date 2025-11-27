@@ -3,6 +3,8 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
+import data_access.CompositeViewResultsDataAccessObject;
+import data_access.FileLeaderboardDataAccessObject;
 import data_access.FileQuizDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.HashtoQuizDataAccessObject;
@@ -41,7 +43,9 @@ import interface_adapter.view_results.ViewResultsController;
 import interface_adapter.view_results.ViewResultsPresenter;
 import interface_adapter.view_results.ViewResultsViewModel;
 import interface_adapter.leaderboard.LeaderboardController;
-import interface_adapter.leaderboard.LeaderboardViewModel;
+import interface_adapter.view_leaderboard.ViewLeaderboardController;
+import interface_adapter.view_leaderboard.ViewLeaderboardPresenter;
+import interface_adapter.view_leaderboard.ViewLeaderboardViewModel;
 import interface_adapter.validate_question.ValidateQuestionController;
 import interface_adapter.validate_question.ValidateQuestionPresenter;
 import interface_adapter.validate_question.ValidateQuestionViewModel;
@@ -84,6 +88,10 @@ import use_cases.view_results.ViewResultsDataAccessInterface;
 import use_cases.view_results.ViewResultsInputBoundary;
 import use_cases.view_results.ViewResultsInteractor;
 import use_cases.view_results.ViewResultsOutputBoundary;
+import use_cases.view_leaderboard.LeaderboardDataAccessInterface;
+import use_cases.view_leaderboard.ViewLeaderboardInputBoundary;
+import use_cases.view_leaderboard.ViewLeaderboardInteractor;
+import use_cases.view_leaderboard.ViewLeaderboardOutputBoundary;
 import use_cases.validate_question.ValidateQuestionInputBoundary;
 import use_cases.validate_question.ValidateQuestionInteractor;
 import use_cases.validate_question.ValidateQuestionOutputBoundary;
@@ -102,6 +110,7 @@ public class AppBuilder {
     final QuizFactory quizFactory = new QuizFactory();
     final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
     final FileQuizDataAccessObject quizFileDataAccessObject = new FileQuizDataAccessObject("quizzes.json");
+    final FileLeaderboardDataAccessObject leaderboardDataAccessObject = new FileLeaderboardDataAccessObject("leaderboards.json");
 
 
     private LoginView loginView;
@@ -131,9 +140,10 @@ public class AppBuilder {
     private ViewResultsViewModel viewResultsViewModel;
     private ResultsView resultsView;
     private ViewResultsController viewResultsController;
-    private LeaderboardViewModel leaderboardViewModel;
+    private ViewLeaderboardViewModel viewLeaderboardViewModel;
     private LeaderboardView leaderboardView;
     private LeaderboardController leaderboardController;
+    private ViewLeaderboardController viewLeaderboardController;
     private ValidateQuestionViewModel validateQuestionViewModel;
     private ValidateQuestionView validateQuestionView;
     private TakeSharedQuizView takeSharedQuizView;
@@ -216,8 +226,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addLeaderboardView() {
-        leaderboardViewModel = new LeaderboardViewModel();
-        leaderboardView = new LeaderboardView(leaderboardViewModel);
+        viewLeaderboardViewModel = new ViewLeaderboardViewModel();
+        leaderboardView = new LeaderboardView(viewLeaderboardViewModel);
         cardPanel.add(leaderboardView, leaderboardView.getViewName());
         return this;
     }
@@ -270,11 +280,12 @@ public class AppBuilder {
 
     public AppBuilder addViewResultsUseCase() {
         final ViewResultsOutputBoundary viewResultsPresenter = new ViewResultsPresenter(viewResultsViewModel, viewManagerModel);
-        // TODO Add compatibility with existing quiz DAO (FileQuizDataAccessObject) so that we can view results for existing quizzes too.
-        final ViewResultsDataAccessInterface viewResultsDAO = quizApiDataAccessObject;
+        // Use composite data access that checks both API (quickstart) and file (custom/shared) quizzes
+        final ViewResultsDataAccessInterface viewResultsDAO = 
+                new CompositeViewResultsDataAccessObject(quizApiDataAccessObject, quizFileDataAccessObject);
 
         final ViewResultsInputBoundary viewResultsInteractor =
-                new ViewResultsInteractor(viewResultsPresenter, viewResultsDAO);
+                new ViewResultsInteractor(viewResultsPresenter, viewResultsDAO, leaderboardDataAccessObject);
 
         viewResultsController = new ViewResultsController(viewResultsInteractor);
 
@@ -282,6 +293,22 @@ public class AppBuilder {
             resultsView.setViewResultsController(viewResultsController);
             resultsView.setViewManagerModel(viewManagerModel);
             viewResultsViewModel.addPropertyChangeListener(resultsView);
+        }
+
+        return this;
+    }
+
+    public AppBuilder addViewLeaderboardUseCase() {
+        final ViewLeaderboardOutputBoundary viewLeaderboardPresenter = new ViewLeaderboardPresenter(viewLeaderboardViewModel, viewManagerModel);
+        final LeaderboardDataAccessInterface leaderboardDAO = leaderboardDataAccessObject;
+
+        final ViewLeaderboardInputBoundary viewLeaderboardInteractor =
+                new ViewLeaderboardInteractor(viewLeaderboardPresenter, leaderboardDAO);
+
+        viewLeaderboardController = new ViewLeaderboardController(viewLeaderboardInteractor);
+
+        if (leaderboardView != null) {
+            viewLeaderboardViewModel.addPropertyChangeListener(leaderboardView);
         }
 
         return this;
@@ -303,10 +330,13 @@ public class AppBuilder {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
             leaderboardView.setViewManagerModel(viewManagerModel);
+        }
         if (takeSharedQuizPresenter != null && takeQuizController != null) {
             takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
         }
-
+        if (resultsView != null && viewLeaderboardController != null) {
+            resultsView.setViewLeaderboardController(viewLeaderboardController);
+        }
         return this;
     }
 
