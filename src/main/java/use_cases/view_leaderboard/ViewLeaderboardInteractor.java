@@ -30,8 +30,14 @@ public class ViewLeaderboardInteractor implements ViewLeaderboardInputBoundary {
         // Get leaderboard from data access
         Leaderboard leaderboard = dataAccessObject.getLeaderboard(quizName, creatorUsername);
 
-        if (leaderboard == null) {
-            presenter.prepareFailView("Failed to retrieve leaderboard.");
+        if (leaderboard == null || leaderboard.isEmpty()) {
+            // No leaderboard found - show success view with message
+            ViewLeaderboardOutputData outputData = new ViewLeaderboardOutputData(
+                    null,
+                    quizName,
+                    "No results found for this quiz."
+            );
+            presenter.prepareSuccessView(outputData);
             return;
         }
 

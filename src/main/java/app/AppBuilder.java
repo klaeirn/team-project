@@ -3,7 +3,6 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 
-import data_access.CompositeViewResultsDataAccessObject;
 import data_access.FileLeaderboardDataAccessObject;
 import data_access.FileQuizDataAccessObject;
 import data_access.FileUserDataAccessObject;
@@ -84,7 +83,6 @@ import use_cases.take_shared_quiz.TakeSharedQuizDataAccessInterface;
 import use_cases.take_shared_quiz.TakeSharedQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
-import use_cases.view_results.ViewResultsDataAccessInterface;
 import use_cases.view_results.ViewResultsInputBoundary;
 import use_cases.view_results.ViewResultsInteractor;
 import use_cases.view_results.ViewResultsOutputBoundary;
@@ -280,12 +278,10 @@ public class AppBuilder {
 
     public AppBuilder addViewResultsUseCase() {
         final ViewResultsOutputBoundary viewResultsPresenter = new ViewResultsPresenter(viewResultsViewModel, viewManagerModel);
-        // Use composite data access that checks both API (quickstart) and file (custom/shared) quizzes
-        final ViewResultsDataAccessInterface viewResultsDAO = 
-                new CompositeViewResultsDataAccessObject(quizApiDataAccessObject, quizFileDataAccessObject);
+        // Quiz object is passed directly from TakeQuiz - no data access needed here
 
         final ViewResultsInputBoundary viewResultsInteractor =
-                new ViewResultsInteractor(viewResultsPresenter, viewResultsDAO, leaderboardDataAccessObject);
+                new ViewResultsInteractor(viewResultsPresenter, leaderboardDataAccessObject);
 
         viewResultsController = new ViewResultsController(viewResultsInteractor);
 
@@ -330,15 +326,16 @@ public class AppBuilder {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
             leaderboardView.setViewManagerModel(viewManagerModel);
-        }
-        if (takeSharedQuizPresenter != null && takeQuizController != null) {
-            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+            if (takeSharedQuizPresenter != null && takeQuizController != null) {
+                takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+            }
         }
         if (resultsView != null && viewLeaderboardController != null) {
             resultsView.setViewLeaderboardController(viewLeaderboardController);
         }
         return this;
     }
+
 
     public AppBuilder addCreateQuizView() {
         createQuizViewModel = new CreateQuizViewModel();

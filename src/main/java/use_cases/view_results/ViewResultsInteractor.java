@@ -10,26 +10,19 @@ import java.util.Map;
 
 public class ViewResultsInteractor implements ViewResultsInputBoundary {
     private final ViewResultsOutputBoundary presenter;
-    private final ViewResultsDataAccessInterface dataAccessObject;
     private final LeaderboardDataAccessInterface leaderboardDataAccess;
 
     public ViewResultsInteractor(ViewResultsOutputBoundary presenter,
-                                 ViewResultsDataAccessInterface dataAccessObject,
                                  LeaderboardDataAccessInterface leaderboardDataAccess) {
         this.presenter = presenter;
-        this.dataAccessObject = dataAccessObject;
         this.leaderboardDataAccess = leaderboardDataAccess;
     }
 
     @Override
     public void execute(ViewResultsInputData inputData) {
-        String quizName = inputData.getQuizName();
-        String creatorUsername = inputData.getCreatorUsername();
+        Quiz quiz = inputData.getQuiz();
         String username = inputData.getUsername();
         Map<Integer, String> userAnswers = inputData.getUserAnswers();
-
-        // Fetch quiz from data access layer
-        Quiz quiz = dataAccessObject.getQuiz(quizName, creatorUsername);
 
         if (quiz == null) {
             presenter.prepareFailView("Quiz not found.");
@@ -61,6 +54,8 @@ public class ViewResultsInteractor implements ViewResultsInputBoundary {
         QuizResult quizResult = new QuizResult(username, score, questions.size());
 
         // Save to leaderboard if this is a shared quiz (not quickstart)
+        String quizName = quiz.getName();
+        String creatorUsername = quiz.getCreatorUsername();
         if (leaderboardDataAccess != null && !"System".equals(creatorUsername)) {
             leaderboardDataAccess.saveQuizResult(quizName, creatorUsername, quizResult);
         }
