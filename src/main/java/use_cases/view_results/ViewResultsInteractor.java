@@ -3,6 +3,7 @@ package use_cases.view_results;
 import entities.Question;
 import entities.Quiz;
 import entities.QuizResult;
+import use_cases.view_leaderboard.LeaderboardDataAccessInterface;
 
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,14 @@ import java.util.Map;
 public class ViewResultsInteractor implements ViewResultsInputBoundary {
     private final ViewResultsOutputBoundary presenter;
     private final ViewResultsDataAccessInterface dataAccessObject;
+    private final LeaderboardDataAccessInterface leaderboardDataAccess;
 
     public ViewResultsInteractor(ViewResultsOutputBoundary presenter,
-                                 ViewResultsDataAccessInterface dataAccessObject) {
+                                 ViewResultsDataAccessInterface dataAccessObject,
+                                 LeaderboardDataAccessInterface leaderboardDataAccess) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
+        this.leaderboardDataAccess = leaderboardDataAccess;
     }
 
     @Override
@@ -56,10 +60,16 @@ public class ViewResultsInteractor implements ViewResultsInputBoundary {
         // Create QuizResult
         QuizResult quizResult = new QuizResult(username, score, questions.size());
 
+        // Save to leaderboard if this is a shared quiz (not quickstart)
+        if (leaderboardDataAccess != null && !"System".equals(creatorUsername)) {
+            leaderboardDataAccess.saveQuizResult(quizName, creatorUsername, quizResult);
+        }
+
         // Create output data
         ViewResultsOutputData outputData = new ViewResultsOutputData(
                 quizResult,
                 quiz.getName(),
+                creatorUsername,
                 null
         );
 

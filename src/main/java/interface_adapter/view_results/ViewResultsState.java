@@ -5,6 +5,7 @@ import entities.QuizResult;
 public class ViewResultsState {
     private QuizResult quizResult;
     private String quizName;
+    private String creatorUsername;
     private String errorMessage;
 
     public QuizResult getQuizResult() {
@@ -21,6 +22,14 @@ public class ViewResultsState {
 
     public void setQuizName(String quizName) {
         this.quizName = quizName;
+    }
+
+    public String getCreatorUsername() {
+        return creatorUsername;
+    }
+
+    public void setCreatorUsername(String creatorUsername) {
+        this.creatorUsername = creatorUsername;
     }
 
     public String getErrorMessage() {
