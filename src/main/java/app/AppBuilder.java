@@ -330,15 +330,13 @@ public class AppBuilder {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
             leaderboardView.setViewManagerModel(viewManagerModel);
-        }
-        if (takeSharedQuizPresenter != null && takeQuizController != null) {
-            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
-        }
-        if (resultsView != null && viewLeaderboardController != null) {
-            resultsView.setViewLeaderboardController(viewLeaderboardController);
+            if (takeSharedQuizPresenter != null && takeQuizController != null) {
+                takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+            }
         }
         return this;
     }
+
 
     public AppBuilder addCreateQuizView() {
         createQuizViewModel = new CreateQuizViewModel();
