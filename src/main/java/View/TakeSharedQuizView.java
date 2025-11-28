@@ -12,8 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
-public class TakeSharedQuizView extends JPanel implements ActionListener, PropertyChangeListener {
+public class TakeSharedQuizView extends JPanel implements ActionListener,
+        PropertyChangeListener {
+
     private final String viewName = "take shared quiz";
     private final TakeSharedQuizViewModel viewModel;
 
@@ -49,7 +52,7 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         this.add(hashErrorField);
         this.add(buttons);
 
-        hashInputField.getDocument().addDocumentListener(new DocumentListener() {
+        hashInputField.getDocument().addDocumentListener(new DocumentListener(){
 
             private void documentListenerHelper() {
                 final TakeSharedQuizState currentState = viewModel.getState();
@@ -76,8 +79,10 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         startButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(startButton) && controller != null) {
-                            final TakeSharedQuizState currentState = viewModel.getState();
+                        if (evt.getSource().equals(startButton) && controller !=
+                                null) {
+                            final TakeSharedQuizState currentState =
+                                    viewModel.getState();
                             controller.execute(currentState.getHash());
                         }
                     }
@@ -87,7 +92,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         backButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(backButton) && viewManagerModel != null) {
+                        if (evt.getSource().equals(backButton) &&
+                                viewManagerModel != null) {
                             viewManagerModel.setState("logged in");
                             viewManagerModel.firePropertyChange();
                         }
@@ -123,10 +129,11 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         }
 
         String error = state.getErrorMessage();
-        if (error == null) {
-            hashErrorField.setText("");
-        } else {
-            hashErrorField.setText(error);
-        }
+        hashErrorField.setText(Objects.requireNonNullElse(error, ""));
+//        if (error == null) {
+//            hashErrorField.setText("");
+//        } else {
+//            hashErrorField.setText(error);
+//        }
     }
 }

@@ -7,7 +7,10 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
     private final TakeSharedQuizDataAccessInterface takeSharedQuizDataAccess;
     private final TakeSharedQuizOutputBoundary takeSharedQuizOutputBoundary;
 
-    public  TakeSharedQuizInteractor(TakeSharedQuizDataAccessInterface takeSharedQuizDataAccess, TakeSharedQuizOutputBoundary takeSharedQuizOutputBoundary) {
+    public  TakeSharedQuizInteractor(TakeSharedQuizDataAccessInterface
+                                             takeSharedQuizDataAccess,
+                                     TakeSharedQuizOutputBoundary
+                                             takeSharedQuizOutputBoundary) {
         this.takeSharedQuizDataAccess = takeSharedQuizDataAccess;
         this.takeSharedQuizOutputBoundary = takeSharedQuizOutputBoundary;
     }

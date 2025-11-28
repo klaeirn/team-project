@@ -5,10 +5,13 @@ import use_cases.take_shared_quiz.TakeSharedQuizInputBoundary;
 import use_cases.take_shared_quiz.TakeSharedQuizInputData;
 
 public class TakeSharedQuizController {
+
     private final TakeSharedQuizInputBoundary takeSharedQuizInputBoundary;
     private final ViewManagerModel viewManagerModel;
 
-    public TakeSharedQuizController(TakeSharedQuizInputBoundary takeSharedQuizInputBoundary, ViewManagerModel viewManagerModel){
+    public TakeSharedQuizController(TakeSharedQuizInputBoundary
+                                            takeSharedQuizInputBoundary,
+                                    ViewManagerModel viewManagerModel){
         this.takeSharedQuizInputBoundary = takeSharedQuizInputBoundary;
         this.viewManagerModel = viewManagerModel;
     }

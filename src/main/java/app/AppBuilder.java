@@ -7,6 +7,7 @@ import data_access.FileQuizDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.HashtoQuizDataAccessObject;
 import data_access.QuizApiDataAccessObject;
+import data_access.ReadHashToQuizDataAccessObject;
 import entities.QuestionFactory;
 import entities.QuizFactory;
 import entities.UserFactory;
@@ -95,13 +96,17 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     final UserFactory userFactory = new UserFactory();
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    ViewManager viewManager = new ViewManager(cardPanel, cardLayout,
+            viewManagerModel);
 
-    final FileUserDataAccessObject userDataAccessObject = new FileUserDataAccessObject("users.csv", userFactory);
+    final FileUserDataAccessObject userDataAccessObject =
+            new FileUserDataAccessObject("users.csv", userFactory);
     final QuestionFactory questionFactory = new QuestionFactory();
     final QuizFactory quizFactory = new QuizFactory();
-    final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
-    final FileQuizDataAccessObject quizFileDataAccessObject = new FileQuizDataAccessObject("quizzes.json");
+    final QuizApiDataAccessObject quizApiDataAccessObject =
+            new QuizApiDataAccessObject(questionFactory, quizFactory);
+    final FileQuizDataAccessObject quizFileDataAccessObject =
+            new FileQuizDataAccessObject("quizzes.json");
 
 
     private LoginView loginView;
@@ -253,7 +258,8 @@ public class AppBuilder {
 
     public AppBuilder addTakeSharedQuizUseCase() {
         takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
-        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        //final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizDataAccessInterface dataAccess = new ReadHashToQuizDataAccessObject();
         final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
         takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
 
@@ -303,11 +309,14 @@ public class AppBuilder {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
             leaderboardView.setViewManagerModel(viewManagerModel);
-            if (takeSharedQuizPresenter != null && takeQuizController != null) {
-                takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
-            }
         }
+
+        if (takeSharedQuizPresenter != null && takeQuizController != null) {
+            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+        }
+
         return this;
+
     }
 
 
