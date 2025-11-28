@@ -19,7 +19,15 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateQuizOutputData outputData) {
-        this.createQuizViewModel.setState(new CreateQuizState());
+        CreateQuizState state = new CreateQuizState();
+        String successMessage = String.format(
+                "Quiz '%s' (%s) with %d questions saved successfully!",
+                outputData.getQuizName(),
+                outputData.getCategory(),
+                outputData.getQuestionCount()
+        );
+        state.setSuccessMessage(successMessage);
+        this.createQuizViewModel.setState(state);
         this.createQuizViewModel.firePropertyChange();
 
         this.viewManagerModel.setState(loggedInViewModel.getViewName());

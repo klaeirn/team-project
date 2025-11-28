@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6455bb66-7bb4-4964-b83b-156294a00ea3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/entities/CreateQuizTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/entities/ValidateQuestionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/View/CreateQuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/CreateQuizView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/View/ValidateQuestionView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/ValidateQuestionView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileQuizDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileQuizDataAccessObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/create_quiz/CreateQuizPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/create_quiz/CreateQuizPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/create_quiz/CreateQuizState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/create_quiz/CreateQuizState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_cases/create_quiz/CreateQuizOutputData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +40,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/klaeirn/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;bbd33b1a-b2ad-4323-96ad-b51d4135637c&quot;
+    &quot;accountId&quot;: &quot;748da5c6-98ca-45e9-8b8f-89127ff68cc0&quot;
   },
   &quot;editorReviewEnabled&quot;: false
 }</component>
@@ -51,18 +55,25 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "JUnit.All in TeamProject.executor": "Run",
+    "JUnit.CreateQuizTest.executor": "Run",
+    "JUnit.ValidateQuestionInteractorTest.executor": "Run",
+    "JUnit.ValidateQuestionTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "validate__question",
+    "git-widget-placeholder": "clean__up",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "diff.base",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -71,7 +82,7 @@
       <recent name="C:\Users\Avyuk\Documents\CSC207\team_project\src\main\java" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.CreateQuizTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="TeamProject" />
@@ -81,6 +92,44 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in TeamProject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreateQuizTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entities" />
+      <option name="MAIN_CLASS_NAME" value="entities.CreateQuizTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ValidateQuestionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entities" />
+      <option name="MAIN_CLASS_NAME" value="entities.ValidateQuestionTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -96,7 +145,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CreateQuizTest" />
+        <item itemvalue="JUnit.ValidateQuestionTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.All in TeamProject" />
       </list>
     </recent_temporary>
   </component>
@@ -104,7 +156,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -123,10 +174,15 @@
       <workItem from="1763009984152" duration="1701000" />
       <workItem from="1763011720550" duration="6544000" />
       <workItem from="1763250828121" duration="2619000" />
+      <workItem from="1764284147340" duration="10663000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

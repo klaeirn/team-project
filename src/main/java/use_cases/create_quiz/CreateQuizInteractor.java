@@ -45,7 +45,7 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
             return;
         }
         
-        String creatorUsername = userDataAccessObject.getCurrentUsername();
+        String creatorUsername = createQuizInputData.getUsername();
         List<Question> questions = new ArrayList<>();
         for (int i = 0; i < questionsDetails.size(); i++) {
             List<String> questionDetails = questionsDetails.get(i);
@@ -60,7 +60,8 @@ public class CreateQuizInteractor implements CreateQuizInputBoundary {
         Quiz quiz = quizFactory.createQuiz(quizName, creatorUsername, category, questions);
         quizDataAccessObject.saveUserQuiz(quiz);
 
-        CreateQuizOutputData outputData = new CreateQuizOutputData();
+        CreateQuizOutputData outputData = new CreateQuizOutputData(
+                quizName, creatorUsername, category, questions.size());
         createQuizPresenter.prepareSuccessView(outputData);
     }
 
