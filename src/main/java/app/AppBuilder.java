@@ -40,9 +40,14 @@ import interface_adapter.take_quiz.TakeQuizViewModel;
 import interface_adapter.view_results.ViewResultsController;
 import interface_adapter.view_results.ViewResultsPresenter;
 import interface_adapter.view_results.ViewResultsViewModel;
+import interface_adapter.leaderboard.LeaderboardController;
+import interface_adapter.leaderboard.LeaderboardViewModel;
 import interface_adapter.validate_question.ValidateQuestionController;
 import interface_adapter.validate_question.ValidateQuestionPresenter;
 import interface_adapter.validate_question.ValidateQuestionViewModel;
+import interface_adapter.take_shared_quiz.TakeSharedQuizController;
+import interface_adapter.take_shared_quiz.TakeSharedQuizPresenter;
+import interface_adapter.take_shared_quiz.TakeSharedQuizViewModel;
 import interface_adapter.preview_quiz.PreviewQuizViewModel;
 import interface_adapter.preview_quiz.PreviewQuizPresenter;
 import interface_adapter.preview_quiz.PreviewQuizController;
@@ -69,6 +74,10 @@ import use_cases.share_quiz.ShareQuizInteractor;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInteractor;
 import use_cases.take_quiz.TakeQuizOutputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInputBoundary;
+import use_cases.take_shared_quiz.TakeSharedQuizInteractor;
+import use_cases.take_shared_quiz.TakeSharedQuizDataAccessInterface;
+import use_cases.take_shared_quiz.TakeSharedQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizInteractor;
 import use_cases.view_results.ViewResultsDataAccessInterface;
@@ -122,8 +131,15 @@ public class AppBuilder {
     private ViewResultsViewModel viewResultsViewModel;
     private ResultsView resultsView;
     private ViewResultsController viewResultsController;
+    private LeaderboardViewModel leaderboardViewModel;
+    private LeaderboardView leaderboardView;
+    private LeaderboardController leaderboardController;
     private ValidateQuestionViewModel validateQuestionViewModel;
     private ValidateQuestionView validateQuestionView;
+    private TakeSharedQuizView takeSharedQuizView;
+    private TakeSharedQuizPresenter takeSharedQuizPresenter;
+    private TakeSharedQuizViewModel takeSharedQuizViewModel;
+    private TakeSharedQuizController takeSharedQuizController;
     private PreviewQuizView previewQuizView;
     private PreviewQuizViewModel previewQuizViewModel;
 
@@ -185,10 +201,24 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTakeSharedQuizView() {
+        takeSharedQuizViewModel = new TakeSharedQuizViewModel();
+        takeSharedQuizView = new TakeSharedQuizView(takeSharedQuizViewModel);
+        cardPanel.add(takeSharedQuizView, takeSharedQuizView.getViewName());
+        return this;
+    }
+
     public AppBuilder addResultsView() {
         viewResultsViewModel = new ViewResultsViewModel();
         resultsView = new ResultsView(viewResultsViewModel);
         cardPanel.add(resultsView, resultsView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addLeaderboardView() {
+        leaderboardViewModel = new LeaderboardViewModel();
+        leaderboardView = new LeaderboardView(leaderboardViewModel);
+        cardPanel.add(leaderboardView, leaderboardView.getViewName());
         return this;
     }
 
@@ -218,6 +248,23 @@ public class AppBuilder {
             takeQuizViewModel.addPropertyChangeListener(takeQuizView);
         }
 
+        return this;
+    }
+
+    public AppBuilder addTakeSharedQuizUseCase() {
+        takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
+        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
+        takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
+
+        if (takeSharedQuizView != null) {
+            takeSharedQuizView.setController(takeSharedQuizController);
+            takeSharedQuizView.setViewManagerModel(viewManagerModel);
+            takeSharedQuizViewModel.addPropertyChangeListener(takeSharedQuizView);
+        }
+        if (loggedInView != null) {
+            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+        }
         return this;
     }
 
@@ -252,8 +299,17 @@ public class AppBuilder {
             takeQuizView.setViewResultsController(viewResultsController);
         }
 
+        if (leaderboardView != null) {
+            leaderboardController = new LeaderboardController(viewManagerModel);
+            leaderboardView.setLeaderboardController(leaderboardController);
+            leaderboardView.setViewManagerModel(viewManagerModel);
+            if (takeSharedQuizPresenter != null && takeQuizController != null) {
+                takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+            }
+        }
         return this;
     }
+
 
     public AppBuilder addCreateQuizView() {
         createQuizViewModel = new CreateQuizViewModel();
@@ -293,7 +349,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addChangeUsernameUseCase() {
-        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel, viewManagerModel);
+        final ChangeUsernameOutputBoundary changeUsernameOutputBoundary = new ChangeUsernamePresenter(changeUsernameViewModel,
+                viewManagerModel,loggedInViewModel);
         final ChangeUsernameInputBoundary changeUsernameInteractor = new ChangeUsernameInteractor(
                 userDataAccessObject, changeUsernameOutputBoundary);
 

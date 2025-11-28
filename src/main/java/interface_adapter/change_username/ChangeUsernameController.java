@@ -19,4 +19,8 @@ public class ChangeUsernameController {
     public void switchToChangeUsernameView() {
         changeUsernameUsecaseInteractor.switchToChangeUsernameView();
     }
+
+    public void switchToLoggedInView() {
+        changeUsernameUsecaseInteractor.switchToLoggedInView();
+    }
 }

@@ -65,11 +65,10 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         leaderboardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Navigate to leaderboard view (not implemented yet)
-                // if (viewManagerModel != null) {
-                //     viewManagerModel.setState("leaderboard");
-                //     viewManagerModel.firePropertyChange(); <-- probably something like that
-                // }
+                if (viewManagerModel != null) {
+                    viewManagerModel.setState("leaderboard");
+                    viewManagerModel.firePropertyChange();
+                }
             }
         });
         backButton = new JButton("Back to Quiz Menu");

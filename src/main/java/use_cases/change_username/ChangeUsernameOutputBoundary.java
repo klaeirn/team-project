@@ -16,4 +16,6 @@ public interface ChangeUsernameOutputBoundary {
     void prepareFailView(String error);
 
     void switchToChangeUsernameView();
+
+    void switchToLoggedInView();
 }
