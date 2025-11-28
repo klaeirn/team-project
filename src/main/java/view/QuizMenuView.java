@@ -15,7 +15,8 @@ import java.beans.PropertyChangeListener;
 /**
  * The View for the Quiz Menu after pressing the take quiz button.
  */
-public class QuizMenuView extends JPanel implements ActionListener, PropertyChangeListener {
+public class QuizMenuView extends JPanel implements ActionListener,
+        PropertyChangeListener {
     private final String viewName = "quiz menu";
     private QuizMenuController quizMenuController;
     private SelectExistingQuizController selectExistingQuizController;
@@ -37,9 +38,10 @@ public class QuizMenuView extends JPanel implements ActionListener, PropertyChan
         backButton = new JButton("Back");
         takeSharedQuizButton = new JButton("Take Shared Quiz");
         buttons.add(selectExistingQuizButton);
+        buttons.add(takeSharedQuizButton);
         buttons.add(quickstartButton);
         buttons.add(backButton);
-        buttons.add(takeSharedQuizButton);
+//        buttons.add(takeSharedQuizButton);
 
         selectExistingQuizButton.addActionListener(new ActionListener() {
             @Override

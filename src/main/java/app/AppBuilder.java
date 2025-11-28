@@ -161,8 +161,9 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+        final LoginOutputBoundary loginOutputBoundary =
+                new LoginPresenter(viewManagerModel, loggedInViewModel,
+                        loginViewModel);
         final LoginInputBoundary loginInteractor = new LogInInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -268,9 +269,13 @@ public class AppBuilder {
             takeSharedQuizView.setViewManagerModel(viewManagerModel);
             takeSharedQuizViewModel.addPropertyChangeListener(takeSharedQuizView);
         }
-        if (loggedInView != null) {
-            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+//        if (loggedInView != null) {
+//            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+//        }
+        if (quizMenuView != null) {
+            quizMenuView.setTakeSharedQuizController(takeSharedQuizController);
         }
+
         return this;
     }
 
@@ -386,7 +391,8 @@ public class AppBuilder {
 
     public AppBuilder addShareQuizView() {
         shareQuizViewModel = new ShareQuizViewModel();
-        shareQuizView = new ShareQuizView(shareQuizViewModel);
+        shareQuizView = new ShareQuizView(shareQuizViewModel, viewManagerModel);
+
         cardPanel.add(shareQuizView, shareQuizView.getViewName());
         return this;
     }

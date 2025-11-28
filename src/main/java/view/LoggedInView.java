@@ -22,7 +22,8 @@ import interface_adapter.change_username.ChangeUsernameViewModel;
 /**
  * The View for when the user is logged into the program.
  */
-public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoggedInView extends JPanel implements ActionListener,
+        PropertyChangeListener {
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     //    private final JLabel passwordErrorField = new JLabel();

@@ -11,7 +11,8 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private TakeQuizController takeQuizController;
 
-    public TakeSharedQuizPresenter(TakeSharedQuizViewModel takeSharedQuizViewModel,
+    public TakeSharedQuizPresenter(TakeSharedQuizViewModel
+                                           takeSharedQuizViewModel,
                                    ViewManagerModel viewManagerModel) {
 
         this.takeSharedQuizViewModel = takeSharedQuizViewModel;

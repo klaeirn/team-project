@@ -52,7 +52,7 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
         this.add(hashErrorField);
         this.add(buttons);
 
-        hashInputField.getDocument().addDocumentListener(new DocumentListener(){
+        hashInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
                 final TakeSharedQuizState currentState = viewModel.getState();
@@ -89,18 +89,39 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
                 }
         );
 
+//        backButton.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(backButton) &&
+//                                viewManagerModel != null) {
+//                            viewManagerModel.setState("logged in");
+//                            viewManagerModel.firePropertyChange();
+//                        }
+//                    }
+//                }
+//        );
         backButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(backButton) &&
                                 viewManagerModel != null) {
-                            viewManagerModel.setState("logged in");
+                            TakeSharedQuizState currentState = viewModel.getState();
+                            currentState.setHash("");
+                            currentState.setErrorMessage(null);
+                            viewModel.setState(currentState);
+
+                            hashInputField.setText("");
+                            hashErrorField.setText("");
+
+                            viewManagerModel.setState("quiz menu");
                             viewManagerModel.firePropertyChange();
                         }
                     }
                 }
+
         );
     }
+
     public String getViewName() {
         return viewName;
     }
@@ -120,7 +141,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final TakeSharedQuizState state = (TakeSharedQuizState) evt.getNewValue();
+        final TakeSharedQuizState state =
+                (TakeSharedQuizState) evt.getNewValue();
         if (state == null) {
             return;
         }
