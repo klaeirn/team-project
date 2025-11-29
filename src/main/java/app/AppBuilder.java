@@ -8,6 +8,7 @@ import data_access.FileQuizDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.HashtoQuizDataAccessObject;
 import data_access.QuizApiDataAccessObject;
+import data_access.ReadHashToQuizDataAccessObject;
 import entities.QuestionFactory;
 import entities.QuizFactory;
 import entities.UserFactory;
@@ -101,11 +102,17 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     final UserFactory userFactory = new UserFactory();
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    ViewManager viewManager = new ViewManager(cardPanel, cardLayout,
+            viewManagerModel);
 
-    final FileUserDataAccessObject userDataAccessObject = new FileUserDataAccessObject("users.csv", userFactory);
+    final FileUserDataAccessObject userDataAccessObject =
+            new FileUserDataAccessObject("users.csv", userFactory);
     final QuestionFactory questionFactory = new QuestionFactory();
     final QuizFactory quizFactory = new QuizFactory();
+    final QuizApiDataAccessObject quizApiDataAccessObject =
+            new QuizApiDataAccessObject(questionFactory, quizFactory);
+    final FileQuizDataAccessObject quizFileDataAccessObject =
+            new FileQuizDataAccessObject("quizzes.json");
     final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
     final FileQuizDataAccessObject quizFileDataAccessObject = new FileQuizDataAccessObject("quizzes.json");
     final FileLeaderboardDataAccessObject leaderboardDataAccessObject = new FileLeaderboardDataAccessObject("leaderboards.json");
@@ -164,8 +171,9 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+        final LoginOutputBoundary loginOutputBoundary =
+                new LoginPresenter(viewManagerModel, loggedInViewModel,
+                        loginViewModel);
         final LoginInputBoundary loginInteractor = new LogInInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -261,7 +269,8 @@ public class AppBuilder {
 
     public AppBuilder addTakeSharedQuizUseCase() {
         takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
-        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        //final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizDataAccessInterface dataAccess = new ReadHashToQuizDataAccessObject();
         final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
         takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
 
@@ -270,9 +279,13 @@ public class AppBuilder {
             takeSharedQuizView.setViewManagerModel(viewManagerModel);
             takeSharedQuizViewModel.addPropertyChangeListener(takeSharedQuizView);
         }
-        if (loggedInView != null) {
-            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+//        if (loggedInView != null) {
+//            loggedInView.setTakeSharedQuizController(takeSharedQuizController);
+//        }
+        if (quizMenuView != null) {
+            quizMenuView.setTakeSharedQuizController(takeSharedQuizController);
         }
+
         return this;
     }
 
@@ -326,14 +339,17 @@ public class AppBuilder {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
             leaderboardView.setViewManagerModel(viewManagerModel);
-            if (takeSharedQuizPresenter != null && takeQuizController != null) {
-                takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
-            }
         }
+
+        if (takeSharedQuizPresenter != null && takeQuizController != null) {
+            takeSharedQuizPresenter.setTakeQuizController(takeQuizController);
+        }
+
         if (resultsView != null && viewLeaderboardController != null) {
             resultsView.setViewLeaderboardController(viewLeaderboardController);
         }
         return this;
+
     }
 
 
@@ -403,7 +419,8 @@ public class AppBuilder {
 
     public AppBuilder addShareQuizView() {
         shareQuizViewModel = new ShareQuizViewModel();
-        shareQuizView = new ShareQuizView(shareQuizViewModel);
+        shareQuizView = new ShareQuizView(shareQuizViewModel, viewManagerModel);
+
         cardPanel.add(shareQuizView, shareQuizView.getViewName());
         return this;
     }

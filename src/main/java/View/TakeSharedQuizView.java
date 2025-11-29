@@ -12,8 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
-public class TakeSharedQuizView extends JPanel implements ActionListener, PropertyChangeListener {
+public class TakeSharedQuizView extends JPanel implements ActionListener,
+        PropertyChangeListener {
+
     private final String viewName = "take shared quiz";
     private final TakeSharedQuizViewModel viewModel;
 
@@ -76,25 +79,49 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         startButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(startButton) && controller != null) {
-                            final TakeSharedQuizState currentState = viewModel.getState();
+                        if (evt.getSource().equals(startButton) && controller !=
+                                null) {
+                            final TakeSharedQuizState currentState =
+                                    viewModel.getState();
                             controller.execute(currentState.getHash());
                         }
                     }
                 }
         );
 
+//        backButton.addActionListener(
+//                new ActionListener() {
+//                    public void actionPerformed(ActionEvent evt) {
+//                        if (evt.getSource().equals(backButton) &&
+//                                viewManagerModel != null) {
+//                            viewManagerModel.setState("logged in");
+//                            viewManagerModel.firePropertyChange();
+//                        }
+//                    }
+//                }
+//        );
         backButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(backButton) && viewManagerModel != null) {
-                            viewManagerModel.setState("logged in");
+                        if (evt.getSource().equals(backButton) &&
+                                viewManagerModel != null) {
+                            TakeSharedQuizState currentState = viewModel.getState();
+                            currentState.setHash("");
+                            currentState.setErrorMessage(null);
+                            viewModel.setState(currentState);
+
+                            hashInputField.setText("");
+                            hashErrorField.setText("");
+
+                            viewManagerModel.setState("quiz menu");
                             viewManagerModel.firePropertyChange();
                         }
                     }
                 }
+
         );
     }
+
     public String getViewName() {
         return viewName;
     }
@@ -114,7 +141,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final TakeSharedQuizState state = (TakeSharedQuizState) evt.getNewValue();
+        final TakeSharedQuizState state =
+                (TakeSharedQuizState) evt.getNewValue();
         if (state == null) {
             return;
         }
@@ -123,10 +151,11 @@ public class TakeSharedQuizView extends JPanel implements ActionListener, Proper
         }
 
         String error = state.getErrorMessage();
-        if (error == null) {
-            hashErrorField.setText("");
-        } else {
-            hashErrorField.setText(error);
-        }
+        hashErrorField.setText(Objects.requireNonNullElse(error, ""));
+//        if (error == null) {
+//            hashErrorField.setText("");
+//        } else {
+//            hashErrorField.setText(error);
+//        }
     }
 }

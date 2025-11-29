@@ -71,7 +71,8 @@ public final class QuizApiDatabase {
     public static String buildUrl(String categoryDisplay,
                                   String difficultyDisplay,
                                   String typeDisplay) {
-        StringBuilder sb = new StringBuilder("https://opentdb.com/api.php?amount=10");
+        StringBuilder sb =
+                new StringBuilder("https://opentdb.com/api.php?amount=10");
 
         Integer catId = getCategoryId(categoryDisplay);
         if (catId != null) {
