@@ -26,6 +26,7 @@ public class Main {
                 .addTakeQuizUseCase()
                 .addTakeSharedQuizUseCase()
                 .addViewResultsUseCase()
+                .addViewLeaderboardUseCase()
                 .addCreateQuizUseCase()
                 .addValidateQuestionUseCase()
                 .addQuizMenuController()

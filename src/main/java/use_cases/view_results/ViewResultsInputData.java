@@ -1,26 +1,21 @@
 package use_cases.view_results;
 
+import entities.Quiz;
 import java.util.Map;
 
 public class ViewResultsInputData {
-    private final String quizName;
-    private final String creatorUsername;
+    private final Quiz quiz;
     private final String username;
     private final Map<Integer, String> userAnswers;
 
-    public ViewResultsInputData(String quizName, String creatorUsername, String username, Map<Integer, String> userAnswers) {
-        this.quizName = quizName;
-        this.creatorUsername = creatorUsername;
+    public ViewResultsInputData(Quiz quiz, String username, Map<Integer, String> userAnswers) {
+        this.quiz = quiz;
         this.username = username;
         this.userAnswers = userAnswers;
     }
 
-    public String getQuizName() {
-        return quizName;
-    }
-
-    public String getCreatorUsername() {
-        return creatorUsername;
+    public Quiz getQuiz() {
+        return quiz;
     }
 
     public String getUsername() {

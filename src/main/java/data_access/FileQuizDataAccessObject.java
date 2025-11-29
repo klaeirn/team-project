@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONString;
 import use_cases.preview_quiz.PreviewQuizDataAccessInterface;
+import use_cases.view_results.ViewResultsDataAccessInterface;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +23,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface, PreviewQuizDataAccessInterface {
+public class FileQuizDataAccessObject implements CreateQuizDataAccessInterface, PreviewQuizDataAccessInterface, ViewResultsDataAccessInterface {
 
     private final Path quizPath;
     private final QuizFactory quizFactory;
