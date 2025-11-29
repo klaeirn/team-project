@@ -1,5 +1,6 @@
 package interface_adapter.view_results;
 
+import entities.Quiz;
 import use_cases.view_results.ViewResultsInputBoundary;
 import use_cases.view_results.ViewResultsInputData;
 
@@ -12,8 +13,8 @@ public class ViewResultsController {
         this.viewResultsUseCaseInteractor = viewResultsUseCaseInteractor;
     }
 
-    public void execute(String quizName, String creatorUsername, String username, Map<Integer, String> userAnswers) {
-        ViewResultsInputData inputData = new ViewResultsInputData(quizName, creatorUsername, username, userAnswers);
+    public void execute(Quiz quiz, String username, Map<Integer, String> userAnswers) {
+        ViewResultsInputData inputData = new ViewResultsInputData(quiz, username, userAnswers);
         viewResultsUseCaseInteractor.execute(inputData);
     }
 }
