@@ -48,32 +48,13 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, 16));
 
-      
         questionInputField.setLineWrap(true);
         questionInputField.setWrapStyleWord(true);
 
-        questionInputField.setText("Type question here...");
-        questionInputField.setForeground(Color.GRAY);
-        questionInputField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                if (questionInputField.getText().equals("Type question here...")) {
-                    questionInputField.setText("");
-                    questionInputField.setForeground(Color.BLACK);
-                }
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                if (questionInputField.getText().trim().isEmpty()) {
-                    questionInputField.setText("Type question here...");
-                    questionInputField.setForeground(Color.GRAY);
-                }
-            }
-        });
-
-    
-        instructionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        instructionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         for (int i = 0; i < 4; i++) {
-            optionFields[i] = new JTextField(15);
+            optionFields[i] = new JTextField(20);
             
             optionCheckboxes[i] = new JCheckBox();
             optionCheckboxes[i].setText("Option " + (i + 1));
@@ -94,84 +75,89 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
 
         deleteButton = new JButton("Delete");
         deleteButton.setBackground(Color.RED);
-        deleteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        deleteButton.setFocusPainted(false);
 
         saveButton = new JButton("Save");
         saveButton.setBackground(new Color(173, 216, 230));
-        saveButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        saveButton.setFocusPainted(false);
 
         deleteButton.addActionListener(this);
         saveButton.addActionListener(this);
 
         errorLabel.setForeground(Color.RED);
-        errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         this.add(titleLabel);
-        this.add(Box.createVerticalStrut(10));
+        this.add(Box.createVerticalStrut(20));
 
+        // Question input section
+        final JLabel questionLabel = new JLabel("Question:");
+        questionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(questionLabel);
+        this.add(Box.createVerticalStrut(5));
+        
         JPanel questionPanel = new JPanel(new BorderLayout());
         questionPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         questionPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         JScrollPane questionScrollPane = new JScrollPane(questionInputField);
-        questionScrollPane.setPreferredSize(new Dimension(400, 80));
-        questionScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        questionScrollPane.setPreferredSize(new Dimension(500, 20));
+        questionScrollPane.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.GRAY),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         questionPanel.add(questionScrollPane, BorderLayout.CENTER);
         this.add(questionPanel);
+        this.add(Box.createVerticalStrut(20));
+
+        instructionLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        this.add(instructionLabel);
         this.add(Box.createVerticalStrut(10));
-        
-        JPanel instructionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        instructionPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        instructionPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        instructionLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        instructionPanel.add(instructionLabel);
-        this.add(instructionPanel);
-        this.add(Box.createVerticalStrut(10));
-        
+
         JPanel optionsGrid = new JPanel(new GridLayout(2, 2, 10, 10));
         optionsGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
-        optionsGrid.setPreferredSize(new Dimension(400, 200));
+        optionsGrid.setPreferredSize(new Dimension(500, 200));
         
         for (int i = 0; i < 4; i++) {
-            JPanel optionPanel = new JPanel(new BorderLayout());
-            optionPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            JPanel optionPanel = new JPanel();
+            optionPanel.setLayout(new BoxLayout(optionPanel, BoxLayout.Y_AXIS));
+            optionPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
             optionPanel.setBackground(Color.WHITE);
+            optionPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             
-            JPanel checkboxPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            checkboxPanel.setBackground(Color.WHITE);
-            checkboxPanel.add(optionCheckboxes[i]);
-            optionPanel.add(checkboxPanel, BorderLayout.NORTH);
+            optionCheckboxes[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+            optionPanel.add(optionCheckboxes[i]);
+            optionPanel.add(Box.createVerticalStrut(5));
             
-            optionFields[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            optionPanel.add(optionFields[i], BorderLayout.CENTER);
+            optionFields[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+            optionFields[i].setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            optionPanel.add(optionFields[i]);
             
             optionsGrid.add(optionPanel);
         }
         
         this.add(optionsGrid);
-        this.add(Box.createVerticalStrut(10));
-        
-        final JPanel buttons = new JPanel();
-        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttons.add(deleteButton);
-        buttons.add(saveButton);
-        this.add(buttons);
-        
-        this.add(Box.createVerticalStrut(10));
-        
-        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(Box.createVerticalStrut(20));
+
+        errorLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         this.add(errorLabel);
+        this.add(Box.createVerticalStrut(20));
+
+        final JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        buttonsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonsPanel.add(deleteButton);
+        buttonsPanel.add(saveButton);
+        this.add(buttonsPanel);
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(saveButton)) {
-            String titleText = questionInputField.getText();
-            if (titleText.equals("Type question here...")) {
-                titleText = "";
-            }
-            String title = titleText.trim();
+            String title = questionInputField.getText().trim();
 
 
             List<String> options = new ArrayList<>();
@@ -188,8 +174,7 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
 
             // clear all UI fields directly
             if (validateQuestionViewModel.getState().isValid()){
-                questionInputField.setText("Type question here...");
-                questionInputField.setForeground(Color.GRAY);
+                questionInputField.setText("");
                 for (int i = 0; i < 4; i++) {
                     optionFields[i].setText("");
                     optionCheckboxes[i].setSelected(false);
@@ -214,8 +199,7 @@ public class ValidateQuestionView extends JPanel implements ActionListener, Prop
             }
             
             // clear all UI fields directly
-            questionInputField.setText("Type question here...");
-            questionInputField.setForeground(Color.GRAY);
+            questionInputField.setText("");
             for (int i = 0; i < 4; i++) {
                 optionFields[i].setText("");
                 optionCheckboxes[i].setSelected(false);

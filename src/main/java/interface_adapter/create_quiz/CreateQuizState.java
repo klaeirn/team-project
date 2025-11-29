@@ -10,7 +10,9 @@ public class CreateQuizState {
     private List<List<String>> questionsDetails = new ArrayList<>();
     private List<String> correctAnswers = new ArrayList<>();
     private String createError;
+    private String successMessage;
     private Integer editingQuestionIndex = null;
+    private boolean reorderMode = false;
 
     public String getQuizName() {
         return quizName;
@@ -56,8 +58,56 @@ public class CreateQuizState {
         this.createError = createError;
     }
 
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
+    }
+
     public Integer getEditingQuestionIndex() {return editingQuestionIndex;}
 
     public void setEditingQuestionIndex(Integer editingQuestionIndex){this.editingQuestionIndex = editingQuestionIndex;}
+
+    public boolean isReorderMode() {
+        return reorderMode;
+    }
+
+    public void setReorderMode(boolean reorderMode) {
+        this.reorderMode = reorderMode;
+    }
+
+    public boolean moveQuestionUp(int index) {
+        if (index <= 0 || index >= questionsDetails.size()) {
+            return false;
+        }
+        
+        List<String> tempQuestion = questionsDetails.get(index);
+        questionsDetails.set(index, questionsDetails.get(index - 1));
+        questionsDetails.set(index - 1, tempQuestion);
+        
+        String tempAnswer = correctAnswers.get(index);
+        correctAnswers.set(index, correctAnswers.get(index - 1));
+        correctAnswers.set(index - 1, tempAnswer);
+        
+        return true;
+    }
+
+    public boolean moveQuestionDown(int index) {
+        if (index < 0 || index >= questionsDetails.size() - 1) {
+            return false;
+        }
+
+        List<String> tempQuestion = questionsDetails.get(index);
+        questionsDetails.set(index, questionsDetails.get(index + 1));
+        questionsDetails.set(index + 1, tempQuestion);
+
+        String tempAnswer = correctAnswers.get(index);
+        correctAnswers.set(index, correctAnswers.get(index + 1));
+        correctAnswers.set(index + 1, tempAnswer);
+        
+        return true;
+    }
 }
 
