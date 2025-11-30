@@ -408,6 +408,9 @@ public class AppBuilder {
         if (quickstartView != null) {
             quickstartView.setQuizMenuController(quizMenuController);
         }
+        if (selectExistingQuizView != null) {
+            selectExistingQuizView.setQuizMenuController(quizMenuController);
+        }
         return this;
     }
 
@@ -425,12 +428,8 @@ public class AppBuilder {
                 userDataAccessObject,
                 selectExistingQuizPresenter);
 
-        ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
-        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
-
-        ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
         selectExistingQuizController = new SelectExistingQuizController(viewManagerModel, selectInteractor);
-        ShareQuizController shareQuizController = new ShareQuizController(shareQuizInteractor);
+
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
             selectExistingQuizViewModel.addPropertyChangeListener(selectExistingQuizView);
@@ -438,12 +437,20 @@ public class AppBuilder {
         if (quizMenuView != null) {
             quizMenuView.setSelectExistingQuizController(selectExistingQuizController);
         }
-        if (selectExistingQuizView != null) {
-            selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
-            selectExistingQuizView.setShareQuizController(shareQuizController);
-        }
-        if (selectExistingQuizPresenter != null && takeQuizController != null) {
+        if (takeQuizController != null) {
             selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
+        }
+        return this;
+    }
+
+    public AppBuilder addShareQuizUseCase() {
+        ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
+        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
+        ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
+        shareQuizController = new ShareQuizController(shareQuizInteractor);
+
+        if (selectExistingQuizView != null) {
+            selectExistingQuizView.setShareQuizController(shareQuizController);
         }
         return this;
     }

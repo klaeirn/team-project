@@ -31,6 +31,7 @@ public class Main {
                 .addValidateQuestionUseCase()
                 .addQuizMenuUseCase()
                 .addSelectExistingQuizUseCase()
+                .addShareQuizUseCase()
                 .addPreviewQuizView()
                 .addPreviewQuizUseCase()
                 .wireControllers()
