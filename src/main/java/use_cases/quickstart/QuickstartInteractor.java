@@ -1,6 +1,5 @@
 package use_cases.quickstart;
 
-import data_access.QuizApiDatabase;
 import entities.Quiz;
 import use_cases.take_quiz.TakeQuizInputBoundary;
 import use_cases.take_quiz.TakeQuizInputData;
@@ -32,15 +31,13 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     @Override
     public void execute(QuickstartInputData inputData) {
         try {
-            // Build the URL from the input data
-            String url = QuizApiDatabase.buildUrl(
+            // Fetch quiz from API using the parameters directly
+            // The data access layer handles URL construction
+            Quiz quiz = dataAccessObject.fetchQuiz(
                     inputData.getCategory(),
                     inputData.getDifficulty(),
                     inputData.getType()
             );
-
-            // Fetch quiz from API
-            Quiz quiz = dataAccessObject.fetchQuizFromUrl(url);
 
             // Resolve current username (taker). Always present per specification.
             String username = currentUserProvider.getCurrentUsername();

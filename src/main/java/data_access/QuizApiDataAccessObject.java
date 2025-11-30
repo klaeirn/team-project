@@ -38,7 +38,13 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface, V
     }
 
     @Override
-    public Quiz fetchQuizFromUrl(String urlString) throws IOException {
+    public Quiz fetchQuiz(String category, String difficulty, String type) throws IOException {
+        // Build the URL using the parameters
+        String url = QuizApiDatabase.buildUrl(category, difficulty, type);
+        return fetchQuizFromUrl(url);
+    }
+
+    private Quiz fetchQuizFromUrl(String urlString) throws IOException {
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();
