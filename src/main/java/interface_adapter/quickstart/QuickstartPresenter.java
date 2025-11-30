@@ -9,7 +9,6 @@ public class QuickstartPresenter implements QuickstartOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final QuickstartViewModel quickstartViewModel;
     private static final String QUIZ_MENU_VIEW = "quiz menu";
-    private static final String TAKE_QUIZ_VIEW = "take quiz";
 
     public QuickstartPresenter(ViewManagerModel viewManagerModel, QuickstartViewModel quickstartViewModel) {
         this.viewManagerModel = viewManagerModel;
@@ -30,10 +29,8 @@ public class QuickstartPresenter implements QuickstartOutputBoundary {
         quickstartViewModel.setState(state);
         quickstartViewModel.firePropertyChange();
 
-        // Navigate to take quiz view
-        // The QuickstartInteractor will handle calling the TakeQuiz use case
-        viewManagerModel.setState(TAKE_QUIZ_VIEW);
-        viewManagerModel.firePropertyChange();
+        // Navigation to take quiz view is now handled by TakeQuizPresenter
+        // This presenter only updates the Quickstart view model
     }
 
     @Override

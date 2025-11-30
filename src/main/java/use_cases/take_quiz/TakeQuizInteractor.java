@@ -90,27 +90,11 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
         presenter.prepareQuestionView(outputData);
     }
 
-    public int getCurrentQuestionIndex() {
-        return currentQuestionIndex;
-    }
-
-    public Map<Integer, String> getUserAnswers() {
-        return new HashMap<>(userAnswers);
-    }
-
     @Override
     public void submitQuiz() {
         // This method will be called when the quiz is completed
         // The actual submission logic (calculating results) will be handled by ViewResultsInteractor
         // This method exists to signal that the quiz is complete
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public String getUsername() {
-        return username;
     }
 }
 

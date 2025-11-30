@@ -6,21 +6,17 @@ import use_cases.select_existing_quiz.SelectExistingQuizOutputData;
 
 public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoundary {
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
-    private final ViewManagerModel viewManagerModel;
-    private static final String TAKE_QUIZ_VIEW = "take quiz";
 
     public SelectExistingQuizPresenter(SelectExistingQuizViewModel selectExistingQuizViewModel,
                                        ViewManagerModel viewManagerModel) {
         this.selectExistingQuizViewModel = selectExistingQuizViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
-        // Navigate to Take Quiz view
-        // The SelectExistingQuizInteractor will handle calling the TakeQuiz use case
-        viewManagerModel.setState(TAKE_QUIZ_VIEW);
-        viewManagerModel.firePropertyChange();
+        // Navigation to take quiz view is now handled by TakeQuizPresenter
+        // This presenter doesn't need to update any view model state for success
+        // The quiz selection is passed directly to TakeQuiz use case
     }
 
     @Override

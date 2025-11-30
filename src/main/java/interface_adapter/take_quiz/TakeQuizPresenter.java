@@ -37,6 +37,11 @@ public class TakeQuizPresenter implements TakeQuizOutputBoundary {
 
         takeQuizViewModel.setState(state);
         takeQuizViewModel.firePropertyChange();
+
+        // Navigate to take quiz view
+        // This presenter is responsible for showing the take quiz UI
+        viewManagerModel.setState("take quiz");
+        viewManagerModel.firePropertyChange();
     }
 
     @Override

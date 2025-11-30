@@ -422,7 +422,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addSelectExistingQuizUseCase() {
-        selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, viewManagerModel);
+        selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, null);
         final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
                 userDataAccessObject,
                 selectExistingQuizPresenter,
