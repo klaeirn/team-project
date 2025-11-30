@@ -113,8 +113,6 @@ public class AppBuilder {
             new QuizApiDataAccessObject(questionFactory, quizFactory);
     final FileQuizDataAccessObject quizFileDataAccessObject =
             new FileQuizDataAccessObject("quizzes.json");
-    final QuizApiDataAccessObject quizApiDataAccessObject = new QuizApiDataAccessObject(questionFactory, quizFactory);
-    final FileQuizDataAccessObject quizFileDataAccessObject = new FileQuizDataAccessObject("quizzes.json");
     final FileLeaderboardDataAccessObject leaderboardDataAccessObject = new FileLeaderboardDataAccessObject("leaderboards.json");
 
 
