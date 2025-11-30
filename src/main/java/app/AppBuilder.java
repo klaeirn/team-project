@@ -248,6 +248,9 @@ public class AppBuilder {
             quickstartView.setQuickstartController(controller);
             quickStartViewModel.addPropertyChangeListener(quickstartView);
         }
+        if (quickstartPresenter != null && takeQuizController != null) {
+            quickstartPresenter.setTakeQuizController(takeQuizController);
+        }
         return this;
     }
 
@@ -260,6 +263,10 @@ public class AppBuilder {
             takeQuizView.setTakeQuizController(takeQuizController);
             takeQuizView.setViewManagerModel(viewManagerModel);
             takeQuizViewModel.addPropertyChangeListener(takeQuizView);
+        }
+
+        if (takeQuizView != null && viewResultsController != null) {
+            takeQuizView.setViewResultsController(viewResultsController);
         }
 
         return this;
@@ -322,17 +329,6 @@ public class AppBuilder {
     }
 
     public AppBuilder wireControllers() {
-        if (quickstartPresenter != null && takeQuizController != null) {
-            quickstartPresenter.setTakeQuizController(takeQuizController);
-        }
-
-        if (selectExistingQuizPresenter != null && takeQuizController != null) {
-            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
-        }
-        if (takeQuizView != null && viewResultsController != null) {
-            takeQuizView.setViewResultsController(viewResultsController);
-        }
-
         if (leaderboardView != null) {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
@@ -401,7 +397,7 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addQuizMenuController() {
+    public AppBuilder addQuizMenuUseCase() {
         final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
         if (loggedInView != null) {
             loggedInView.setQuizMenuController(quizMenuController);
@@ -423,8 +419,7 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addSelectExistingQuizController() {
-        // Build Select Existing Quiz use case stack
+    public AppBuilder addSelectExistingQuizUseCase() {
         selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, viewManagerModel);
         final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
                 userDataAccessObject,
@@ -446,6 +441,9 @@ public class AppBuilder {
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
             selectExistingQuizView.setShareQuizController(shareQuizController);
+        }
+        if (selectExistingQuizPresenter != null && takeQuizController != null) {
+            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
         }
         return this;
     }
@@ -502,7 +500,7 @@ public class AppBuilder {
     }
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Trivia Quiz");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
