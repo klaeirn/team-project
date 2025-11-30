@@ -1,14 +1,13 @@
 package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.take_quiz.TakeQuizController;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputData;
 
 public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoundary {
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
     private final ViewManagerModel viewManagerModel;
-    private TakeQuizController takeQuizController; // wired in AppBuilder
+    private static final String TAKE_QUIZ_VIEW = "take quiz";
 
     public SelectExistingQuizPresenter(SelectExistingQuizViewModel selectExistingQuizViewModel,
                                        ViewManagerModel viewManagerModel) {
@@ -16,20 +15,12 @@ public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoun
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void setTakeQuizController(TakeQuizController takeQuizController) {
-        this.takeQuizController = takeQuizController;
-    }
-
     @Override
     public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
         // Navigate to Take Quiz view
-        viewManagerModel.setState("take quiz");
+        // The SelectExistingQuizInteractor will handle calling the TakeQuiz use case
+        viewManagerModel.setState(TAKE_QUIZ_VIEW);
         viewManagerModel.firePropertyChange();
-
-        // Start the take-quiz flow
-        if (takeQuizController != null) {
-            takeQuizController.execute(outputData.getQuiz(), outputData.getUsername());
-        }
     }
 
     @Override

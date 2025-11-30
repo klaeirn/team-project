@@ -2,6 +2,8 @@ package use_cases.select_existing_quiz;
 
 import entities.Question;
 import entities.Quiz;
+import use_cases.take_quiz.TakeQuizInputBoundary;
+import use_cases.take_quiz.TakeQuizInputData;
 
 import java.util.List;
 
@@ -9,11 +11,14 @@ public class SelectExistingQuizInteractor implements SelectExistingQuizInputBoun
 
     private final SelectExistingQuizDataAccessInterface currentUserProvider;
     private final SelectExistingQuizOutputBoundary presenter;
+    private final TakeQuizInputBoundary takeQuizInteractor;
 
     public SelectExistingQuizInteractor(SelectExistingQuizDataAccessInterface currentUserProvider,
-                                        SelectExistingQuizOutputBoundary presenter) {
+                                        SelectExistingQuizOutputBoundary presenter,
+                                        TakeQuizInputBoundary takeQuizInteractor) {
         this.currentUserProvider = currentUserProvider;
         this.presenter = presenter;
+        this.takeQuizInteractor = takeQuizInteractor;
     }
 
     @Override
@@ -36,6 +41,12 @@ public class SelectExistingQuizInteractor implements SelectExistingQuizInputBoun
         }
 
         presenter.prepareSuccessView(new SelectExistingQuizOutputData(quiz, username));
+
+        // Start the take quiz flow by calling the TakeQuiz use case
+        if (takeQuizInteractor != null) {
+            TakeQuizInputData takeQuizInputData = new TakeQuizInputData(quiz, username);
+            takeQuizInteractor.execute(takeQuizInputData);
+        }
     }
 
     private boolean isValidQuiz(Quiz quiz) {

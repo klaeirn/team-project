@@ -2,6 +2,8 @@ package use_cases.quickstart;
 
 import data_access.QuizApiDatabase;
 import entities.Quiz;
+import use_cases.take_quiz.TakeQuizInputBoundary;
+import use_cases.take_quiz.TakeQuizInputData;
 
 import java.io.IOException;
 
@@ -10,13 +12,16 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     private final QuickstartOutputBoundary presenter;
     private final QuickstartDataAccessInterface dataAccessObject;
     private final QuickstartUserDataAccessInterface currentUserProvider;
+    private final TakeQuizInputBoundary takeQuizInteractor;
 
     public QuickstartInteractor(QuickstartOutputBoundary presenter,
                                 QuickstartDataAccessInterface dataAccessObject,
-                                QuickstartUserDataAccessInterface currentUserProvider) {
+                                QuickstartUserDataAccessInterface currentUserProvider,
+                                TakeQuizInputBoundary takeQuizInteractor) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
         this.currentUserProvider = currentUserProvider;
+        this.takeQuizInteractor = takeQuizInteractor;
     }
 
     @Override
@@ -43,6 +48,12 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
             // Prepare success view with quiz and username
             QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);
             presenter.prepareSuccessView(outputData);
+
+            // Start the take quiz flow by calling the TakeQuiz use case
+            if (takeQuizInteractor != null) {
+                TakeQuizInputData takeQuizInputData = new TakeQuizInputData(quiz, username);
+                takeQuizInteractor.execute(takeQuizInputData);
+            }
         } catch (IOException e) {
             presenter.prepareFailView("Failed to fetch quiz: " + e.getMessage());
         } catch (Exception e) {
