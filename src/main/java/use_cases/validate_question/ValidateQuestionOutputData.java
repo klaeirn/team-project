@@ -14,6 +14,7 @@ public class ValidateQuestionOutputData {
     public List<String> getQuestionDetails() {
         return questionDetails;
     }
+
     public String getAnswer() {
         return answer;
     }
