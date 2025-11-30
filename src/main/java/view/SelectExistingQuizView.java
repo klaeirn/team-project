@@ -47,7 +47,6 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         final JLabel title = new JLabel("Select Existing Quiz");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Initialize quiz list with JScrollPane, quizzes.json
         quizList = new JList<>(new String[]{"No quizzes available"});
         quizList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         quizList.setVisibleRowCount(10);
@@ -234,7 +233,6 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
     public void propertyChange(PropertyChangeEvent evt) {
         SelectExistingQuizState state = (SelectExistingQuizState) evt.getNewValue();
         if (state != null) {
-            // Update quiz list
             quizzes = state.getAvailableQuizzes();
             if (quizzes != null && !quizzes.isEmpty()) {
                 String[] quizNames = new String[quizzes.size()];
@@ -256,7 +254,6 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
                 quizList.setListData(new String[]{"No quizzes available"});
             }
 
-            // Update error message
             String error = state.getErrorMessage();
             if (error != null && !error.isEmpty()) {
                 errorLabel.setText(error);

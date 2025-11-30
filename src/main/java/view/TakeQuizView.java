@@ -147,7 +147,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.add(contentPanel, BorderLayout.NORTH);
 
-        // Scroll pane for long content
         JScrollPane scrollPane = new JScrollPane(wrapper);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

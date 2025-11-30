@@ -131,6 +131,7 @@ public class AppBuilder {
     private TakeQuizView takeQuizView;
     private TakeQuizViewModel takeQuizViewModel;
     private TakeQuizController takeQuizController;
+    private TakeQuizInputBoundary takeQuizInteractor;
     private SelectExistingQuizController selectExistingQuizController;
     private QuickstartPresenter quickstartPresenter;
     private SelectExistingQuizPresenter selectExistingQuizPresenter;
@@ -241,7 +242,8 @@ public class AppBuilder {
         final QuickstartInputBoundary interactor = new QuickstartInteractor(
                 quickstartPresenter,
                 quizApiDataAccessObject,
-                userDataAccessObject // implements SelectExistingQuizDataAccessInterface for current username
+                userDataAccessObject,
+                takeQuizInteractor
         );
         final QuickstartController controller = new QuickstartController(interactor);
         if (quickstartView != null) {
@@ -253,13 +255,17 @@ public class AppBuilder {
 
     public AppBuilder addTakeQuizUseCase() {
         final TakeQuizOutputBoundary takeQuizPresenter = new TakeQuizPresenter(takeQuizViewModel, viewManagerModel);
-        final TakeQuizInputBoundary takeQuizInteractor = new TakeQuizInteractor(takeQuizPresenter);
+        takeQuizInteractor = new TakeQuizInteractor(takeQuizPresenter);
         takeQuizController = new TakeQuizController(takeQuizInteractor);
 
         if (takeQuizView != null) {
             takeQuizView.setTakeQuizController(takeQuizController);
             takeQuizView.setViewManagerModel(viewManagerModel);
             takeQuizViewModel.addPropertyChangeListener(takeQuizView);
+        }
+
+        if (takeQuizView != null && viewResultsController != null) {
+            takeQuizView.setViewResultsController(viewResultsController);
         }
 
         return this;
@@ -322,17 +328,6 @@ public class AppBuilder {
     }
 
     public AppBuilder wireControllers() {
-        if (quickstartPresenter != null && takeQuizController != null) {
-            quickstartPresenter.setTakeQuizController(takeQuizController);
-        }
-
-        if (selectExistingQuizPresenter != null && takeQuizController != null) {
-            selectExistingQuizPresenter.setTakeQuizController(takeQuizController);
-        }
-        if (takeQuizView != null && viewResultsController != null) {
-            takeQuizView.setViewResultsController(viewResultsController);
-        }
-
         if (leaderboardView != null) {
             leaderboardController = new LeaderboardController(viewManagerModel);
             leaderboardView.setLeaderboardController(leaderboardController);
@@ -401,7 +396,7 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addQuizMenuController() {
+    public AppBuilder addQuizMenuUseCase() {
         final QuizMenuController quizMenuController = new QuizMenuController(viewManagerModel);
         if (loggedInView != null) {
             loggedInView.setQuizMenuController(quizMenuController);
@@ -411,6 +406,9 @@ public class AppBuilder {
         }
         if (quickstartView != null) {
             quickstartView.setQuizMenuController(quizMenuController);
+        }
+        if (selectExistingQuizView != null) {
+            selectExistingQuizView.setQuizMenuController(quizMenuController);
         }
         return this;
     }
@@ -423,19 +421,15 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addSelectExistingQuizController() {
-        // Build Select Existing Quiz use case stack
-        selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, viewManagerModel);
+    public AppBuilder addSelectExistingQuizUseCase() {
+        selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, null);
         final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
                 userDataAccessObject,
-                selectExistingQuizPresenter);
+                selectExistingQuizPresenter,
+                takeQuizInteractor);
 
-        ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
-        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
-
-        ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
         selectExistingQuizController = new SelectExistingQuizController(viewManagerModel, selectInteractor);
-        ShareQuizController shareQuizController = new ShareQuizController(shareQuizInteractor);
+
         if (selectExistingQuizView != null) {
             selectExistingQuizView.setSelectExistingQuizController(selectExistingQuizController);
             selectExistingQuizViewModel.addPropertyChangeListener(selectExistingQuizView);
@@ -443,8 +437,16 @@ public class AppBuilder {
         if (quizMenuView != null) {
             quizMenuView.setSelectExistingQuizController(selectExistingQuizController);
         }
+        return this;
+    }
+
+    public AppBuilder addShareQuizUseCase() {
+        ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
+        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
+        ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
+        shareQuizController = new ShareQuizController(shareQuizInteractor);
+
         if (selectExistingQuizView != null) {
-            selectExistingQuizView.setQuizMenuController(new QuizMenuController(viewManagerModel));
             selectExistingQuizView.setShareQuizController(shareQuizController);
         }
         return this;
@@ -502,7 +504,7 @@ public class AppBuilder {
     }
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Trivia Quiz");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
