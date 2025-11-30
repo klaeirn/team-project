@@ -162,10 +162,7 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         QuickstartState state = (QuickstartState) evt.getNewValue();
         if (state != null) {
-            // Quiz generation is handled by the presenter - it will navigate directly to take quiz view
-            // No dialog needed - quiz starts automatically
             if (state.getErrorMessage() != null && !state.getErrorMessage().isEmpty()) {
-                // Only show error messages
                 JOptionPane.showMessageDialog(QuickstartView.this,
                         state.getErrorMessage(),
                         "Error",

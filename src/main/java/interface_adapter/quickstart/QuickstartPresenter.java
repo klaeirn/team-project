@@ -29,8 +29,6 @@ public class QuickstartPresenter implements QuickstartOutputBoundary {
         quickstartViewModel.setState(state);
         quickstartViewModel.firePropertyChange();
 
-        // Navigation to take quiz view is now handled by TakeQuizPresenter
-        // This presenter only updates the Quickstart view model
     }
 
     @Override

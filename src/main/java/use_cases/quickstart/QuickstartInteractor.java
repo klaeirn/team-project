@@ -31,22 +31,17 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     @Override
     public void execute(QuickstartInputData inputData) {
         try {
-            // Fetch quiz from API using the parameters directly
-            // The data access layer handles URL construction
             Quiz quiz = dataAccessObject.fetchQuiz(
                     inputData.getCategory(),
                     inputData.getDifficulty(),
                     inputData.getType()
             );
 
-            // Resolve current username (taker). Always present per specification.
             String username = currentUserProvider.getCurrentUsername();
 
-            // Prepare success view with quiz and username
             QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);
             presenter.prepareSuccessView(outputData);
 
-            // Start the take quiz flow by calling the TakeQuiz use case
             if (takeQuizInteractor != null) {
                 TakeQuizInputData takeQuizInputData = new TakeQuizInputData(quiz, username);
                 takeQuizInteractor.execute(takeQuizInputData);

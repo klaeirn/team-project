@@ -82,6 +82,26 @@ class TakeQuizTest {
     }
 
     @Test
+    void quizWithNullQuestionsFails() {
+        Quiz invalidQuiz = new Quiz("Invalid Quiz", "creator", "Test", null);
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("No quiz available to take.", error);
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        TakeQuizInputData inputData = new TakeQuizInputData(invalidQuiz, "testuser");
+        interactor.execute(inputData);
+    }
+
+    @Test
     void nextQuestionMovesToSecondQuestion() {
         Quiz quiz = createValidQuiz();
         final int[] callCount = {0};
@@ -233,6 +253,119 @@ class TakeQuizTest {
     }
 
     @Test
+    void setAnswerWithNullQuizDoesNothing() {
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        // Don't execute, so quiz is null
+        assertDoesNotThrow(() -> interactor.setAnswer(0, "Option A"));
+    }
+
+    @Test
+    void setAnswerWithEmptyQuizDoesNothing() {
+        Quiz emptyQuiz = new Quiz("Empty", "creator", "Test", new ArrayList<>());
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(emptyQuiz, "testuser"));
+        assertDoesNotThrow(() -> interactor.setAnswer(0, "Option A"));
+    }
+
+    @Test
+    void setAnswerWithInvalidIndexDoesNothing() {
+        Quiz quiz = createValidQuiz();
+        final int[] callCount = {0};
+
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+                callCount[0]++;
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(quiz, "testuser"));
+
+        // Try to set answer at invalid indices
+        interactor.setAnswer(-1, "Option A");
+        interactor.setAnswer(999, "Option A");
+
+        // Only one call from execute
+        assertEquals(1, callCount[0]);
+    }
+
+    @Test
+    void setAnswerWithNullOptionsDoesNothing() {
+        List<Question> questions = new ArrayList<>();
+        questions.add(new Question("Q1", null, "Answer"));
+        Quiz quiz = new Quiz("Test", "creator", "Test", questions);
+
+        final int[] callCount = {0};
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+                callCount[0]++;
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(quiz, "testuser"));
+        interactor.setAnswer(0, "Option A");
+
+        // Only one call from execute
+        assertEquals(1, callCount[0]);
+    }
+
+    @Test
+    void setAnswerOnDifferentQuestionDoesNotTriggerView() {
+        Quiz quiz = createValidQuiz();
+        final int[] callCount = {0};
+
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+                callCount[0]++;
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(quiz, "testuser"));
+        // Set answer for question 1 (index 1), but we're on question 0
+        interactor.setAnswer(1, "Option B");
+
+        // Only one call from execute (setAnswer on different question doesn't trigger view)
+        assertEquals(1, callCount[0]);
+    }
+
+    @Test
     void cannotMoveNextBeyondLastQuestion() {
         Quiz quiz = createValidQuiz();
         final int[] callCount = {0};
@@ -284,6 +417,41 @@ class TakeQuizTest {
 
         // Only 1 call from execute, previousQuestion does nothing
         assertEquals(1, callCount[0]);
+    }
+
+    @Test
+    void nextQuestionWithNullQuizDoesNothing() {
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        // Don't execute, so quiz is null
+        assertDoesNotThrow(() -> interactor.nextQuestion());
+    }
+
+    @Test
+    void nextQuestionWithNullQuestionsDoesNothing() {
+        Quiz quiz = new Quiz("Test", "creator", "Test", null);
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(quiz, "testuser"));
+        assertDoesNotThrow(() -> interactor.nextQuestion());
     }
 
     @Test
@@ -345,6 +513,38 @@ class TakeQuizTest {
 
         TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
         interactor.execute(new TakeQuizInputData(quiz, "testuser"));
+    }
+
+    @Test
+    void executeResetsState() {
+        Quiz quiz1 = createValidQuiz();
+        Quiz quiz2 = createValidQuiz();
+        final int[] callCount = {0};
+
+        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
+            @Override
+            public void prepareQuestionView(TakeQuizOutputData outputData) {
+                callCount[0]++;
+                // After second execute, should be back to first question
+                if (callCount[0] == 4) {
+                    assertEquals(1, outputData.getCurrentQuestionIndex());
+                    assertEquals(0, outputData.getUserAnswers().size());
+                }
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
+        interactor.execute(new TakeQuizInputData(quiz1, "user1"));
+        interactor.nextQuestion();
+        interactor.setAnswer(1, "Option B"); // Set answer for current question (index 1)
+        // Execute again with new quiz - should reset state
+        interactor.execute(new TakeQuizInputData(quiz2, "user2"));
+
+        assertEquals(4, callCount[0]);
     }
 
     private Quiz createValidQuiz() {

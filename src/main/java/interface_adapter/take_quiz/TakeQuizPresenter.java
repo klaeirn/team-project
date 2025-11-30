@@ -24,11 +24,10 @@ public class TakeQuizPresenter implements TakeQuizOutputBoundary {
         state.setScore(null);
         state.setErrorMessage(null);
 
-        // Store quiz and username if not already set (first question)
-        if (state.getQuiz() == null && outputData.getQuiz() != null) {
+        if (outputData.getQuiz() != null) {
             state.setQuiz(outputData.getQuiz());
         }
-        if (state.getUsername() == null && outputData.getUsername() != null) {
+        if (outputData.getUsername() != null) {
             state.setUsername(outputData.getUsername());
         }
 
@@ -38,8 +37,6 @@ public class TakeQuizPresenter implements TakeQuizOutputBoundary {
         takeQuizViewModel.setState(state);
         takeQuizViewModel.firePropertyChange();
 
-        // Navigate to take quiz view
-        // This presenter is responsible for showing the take quiz UI
         viewManagerModel.setState("take quiz");
         viewManagerModel.firePropertyChange();
     }
