@@ -37,9 +37,6 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
 
     @Override
     public void nextQuestion() {
-        if (quiz == null || quiz.getQuestions() == null) {
-            return;
-        }
 
         if (currentQuestionIndex < quiz.getQuestions().size() - 1) {
             currentQuestionIndex++;
@@ -56,9 +53,6 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
     }
 
     public void setAnswer(int questionIndex, String answer) {
-        if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
-            return;
-        }
 
         if (questionIndex < 0 || questionIndex >= quiz.getQuestions().size()) {
             return;
@@ -90,27 +84,11 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
         presenter.prepareQuestionView(outputData);
     }
 
-    public int getCurrentQuestionIndex() {
-        return currentQuestionIndex;
-    }
-
-    public Map<Integer, String> getUserAnswers() {
-        return new HashMap<>(userAnswers);
-    }
-
     @Override
     public void submitQuiz() {
         // This method will be called when the quiz is completed
         // The actual submission logic (calculating results) will be handled by ViewResultsInteractor
         // This method exists to signal that the quiz is complete
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public String getUsername() {
-        return username;
     }
 }
 

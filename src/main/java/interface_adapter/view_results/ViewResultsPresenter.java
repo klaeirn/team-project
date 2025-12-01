@@ -18,6 +18,7 @@ public class ViewResultsPresenter implements ViewResultsOutputBoundary {
         ViewResultsState state = viewResultsViewModel.getState();
         state.setQuizResult(outputData.getQuizResult());
         state.setQuizName(outputData.getQuizName());
+        state.setCreatorUsername(outputData.getCreatorUsername());
         state.setErrorMessage(null);
 
         viewResultsViewModel.setState(state);

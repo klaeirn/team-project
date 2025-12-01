@@ -11,8 +11,8 @@ public class CreateQuizState {
     private List<String> correctAnswers = new ArrayList<>();
     private String createError;
     private String successMessage;
-    private Integer editingQuestionIndex = null;
-    private boolean reorderMode = false;
+    private Integer editingQuestionIndex;
+    private boolean reorderMode;
 
     public String getQuizName() {
         return quizName;
@@ -30,9 +30,13 @@ public class CreateQuizState {
         this.category = category;
     }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public List<List<String>> getQuestionsDetails() {
         return questionsDetails;
@@ -66,9 +70,13 @@ public class CreateQuizState {
         this.successMessage = successMessage;
     }
 
-    public Integer getEditingQuestionIndex() {return editingQuestionIndex;}
+    public Integer getEditingQuestionIndex() {
+        return editingQuestionIndex;
+    }
 
-    public void setEditingQuestionIndex(Integer editingQuestionIndex){this.editingQuestionIndex = editingQuestionIndex;}
+    public void setEditingQuestionIndex(Integer editingQuestionIndex) {
+        this.editingQuestionIndex = editingQuestionIndex;
+    }
 
     public boolean isReorderMode() {
         return reorderMode;
@@ -78,36 +86,48 @@ public class CreateQuizState {
         this.reorderMode = reorderMode;
     }
 
+    /**
+     * Moves a question up in the list by swapping it with the question above.
+     *
+     * @param index : the index of the question to move up
+     * @return true if the question was successfully moved, false if the index is invalid
+     */
     public boolean moveQuestionUp(int index) {
-        if (index <= 0 || index >= questionsDetails.size()) {
-            return false;
+        boolean success = false;
+        if (index > 0 && index < questionsDetails.size()) {
+            final List<String> tempQuestion = questionsDetails.get(index);
+            questionsDetails.set(index, questionsDetails.get(index - 1));
+            questionsDetails.set(index - 1, tempQuestion);
+
+            final String tempAnswer = correctAnswers.get(index);
+            correctAnswers.set(index, correctAnswers.get(index - 1));
+            correctAnswers.set(index - 1, tempAnswer);
+            
+            success = true;
         }
-        
-        List<String> tempQuestion = questionsDetails.get(index);
-        questionsDetails.set(index, questionsDetails.get(index - 1));
-        questionsDetails.set(index - 1, tempQuestion);
-        
-        String tempAnswer = correctAnswers.get(index);
-        correctAnswers.set(index, correctAnswers.get(index - 1));
-        correctAnswers.set(index - 1, tempAnswer);
-        
-        return true;
+        return success;
     }
 
+    /**
+     * Moves a question down in the list by swapping it with the question below.
+     *
+     * @param index : the index of the question to move down
+     * @return true if the question was successfully moved, false if the index is invalid
+     */
     public boolean moveQuestionDown(int index) {
-        if (index < 0 || index >= questionsDetails.size() - 1) {
-            return false;
+        boolean success = false;
+        if (index >= 0 && index < questionsDetails.size() - 1) {
+            final List<String> tempQuestion = questionsDetails.get(index);
+            questionsDetails.set(index, questionsDetails.get(index + 1));
+            questionsDetails.set(index + 1, tempQuestion);
+
+            final String tempAnswer = correctAnswers.get(index);
+            correctAnswers.set(index, correctAnswers.get(index + 1));
+            correctAnswers.set(index + 1, tempAnswer);
+            
+            success = true;
         }
-
-        List<String> tempQuestion = questionsDetails.get(index);
-        questionsDetails.set(index, questionsDetails.get(index + 1));
-        questionsDetails.set(index + 1, tempQuestion);
-
-        String tempAnswer = correctAnswers.get(index);
-        correctAnswers.set(index, correctAnswers.get(index + 1));
-        correctAnswers.set(index + 1, tempAnswer);
-        
-        return true;
+        return success;
     }
 }
 

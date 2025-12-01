@@ -1,9 +1,9 @@
 package interface_adapter.create_quiz;
 
-import use_cases.create_quiz.CreateQuizOutputBoundary;
-import use_cases.create_quiz.CreateQuizOutputData;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import use_cases.create_quiz.CreateQuizOutputBoundary;
+import use_cases.create_quiz.CreateQuizOutputData;
 
 public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
@@ -19,8 +19,8 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateQuizOutputData outputData) {
-        CreateQuizState state = new CreateQuizState();
-        String successMessage = String.format(
+        final CreateQuizState state = new CreateQuizState();
+        final String successMessage = String.format(
                 "Quiz '%s' (%s) with %d questions saved successfully!",
                 outputData.getQuizName(),
                 outputData.getCategory(),
@@ -43,7 +43,7 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
 
     @Override
     public void switchToCreateQuizView(String username) {
-        CreateQuizState state = createQuizViewModel.getState();
+        final CreateQuizState state = createQuizViewModel.getState();
         state.setUsername(username);
         state.setQuizName("");
         state.setCategory("");
@@ -55,6 +55,10 @@ public class CreateQuizPresenter implements CreateQuizOutputBoundary {
         viewManagerModel.firePropertyChange();
     }
 
+    /**
+     * Method for switching to the login view.
+     *
+     */
     public void switchToLoggedInView() {
         this.createQuizViewModel.setState(new CreateQuizState());
         this.createQuizViewModel.firePropertyChange();

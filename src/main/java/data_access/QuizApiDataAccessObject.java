@@ -38,7 +38,12 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface, V
     }
 
     @Override
-    public Quiz fetchQuizFromUrl(String urlString) throws IOException {
+    public Quiz fetchQuiz(String category, String difficulty, String type) throws IOException {
+        String url = QuizApiDatabase.buildUrl(category, difficulty, type);
+        return fetchQuizFromUrl(url);
+    }
+
+    private Quiz fetchQuizFromUrl(String urlString) throws IOException {
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();
@@ -101,10 +106,8 @@ public class QuizApiDataAccessObject implements QuickstartDataAccessInterface, V
             throw new IOException("No questions returned from API");
         }
 
-        // Create a quiz with a default name
         Quiz quiz = quizFactory.createQuiz("Quickstart Quiz", "System", "Quickstart", questions);
 
-        // Store the quiz in cache so it can be retrieved later
         String cacheKey = getCacheKey(quiz.getName(), quiz.getCreatorUsername());
         quizCache.put(cacheKey, quiz);
 

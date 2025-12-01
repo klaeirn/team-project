@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.view_results.ViewResultsController;
 import interface_adapter.view_results.ViewResultsState;
 import interface_adapter.view_results.ViewResultsViewModel;
+import interface_adapter.view_leaderboard.ViewLeaderboardController;
 import entities.QuizResult;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
     private ViewResultsController viewResultsController;
     private final ViewResultsViewModel viewResultsViewModel;
     private ViewManagerModel viewManagerModel;
+    private ViewLeaderboardController viewLeaderboardController;
 
     private final JLabel usernameLabel;
     private final JLabel scoreLabel;
@@ -65,9 +67,21 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
         leaderboardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (viewManagerModel != null) {
-                    viewManagerModel.setState("leaderboard");
-                    viewManagerModel.firePropertyChange();
+                ViewResultsState state = viewResultsViewModel.getState();
+                String creatorUsername = state.getCreatorUsername();
+                
+                // Check if this is a quickstart quiz (creator == "System")
+                if ("System".equals(creatorUsername)) {
+                    // Navigate to leaderboard view which will show "No Leaderboard" message
+                    if (viewManagerModel != null) {
+                        viewManagerModel.setState("leaderboard");
+                        viewManagerModel.firePropertyChange();
+                    }
+                } else {
+                    // For shared quizzes, trigger the view leaderboard use case
+                    if (viewLeaderboardController != null && state.getQuizName() != null && creatorUsername != null) {
+                        viewLeaderboardController.execute(state.getQuizName(), creatorUsername);
+                    }
                 }
             }
         });
@@ -126,6 +140,10 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
 
     public void setViewManagerModel(ViewManagerModel viewManagerModel) {
         this.viewManagerModel = viewManagerModel;
+    }
+
+    public void setViewLeaderboardController(ViewLeaderboardController viewLeaderboardController) {
+        this.viewLeaderboardController = viewLeaderboardController;
     }
 
     @Override
