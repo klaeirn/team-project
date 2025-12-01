@@ -30,7 +30,7 @@ public class PreviewQuizInteractor implements PreviewQuizInputBoundary {
             List<String> answers = previewQuizInputData.getRawAnswers();
 
             // Empty Quiz
-            if (rawQs == null || rawQs.isEmpty()) {
+            if (rawQs.isEmpty()) {
                 previewQuizPresenter.prepareFailView("No questions to preview.");
                 return;
             }
