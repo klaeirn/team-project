@@ -374,7 +374,7 @@
         <module name="IllegalType">
             <property name="illegalClassNames"
                       value="java.util.HashSet, HashSet, java.util.LinkedHashMap, LinkedHashMap,
-                       java.util.TreeMap, TreeMap, java.util.HashMap, HashMap,
+                       java.util.TreeMap, TreeMap,
                        java.util.LinkedHashSet, LinkedHashSet, java.util.TreeSet, TreeSet,
                        java.lang.StringBuffer, StringBuffer"/>
         </module>
