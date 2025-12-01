@@ -15,9 +15,13 @@ import java.time.format.DateTimeFormatter;
 
 public class HashtoQuizDataAccessObject implements ShareQuizDataAccessInterface {
 
-    private final FileQuizDataAccessObject fileQuizDataAccessObject =
-            new FileQuizDataAccessObject("quizzes.json");
-    private final Path hashPath = Path.of("hashtoquiz.json");
+    private final FileQuizDataAccessObject fileQuizDataAccessObject =  new FileQuizDataAccessObject("quizzes.json");
+    private Path hashPath = Path.of("hashtoquiz.json");
+
+    public HashtoQuizDataAccessObject(String hashPath) {
+        this.hashPath = Path.of(hashPath);
+    }
+
 
     public String makeHash(Quiz quiz) {
 
