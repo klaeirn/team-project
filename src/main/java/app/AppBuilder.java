@@ -253,7 +253,7 @@ public class AppBuilder {
 
     public AppBuilder addTakeSharedQuizUseCase() {
         takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
-        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
+        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject("hashtoquiz.json");
         final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
         takeSharedQuizController = new TakeSharedQuizController(interactor, viewManagerModel);
 
@@ -390,7 +390,7 @@ public class AppBuilder {
                 selectExistingQuizPresenter);
 
         ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
-        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
+        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject("hashtoquiz.json");
 
         ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
         selectExistingQuizController = new SelectExistingQuizController(viewManagerModel, selectInteractor);

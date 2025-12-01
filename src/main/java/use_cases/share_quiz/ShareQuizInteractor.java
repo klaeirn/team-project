@@ -2,8 +2,6 @@ package use_cases.share_quiz;
 
 import use_cases.change_username.*;
 
-import java.sql.SQLOutput;
-
 public class ShareQuizInteractor implements ShareQuizInputBoundary {
 
     private final ShareQuizDataAccessInterface dataAccessInterface;
@@ -28,7 +26,7 @@ public class ShareQuizInteractor implements ShareQuizInputBoundary {
 
         } catch (RuntimeException e) {
 
-            shareQuizPresenter.prepareFailView("Failed to share quiz");
+            shareQuizPresenter.prepareFailView("There was a hashing error! Please try again. ");
         }
 
     }
