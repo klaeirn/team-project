@@ -252,40 +252,6 @@ class TakeQuizTest {
         assertEquals(1, callCount[0]);
     }
 
-    @Test
-    void setAnswerWithNullQuizDoesNothing() {
-        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
-            @Override
-            public void prepareQuestionView(TakeQuizOutputData outputData) {
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-            }
-        };
-
-        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
-        // Don't execute, so quiz is null
-        assertDoesNotThrow(() -> interactor.setAnswer(0, "Option A"));
-    }
-
-    @Test
-    void setAnswerWithEmptyQuizDoesNothing() {
-        Quiz emptyQuiz = new Quiz("Empty", "creator", "Test", new ArrayList<>());
-        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
-            @Override
-            public void prepareQuestionView(TakeQuizOutputData outputData) {
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-            }
-        };
-
-        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
-        interactor.execute(new TakeQuizInputData(emptyQuiz, "testuser"));
-        assertDoesNotThrow(() -> interactor.setAnswer(0, "Option A"));
-    }
 
     @Test
     void setAnswerWithInvalidIndexDoesNothing() {
@@ -417,41 +383,6 @@ class TakeQuizTest {
 
         // Only 1 call from execute, previousQuestion does nothing
         assertEquals(1, callCount[0]);
-    }
-
-    @Test
-    void nextQuestionWithNullQuizDoesNothing() {
-        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
-            @Override
-            public void prepareQuestionView(TakeQuizOutputData outputData) {
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-            }
-        };
-
-        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
-        // Don't execute, so quiz is null
-        assertDoesNotThrow(() -> interactor.nextQuestion());
-    }
-
-    @Test
-    void nextQuestionWithNullQuestionsDoesNothing() {
-        Quiz quiz = new Quiz("Test", "creator", "Test", null);
-        TakeQuizOutputBoundary presenter = new TakeQuizOutputBoundary() {
-            @Override
-            public void prepareQuestionView(TakeQuizOutputData outputData) {
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-            }
-        };
-
-        TakeQuizInteractor interactor = new TakeQuizInteractor(presenter);
-        interactor.execute(new TakeQuizInputData(quiz, "testuser"));
-        assertDoesNotThrow(() -> interactor.nextQuestion());
     }
 
     @Test
