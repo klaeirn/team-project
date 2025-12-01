@@ -106,6 +106,8 @@ class PreviewQuizTest {
                 assertEquals(1, outputData.getQuestions().size());
                 assertEquals("2+2=?", outputData.getQuestions().get(0).getTitle());
                 assertEquals("D", outputData.getQuestions().get(0).getAnswer());
+                List<String> options = List.of("1", "2", "4", "5");
+                assertEquals(options, outputData.getQuestions().get(0).getOptions());
             }
 
             @Override
