@@ -1,7 +1,8 @@
 package use_cases.quickstart;
 
-import data_access.QuizApiDatabase;
 import entities.Quiz;
+import use_cases.take_quiz.TakeQuizInputBoundary;
+import use_cases.take_quiz.TakeQuizInputData;
 
 import java.io.IOException;
 
@@ -10,13 +11,16 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     private final QuickstartOutputBoundary presenter;
     private final QuickstartDataAccessInterface dataAccessObject;
     private final QuickstartUserDataAccessInterface currentUserProvider;
+    private final TakeQuizInputBoundary takeQuizInteractor;
 
     public QuickstartInteractor(QuickstartOutputBoundary presenter,
                                 QuickstartDataAccessInterface dataAccessObject,
-                                QuickstartUserDataAccessInterface currentUserProvider) {
+                                QuickstartUserDataAccessInterface currentUserProvider,
+                                TakeQuizInputBoundary takeQuizInteractor) {
         this.presenter = presenter;
         this.dataAccessObject = dataAccessObject;
         this.currentUserProvider = currentUserProvider;
+        this.takeQuizInteractor = takeQuizInteractor;
     }
 
     @Override
@@ -27,22 +31,21 @@ public class QuickstartInteractor implements QuickstartInputBoundary {
     @Override
     public void execute(QuickstartInputData inputData) {
         try {
-            // Build the URL from the input data
-            String url = QuizApiDatabase.buildUrl(
+            Quiz quiz = dataAccessObject.fetchQuiz(
                     inputData.getCategory(),
                     inputData.getDifficulty(),
                     inputData.getType()
             );
 
-            // Fetch quiz from API
-            Quiz quiz = dataAccessObject.fetchQuizFromUrl(url);
-
-            // Resolve current username (taker). Always present per specification.
             String username = currentUserProvider.getCurrentUsername();
 
-            // Prepare success view with quiz and username
             QuickstartOutputData outputData = new QuickstartOutputData(quiz, username);
             presenter.prepareSuccessView(outputData);
+
+            if (takeQuizInteractor != null) {
+                TakeQuizInputData takeQuizInputData = new TakeQuizInputData(quiz, username);
+                takeQuizInteractor.execute(takeQuizInputData);
+            }
         } catch (IOException e) {
             presenter.prepareFailView("Failed to fetch quiz: " + e.getMessage());
         } catch (Exception e) {

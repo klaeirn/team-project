@@ -1,4 +1,4 @@
-package entities;
+package use_cases;
 
 import org.junit.jupiter.api.Test;
 import use_cases.validate_question.ValidateQuestionInputData;

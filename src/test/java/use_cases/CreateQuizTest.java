@@ -1,5 +1,7 @@
-package entities;
+package use_cases;
 
+import entities.Quiz;
+import entities.QuizFactory;
 import org.junit.jupiter.api.Test;
 import use_cases.create_quiz.CreateQuizDataAccessInterface;
 import use_cases.create_quiz.CreateQuizInputData;

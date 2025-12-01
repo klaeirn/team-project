@@ -92,9 +92,7 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
                         takeQuizController.submitQuiz();
                         // Call ViewResultsController to show results
                         if (viewResultsController != null && state.getQuiz() != null && state.getUsername() != null) {
-                            String quizName = state.getQuiz().getName();
-                            String creatorUsername = state.getQuiz().getCreatorUsername();
-                            viewResultsController.execute(quizName, creatorUsername, state.getUsername(), state.getUserAnswers());
+                            viewResultsController.execute(state.getQuiz(), state.getUsername(), state.getUserAnswers());
                         }
                     } else {
                         takeQuizController.nextQuestion();
@@ -149,7 +147,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.add(contentPanel, BorderLayout.NORTH);
 
-        // Scroll pane for long content
         JScrollPane scrollPane = new JScrollPane(wrapper);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -160,7 +157,6 @@ public class TakeQuizView extends JPanel implements ActionListener, PropertyChan
     }
 
     private void saveCurrentAnswer() {
-        TakeQuizState state = takeQuizViewModel.getState();
         String selectedAnswer = null;
 
         for (JRadioButton button : optionButtons) {

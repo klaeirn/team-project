@@ -16,9 +16,11 @@ public class ValidateQuestionInputData {
     public String getTitle() {
         return title;
     }
+
     public List<String> getOptions() {
         return options;
     }
+
     public String getAnswer() {
         return answer;
     }

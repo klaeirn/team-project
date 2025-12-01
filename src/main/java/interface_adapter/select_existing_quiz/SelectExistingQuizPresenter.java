@@ -1,35 +1,22 @@
 package interface_adapter.select_existing_quiz;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.take_quiz.TakeQuizController;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputBoundary;
 import use_cases.select_existing_quiz.SelectExistingQuizOutputData;
 
 public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoundary {
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
-    private final ViewManagerModel viewManagerModel;
-    private TakeQuizController takeQuizController; // wired in AppBuilder
 
     public SelectExistingQuizPresenter(SelectExistingQuizViewModel selectExistingQuizViewModel,
                                        ViewManagerModel viewManagerModel) {
         this.selectExistingQuizViewModel = selectExistingQuizViewModel;
-        this.viewManagerModel = viewManagerModel;
-    }
-
-    public void setTakeQuizController(TakeQuizController takeQuizController) {
-        this.takeQuizController = takeQuizController;
     }
 
     @Override
     public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
-        // Navigate to Take Quiz view
-        viewManagerModel.setState("take quiz");
-        viewManagerModel.firePropertyChange();
-
-        // Start the take-quiz flow
-        if (takeQuizController != null) {
-            takeQuizController.execute(outputData.getQuiz(), outputData.getUsername());
-        }
+        // Navigation to take quiz view is now handled by TakeQuizPresenter
+        // This presenter doesn't need to update any view model state for success
+        // The quiz selection is passed directly to TakeQuiz use case
     }
 
     @Override

@@ -11,8 +11,10 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private TakeQuizController takeQuizController;
 
-    public TakeSharedQuizPresenter(TakeSharedQuizViewModel takeSharedQuizViewModel,
+    public TakeSharedQuizPresenter(TakeSharedQuizViewModel
+                                           takeSharedQuizViewModel,
                                    ViewManagerModel viewManagerModel) {
+
         this.takeSharedQuizViewModel = takeSharedQuizViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -23,6 +25,7 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
 
     @Override
     public void prepareSuccessView(TakeSharedQuizOutputData outputData) {
+
         TakeSharedQuizState state = takeSharedQuizViewModel.getState();
         state.setErrorMessage("");
         takeSharedQuizViewModel.setState(state);
