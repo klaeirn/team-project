@@ -463,7 +463,7 @@ public class AppBuilder {
         final ValidateQuestionOutputBoundary validateQuestionOutputBoundary = 
             new ValidateQuestionPresenter(validateQuestionViewModel, createQuizViewModel, viewManagerModel);
         final ValidateQuestionInputBoundary validateQuestionInteractor = 
-            new ValidateQuestionInteractor(null, validateQuestionOutputBoundary);
+            new ValidateQuestionInteractor(validateQuestionOutputBoundary);
 
         ValidateQuestionController validateQuestionController = 
             new ValidateQuestionController(validateQuestionInteractor);

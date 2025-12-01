@@ -134,11 +134,113 @@ class CreateQuizTest {
     }
 
     @Test
+    void nullTitleFails() {
+        InMemoryQuizDataAccessObject quizRepository = new InMemoryQuizDataAccessObject();
+
+        CreateQuizInputData inputData = new CreateQuizInputData(
+                null, "Mathematics", createValidQuestionsDetails(), createValidCorrectAnswers(), "alex"
+        );
+
+        CreateQuizOutputBoundary failurePresenter = new CreateQuizOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateQuizOutputData outputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                assertEquals("Quiz title cannot be empty.", errorMessage);
+            }
+
+            @Override
+            public void switchToCreateQuizView(String username) { }
+
+            @Override
+            public void switchToLoggedInView() { }
+        };
+
+        CreateQuizInteractor interactor = new CreateQuizInteractor(
+                quizRepository, new QuizFactory(), null, failurePresenter
+        );
+
+        interactor.execute(inputData);
+        assertNull(quizRepository.getSavedQuiz());
+    }
+
+    @Test
     void emptyCategoryFails() {
         InMemoryQuizDataAccessObject quizRepository = new InMemoryQuizDataAccessObject();
 
         CreateQuizInputData inputData = new CreateQuizInputData(
                 "Math Quiz", "", createValidQuestionsDetails(), createValidCorrectAnswers(), "alex"
+        );
+
+        CreateQuizOutputBoundary failurePresenter = new CreateQuizOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateQuizOutputData outputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                assertEquals("Category cannot be empty.", errorMessage);
+            }
+
+            @Override
+            public void switchToCreateQuizView(String username) { }
+
+            @Override
+            public void switchToLoggedInView() { }
+        };
+
+        CreateQuizInteractor interactor = new CreateQuizInteractor(
+                quizRepository, new QuizFactory(), null, failurePresenter
+        );
+
+        interactor.execute(inputData);
+        assertNull(quizRepository.getSavedQuiz());
+    }
+
+    @Test
+    void nullCategoryFails() {
+        InMemoryQuizDataAccessObject quizRepository = new InMemoryQuizDataAccessObject();
+
+        CreateQuizInputData inputData = new CreateQuizInputData(
+                "Math Quiz", null, createValidQuestionsDetails(), createValidCorrectAnswers(), "alex"
+        );
+
+        CreateQuizOutputBoundary failurePresenter = new CreateQuizOutputBoundary() {
+            @Override
+            public void prepareSuccessView(CreateQuizOutputData outputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                assertEquals("Category cannot be empty.", errorMessage);
+            }
+
+            @Override
+            public void switchToCreateQuizView(String username) { }
+
+            @Override
+            public void switchToLoggedInView() { }
+        };
+
+        CreateQuizInteractor interactor = new CreateQuizInteractor(
+                quizRepository, new QuizFactory(), null, failurePresenter
+        );
+
+        interactor.execute(inputData);
+        assertNull(quizRepository.getSavedQuiz());
+    }
+
+    @Test
+    void whitespaceCategoryFails() {
+        InMemoryQuizDataAccessObject quizRepository = new InMemoryQuizDataAccessObject();
+
+        CreateQuizInputData inputData = new CreateQuizInputData(
+                "Math Quiz", "   ", createValidQuestionsDetails(), createValidCorrectAnswers(), "alex"
         );
 
         CreateQuizOutputBoundary failurePresenter = new CreateQuizOutputBoundary() {
@@ -296,6 +398,42 @@ class CreateQuizTest {
         assertEquals(10, savedQuiz.getQuestions().size());
         assertEquals("Question 1?", savedQuiz.getQuestions().get(0).getTitle());
         assertEquals("Option D", savedQuiz.getQuestions().get(9).getAnswer());
+    }
+
+    @Test
+    void switchToCreateQuizViewTest() {
+        final String[] capturedUsername = new String[1];
+        CreateQuizOutputBoundary presenter = new CreateQuizOutputBoundary() {
+            @Override public void prepareSuccessView(CreateQuizOutputData outputData) { }
+            @Override public void prepareFailView(String errorMessage) { }
+            @Override public void switchToCreateQuizView(String username) { capturedUsername[0] = username; }
+            @Override public void switchToLoggedInView() { }
+        };
+
+        CreateQuizInteractor interactor = new CreateQuizInteractor(
+                null, new QuizFactory(), null, presenter
+        );
+
+        interactor.switchToCreateQuizView("testuser");
+        assertEquals("testuser", capturedUsername[0]);
+    }
+
+    @Test
+    void switchToLoggedInViewTest() {
+        final boolean[] called = new boolean[1];
+        CreateQuizOutputBoundary presenter = new CreateQuizOutputBoundary() {
+            @Override public void prepareSuccessView(CreateQuizOutputData outputData) { }
+            @Override public void prepareFailView(String errorMessage) { }
+            @Override public void switchToCreateQuizView(String username) { }
+            @Override public void switchToLoggedInView() { called[0] = true; }
+        };
+
+        CreateQuizInteractor interactor = new CreateQuizInteractor(
+                null, new QuizFactory(), null, presenter
+        );
+
+        interactor.switchToLoggedInView();
+        assertTrue(called[0]);
     }
 
     private static CreateQuizInteractor getCreateQuizInteractor(InMemoryQuizDataAccessObject quizRepository) {

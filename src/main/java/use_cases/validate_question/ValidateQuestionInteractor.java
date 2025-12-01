@@ -1,19 +1,13 @@
 package use_cases.validate_question;
 
-import entities.Quiz;
-import entities.Question;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
 public class ValidateQuestionInteractor implements ValidateQuestionInputBoundary {
-    private final ValidateQuestionDataAccessInterface validateQuestionDataAccessObject;
     private final ValidateQuestionOutputBoundary validateQuestionPresenter;
 
-    public ValidateQuestionInteractor(ValidateQuestionDataAccessInterface validateQuestionDataAccessObject,
-                                ValidateQuestionOutputBoundary validateQuestionPresenter) {
-        this.validateQuestionDataAccessObject = validateQuestionDataAccessObject;
+    public ValidateQuestionInteractor(ValidateQuestionOutputBoundary validateQuestionPresenter) {
         this.validateQuestionPresenter = validateQuestionPresenter;
     }
 
