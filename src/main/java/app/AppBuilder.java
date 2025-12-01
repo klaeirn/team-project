@@ -273,7 +273,7 @@ public class AppBuilder {
 
     public AppBuilder addTakeSharedQuizUseCase() {
         takeSharedQuizPresenter = new TakeSharedQuizPresenter(takeSharedQuizViewModel, viewManagerModel);
-        final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject("hashtoquiz.json");
+        final TakeSharedQuizDataAccessInterface dataAccess = new ReadHashToQuizDataAccessObject();
         //final TakeSharedQuizDataAccessInterface dataAccess = new HashtoQuizDataAccessObject();
 
         final TakeSharedQuizInputBoundary interactor = new TakeSharedQuizInteractor(dataAccess, takeSharedQuizPresenter);
@@ -426,12 +426,11 @@ public class AppBuilder {
         selectExistingQuizPresenter = new SelectExistingQuizPresenter(selectExistingQuizViewModel, null);
         final SelectExistingQuizInputBoundary selectInteractor = new SelectExistingQuizInteractor(
                 userDataAccessObject,
-                selectExistingQuizPresenter);
+                selectExistingQuizPresenter,
+                takeQuizInteractor);
 
         ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
         ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject("hashtoquiz.json");
-                selectExistingQuizPresenter,
-                takeQuizInteractor);
 
 
         selectExistingQuizController = new SelectExistingQuizController(viewManagerModel, selectInteractor);
@@ -448,7 +447,7 @@ public class AppBuilder {
 
     public AppBuilder addShareQuizUseCase() {
         ShareQuizPresenter shareQuizPresenter = new ShareQuizPresenter(shareQuizViewModel, viewManagerModel);
-        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject();
+        ShareQuizDataAccessInterface dataAccessInterface = new HashtoQuizDataAccessObject("hashtoquiz.json");
         ShareQuizInputBoundary shareQuizInteractor = new ShareQuizInteractor(dataAccessInterface, shareQuizPresenter);
         shareQuizController = new ShareQuizController(shareQuizInteractor);
 
