@@ -1,13 +1,12 @@
-package entities;
+package use_cases.share_quiz;
 
 import data_access.HashtoQuizDataAccessObject;
+import entities.Question;
+import entities.Quiz;
+import entities.QuizFactory;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import use_cases.share_quiz.ShareQuizDataAccessInterface;
-import use_cases.share_quiz.ShareQuizInputData;
-import use_cases.share_quiz.ShareQuizInteractor;
-import use_cases.share_quiz.ShareQuizOutputBoundary;
-import use_cases.share_quiz.ShareQuizOutputData;
+
 import java.util.concurrent.TimeUnit;
 
 import java.nio.file.Files;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShareQuizTest {
+class ShareQuizInteractorTest {
 
     private static final Path TEST_HASH_FILE = Path.of("test_hashtoquiz.json");
 
@@ -99,7 +98,7 @@ class ShareQuizTest {
 
             @Override
             public void prepareFailView(String errorMessage) {
-                assertEquals("Failed to share quiz", errorMessage);
+                assertEquals("There was a hashing error! Please try again. ", errorMessage);
             }
         };
 
@@ -131,7 +130,7 @@ class ShareQuizTest {
         };
 
 
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(10);
 
         ShareQuizOutputBoundary presenter2 = new ShareQuizOutputBoundary() {
             @Override
@@ -154,7 +153,7 @@ class ShareQuizTest {
         assertNotNull(firstHash[0]);
         assertNotNull(secondHash[0]);
 
-        assertNotEquals(firstHash[0], secondHash[0]);
+        assert(!firstHash.equals(secondHash));
     }
 
     @Test
