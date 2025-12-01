@@ -37,9 +37,6 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
 
     @Override
     public void nextQuestion() {
-        if (quiz == null || quiz.getQuestions() == null) {
-            return;
-        }
 
         if (currentQuestionIndex < quiz.getQuestions().size() - 1) {
             currentQuestionIndex++;
@@ -56,9 +53,6 @@ public class TakeQuizInteractor implements TakeQuizInputBoundary {
     }
 
     public void setAnswer(int questionIndex, String answer) {
-        if (quiz == null || quiz.getQuestions() == null || quiz.getQuestions().isEmpty()) {
-            return;
-        }
 
         if (questionIndex < 0 || questionIndex >= quiz.getQuestions().size()) {
             return;
