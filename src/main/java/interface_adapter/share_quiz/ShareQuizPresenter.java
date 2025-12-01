@@ -34,6 +34,10 @@ public class ShareQuizPresenter implements ShareQuizOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        ShareQuizState shareQuizState = shareQuizViewModel.getState();
+        shareQuizState.setHash(error);
 
+        this.viewManagerModel.setState(shareQuizViewModel.getViewName());
+        this.viewManagerModel.firePropertyChange();
     }
 }

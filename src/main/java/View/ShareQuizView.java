@@ -29,7 +29,7 @@ public class ShareQuizView extends JPanel implements ActionListener, PropertyCha
         System.out.println("initial hash: " + hash);
 
         if (hash == null || hash.isEmpty()) {
-            hash = "No share link yet";
+            hash = "There was an error hashing! Please make sure your Java installation is okay";
         }
 
         hashInfo = new JTextField(hash);
@@ -54,7 +54,7 @@ public class ShareQuizView extends JPanel implements ActionListener, PropertyCha
             System.out.println("updated hash: " + newHash);
 
             if (newHash == null || newHash.isEmpty()) {
-                newHash = "No share link yet";
+                newHash = "There was an error hashing! Please make sure your Java installation is okay.";
             }
 
             hashInfo.setText(newHash);
