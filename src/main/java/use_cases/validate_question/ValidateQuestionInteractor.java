@@ -5,12 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ValidateQuestionInteractor implements ValidateQuestionInputBoundary {
-    private final ValidateQuestionDataAccessInterface validateQuestionDataAccessObject;
     private final ValidateQuestionOutputBoundary validateQuestionPresenter;
 
-    public ValidateQuestionInteractor(ValidateQuestionDataAccessInterface validateQuestionDataAccessObject,
-                                ValidateQuestionOutputBoundary validateQuestionPresenter) {
-        this.validateQuestionDataAccessObject = validateQuestionDataAccessObject;
+    public ValidateQuestionInteractor(ValidateQuestionOutputBoundary validateQuestionPresenter) {
         this.validateQuestionPresenter = validateQuestionPresenter;
     }
 

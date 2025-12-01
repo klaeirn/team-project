@@ -30,7 +30,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, successPresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(successPresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "What is 2+2?", createValidOptions(), "Option B"
         ));
@@ -50,7 +50,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "", createValidOptions(), "Option A"
         ));
@@ -70,7 +70,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, successPresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(successPresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "   ", createValidOptions(), "Option A"
         ));
@@ -96,7 +96,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "Capital of France?", options, "Paris"
         ));
@@ -122,7 +122,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "What is 2+2?", options, "Option A"
         ));
@@ -142,7 +142,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "What is 2+2?", createValidOptions(), ""
         ));
@@ -162,7 +162,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, successPresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(successPresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "What is 2+2?", createValidOptions(), "   "
         ));
@@ -186,7 +186,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "", options, ""
         ));
@@ -210,7 +210,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "Valid Title", options, ""
         ));
@@ -234,7 +234,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "Valid Title", options, ""
         ));
@@ -254,7 +254,7 @@ class ValidateQuestionTest {
             }
         };
 
-        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(null, failurePresenter);
+        ValidateQuestionInteractor interactor = new ValidateQuestionInteractor(failurePresenter);
         interactor.execute(new ValidateQuestionInputData(
                 "Valid Title", createValidOptions(), ""
         ));
