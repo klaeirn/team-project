@@ -25,6 +25,7 @@ public class QuickstartPresenter implements QuickstartOutputBoundary {
     public void prepareSuccessView(QuickstartOutputData outputData) {
         QuickstartState state = quickstartViewModel.getState();
         state.setQuiz(outputData.getQuiz());
+        state.setUsername(outputData.getUsername());
         state.setErrorMessage(null);
         quickstartViewModel.setState(state);
         quickstartViewModel.firePropertyChange();

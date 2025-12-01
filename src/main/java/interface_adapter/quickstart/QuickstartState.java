@@ -9,6 +9,7 @@ public class QuickstartState {
     private String selectedType;
     private Quiz quiz;
     private String errorMessage;
+    private String username;
 
     public QuickstartState(QuickstartState copy) {
         if (copy != null) {
@@ -68,5 +69,13 @@ public class QuickstartState {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -14,9 +14,11 @@ public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoun
 
     @Override
     public void prepareSuccessView(SelectExistingQuizOutputData outputData) {
-        // Navigation to take quiz view is now handled by TakeQuizPresenter
-        // This presenter doesn't need to update any view model state for success
-        // The quiz selection is passed directly to TakeQuiz use case
+        final SelectExistingQuizState state = selectExistingQuizViewModel.getState();
+        state.setSelectedQuiz(outputData.getQuiz());
+        state.setUsername(outputData.getUsername());
+        state.setErrorMessage(null);
+        selectExistingQuizViewModel.firePropertyChange();
     }
 
     @Override
@@ -26,11 +28,5 @@ public class SelectExistingQuizPresenter implements SelectExistingQuizOutputBoun
         selectExistingQuizViewModel.firePropertyChange();
     }
 
-    public void prepareQuizzesView(java.util.List<entities.Quiz> quizzes) {
-        final SelectExistingQuizState state = selectExistingQuizViewModel.getState();
-        state.setAvailableQuizzes(quizzes);
-        state.setErrorMessage(null);
-        selectExistingQuizViewModel.firePropertyChange();
-    }
 }
 

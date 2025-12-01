@@ -31,6 +31,7 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
     private QuizMenuController quizMenuController;
     private final SelectExistingQuizViewModel selectExistingQuizViewModel;
     private ShareQuizController shareQuizController;
+    private interface_adapter.take_quiz.TakeQuizController takeQuizController;
 
     private final JList<String> quizList;
     private final JScrollPane quizScrollPane;
@@ -224,6 +225,10 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
         this.quizMenuController = controller;
     }
 
+    public void setTakeQuizController(interface_adapter.take_quiz.TakeQuizController takeQuizController) {
+        this.takeQuizController = takeQuizController;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());
@@ -233,7 +238,13 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
     public void propertyChange(PropertyChangeEvent evt) {
         SelectExistingQuizState state = (SelectExistingQuizState) evt.getNewValue();
         if (state != null) {
-            quizzes = state.getAvailableQuizzes();
+            // Only update quizzes list if state has non-empty data
+            List<Quiz> stateQuizzes = state.getAvailableQuizzes();
+            if (stateQuizzes != null && !stateQuizzes.isEmpty()) {
+                quizzes = stateQuizzes;
+            }
+
+            // Display the quiz list (either from state or from file)
             if (quizzes != null && !quizzes.isEmpty()) {
                 String[] quizNames = new String[quizzes.size()];
                 for (int i = 0; i < quizzes.size(); i++) {
@@ -259,6 +270,20 @@ public class SelectExistingQuizView extends JPanel implements ActionListener, Pr
                 errorLabel.setText(error);
             } else {
                 errorLabel.setText("");
+            }
+
+            // If a quiz was selected successfully, trigger TakeQuiz
+            if (state.getSelectedQuiz() != null && state.getErrorMessage() == null) {
+                if (takeQuizController != null) {
+                    Quiz selectedQuiz = state.getSelectedQuiz();
+                    String username = state.getUsername();
+                    if (username == null) {
+                        username = "Guest";
+                    }
+                    // Clear the selected quiz to prevent re-triggering
+                    state.setSelectedQuiz(null);
+                    takeQuizController.execute(selectedQuiz, username);
+                }
             }
         }
     }
