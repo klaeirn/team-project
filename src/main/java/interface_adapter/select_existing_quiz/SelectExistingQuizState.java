@@ -8,6 +8,7 @@ public class SelectExistingQuizState {
     private List<Quiz> availableQuizzes = new ArrayList<>();
     private Quiz selectedQuiz;
     private String errorMessage;
+    private String username;
 
     public List<Quiz> getAvailableQuizzes() {
         return new ArrayList<>(availableQuizzes);
@@ -31,6 +32,14 @@ public class SelectExistingQuizState {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

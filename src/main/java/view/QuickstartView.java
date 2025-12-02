@@ -20,6 +20,7 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
     private final String viewName = "quickstart";
     private QuickstartController quickstartController;
     private QuizMenuController quizMenuController;
+    private interface_adapter.take_quiz.TakeQuizController takeQuizController;
 
     private final JList<String> categoryList;
     private final JList<String> difficultyList;
@@ -153,6 +154,10 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
         this.quizMenuController = quizMenuController;
     }
 
+    public void setTakeQuizController(interface_adapter.take_quiz.TakeQuizController takeQuizController) {
+        this.takeQuizController = takeQuizController;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click: " + e.getActionCommand());
@@ -167,6 +172,15 @@ public class QuickstartView extends JPanel implements ActionListener, PropertyCh
                         state.getErrorMessage(),
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
+            } else if (state.getQuiz() != null) {
+                // Quiz loaded successfully, trigger TakeQuiz
+                if (takeQuizController != null) {
+                    String username = state.getUsername();
+                    if (username == null) {
+                        username = "Guest";
+                    }
+                    takeQuizController.execute(state.getQuiz(), username);
+                }
             }
         }
     }
