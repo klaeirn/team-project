@@ -265,6 +265,41 @@ public class TakeSharedQuizTest {
 
     }
 
+    /**
+     * tests specifically for input data
+     */
+
+    @Test
+    void inputDataStoresHashAndUsername() {
+        String hash = "ABC123";
+        String username = "testUser";
+
+        TakeSharedQuizInputData inputData =
+                new TakeSharedQuizInputData(hash, username);
+
+        assertEquals(hash, inputData.getHash());
+        assertEquals(username, inputData.getUsername());
+    }
+
+    /**
+     * tests specifically for output data
+     */
+
+    @Test
+    void outputDataStoresQuizCorrectly() {
+        Quiz quiz = new Quiz(
+                "Test quiz",
+                "testUser",
+                "Test category",
+                new ArrayList<>()
+        );
+
+        TakeSharedQuizOutputData outputData =
+                new TakeSharedQuizOutputData(quiz);
+
+        assertEquals(quiz, outputData.getQuiz());
+    }
+
     private static final class InMemoryTakeSharedQuizDataAccessObject
             implements TakeSharedQuizDataAccessInterface {
 
