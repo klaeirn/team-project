@@ -7,7 +7,7 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
     private final TakeSharedQuizDataAccessInterface takeSharedQuizDataAccess;
     private final TakeSharedQuizOutputBoundary takeSharedQuizOutputBoundary;
 
-    public  TakeSharedQuizInteractor(TakeSharedQuizDataAccessInterface
+    public TakeSharedQuizInteractor(TakeSharedQuizDataAccessInterface
                                              takeSharedQuizDataAccess,
                                      TakeSharedQuizOutputBoundary
                                              takeSharedQuizOutputBoundary) {
@@ -17,7 +17,7 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
 
     @Override
     public void execute(TakeSharedQuizInputData InputData) {
-        String hash = InputData.getHash();
+        final String hash = InputData.getHash();
 
         if (hash == null || hash.isBlank()) {
             takeSharedQuizOutputBoundary.prepareFailureView(
@@ -25,7 +25,7 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
             return;
         }
 
-        Quiz quiz = takeSharedQuizDataAccess.getFromHash(hash);
+        final Quiz quiz = takeSharedQuizDataAccess.getFromHash(hash);
 
         if (quiz == null) {
             takeSharedQuizOutputBoundary.prepareFailureView("Quiz not found");

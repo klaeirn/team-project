@@ -11,18 +11,18 @@ public class TakeSharedQuizController {
 
     public TakeSharedQuizController(TakeSharedQuizInputBoundary
                                             takeSharedQuizInputBoundary,
-                                    ViewManagerModel viewManagerModel){
+                                    ViewManagerModel viewManagerModel) {
         this.takeSharedQuizInputBoundary = takeSharedQuizInputBoundary;
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void execute(String hash, String username){
-        TakeSharedQuizInputData inputData =
+    public void execute(String hash, String username) {
+        final TakeSharedQuizInputData inputData =
                 new TakeSharedQuizInputData(hash, username);
         takeSharedQuizInputBoundary.execute(inputData);
     }
 
-    public void switchToTakeSharedQuizView (){
+    public void switchToTakeSharedQuizView() {
         viewManagerModel.setState("take shared quiz");
         viewManagerModel.firePropertyChange();
     }
