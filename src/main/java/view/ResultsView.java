@@ -69,19 +69,13 @@ public class ResultsView extends JPanel implements ActionListener, PropertyChang
             public void actionPerformed(ActionEvent e) {
                 ViewResultsState state = viewResultsViewModel.getState();
                 String creatorUsername = state.getCreatorUsername();
+                String quizName = state.getQuizName();
                 
-                // Check if this is a quickstart quiz (creator == "System")
-                if ("System".equals(creatorUsername)) {
-                    // Navigate to leaderboard view which will show "No Leaderboard" message
-                    if (viewManagerModel != null) {
-                        viewManagerModel.setState("leaderboard");
-                        viewManagerModel.firePropertyChange();
-                    }
-                } else {
-                    // For shared quizzes, trigger the view leaderboard use case
-                    if (viewLeaderboardController != null && state.getQuizName() != null && creatorUsername != null) {
-                        viewLeaderboardController.execute(state.getQuizName(), creatorUsername);
-                    }
+                // Always call the view leaderboard controller to ensure state is properly updated
+                // For quickstart quizzes (creator == "System"), this will show "No results found"
+                // For shared quizzes, this will display the actual leaderboard
+                if (viewLeaderboardController != null && quizName != null && creatorUsername != null) {
+                    viewLeaderboardController.execute(quizName, creatorUsername);
                 }
             }
         });
