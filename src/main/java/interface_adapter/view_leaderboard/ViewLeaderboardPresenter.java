@@ -18,7 +18,8 @@ public class ViewLeaderboardPresenter implements ViewLeaderboardOutputBoundary {
         ViewLeaderboardState state = viewLeaderboardViewModel.getState();
         state.setLeaderboard(outputData.getLeaderboard());
         state.setQuizName(outputData.getQuizName());
-        state.setErrorMessage(null);
+        // Preserve errorMessage from outputData (e.g., "No results found for this quiz.")
+        state.setErrorMessage(outputData.getErrorMessage());
 
         viewLeaderboardViewModel.setState(state);
         viewLeaderboardViewModel.firePropertyChange();
