@@ -11,3 +11,6 @@ Welcome to our Quiz App! In this app, you are able to:
 
 In this project, we use the Open Trivia Database Api. The link can be found here:
 http://opentdb.com/api_config.php
+
+Here's how to use all the different features in our app:
+
