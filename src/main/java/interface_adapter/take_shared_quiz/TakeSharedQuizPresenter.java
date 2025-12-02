@@ -26,7 +26,7 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
     @Override
     public void prepareSuccessView(TakeSharedQuizOutputData outputData) {
 
-        TakeSharedQuizState state = takeSharedQuizViewModel.getState();
+        final TakeSharedQuizState state = takeSharedQuizViewModel.getState();
         state.setErrorMessage("");
         takeSharedQuizViewModel.setState(state);
 
@@ -37,10 +37,11 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
             takeQuizController.execute(outputData.getQuiz(), "");
         }
     }
+
     @Override
     public void prepareFailureView(String errorMessage) {
 
-        TakeSharedQuizState state = takeSharedQuizViewModel.getState();
+        final TakeSharedQuizState state = takeSharedQuizViewModel.getState();
         state.setErrorMessage(errorMessage);
         takeSharedQuizViewModel.setState(state);
         takeSharedQuizViewModel.firePropertyChange();

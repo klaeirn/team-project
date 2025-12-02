@@ -79,33 +79,37 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
         startButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(startButton) && controller !=
+                        if (evt.getSource().equals(startButton) && controller
+                                !=
                                 null) {
                             final TakeSharedQuizState currentState =
                                     viewModel.getState();
-                            controller.execute(currentState.getHash());
+                            controller.execute(currentState.getHash(),
+                                    currentState.getUsername());
                         }
                     }
                 }
         );
 
-//        backButton.addActionListener(
-//                new ActionListener() {
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(backButton) &&
-//                                viewManagerModel != null) {
-//                            viewManagerModel.setState("logged in");
-//                            viewManagerModel.firePropertyChange();
-//                        }
-//                    }
-//                }
-//        );
+        //        backButton.addActionListener(
+        //                new ActionListener() {
+        //                    public void actionPerformed(ActionEvent evt) {
+        //                        if (evt.getSource().equals(backButton) &&
+        //                                viewManagerModel != null) {
+        //                            viewManagerModel.setState("logged in");
+        //                            viewManagerModel.firePropertyChange();
+        //                        }
+        //                    }
+        //                }
+        //        );
         backButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(backButton) &&
+                        if (evt.getSource().equals(backButton)
+                                &&
                                 viewManagerModel != null) {
-                            TakeSharedQuizState currentState = viewModel.getState();
+                            final TakeSharedQuizState currentState =
+                                    viewModel.getState();
                             currentState.setHash("");
                             currentState.setErrorMessage(null);
                             viewModel.setState(currentState);
@@ -150,12 +154,12 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
             hashInputField.setText(state.getHash());
         }
 
-        String error = state.getErrorMessage();
+        final String error = state.getErrorMessage();
         hashErrorField.setText(Objects.requireNonNullElse(error, ""));
-//        if (error == null) {
-//            hashErrorField.setText("");
-//        } else {
-//            hashErrorField.setText(error);
-//        }
+        //        if (error == null) {
+        //            hashErrorField.setText("");
+        //        } else {
+        //            hashErrorField.setText(error);
+        //        }
     }
 }
