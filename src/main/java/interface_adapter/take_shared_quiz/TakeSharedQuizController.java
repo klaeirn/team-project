@@ -16,8 +16,9 @@ public class TakeSharedQuizController {
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void execute(String hash){
-        TakeSharedQuizInputData inputData = new TakeSharedQuizInputData(hash);
+    public void execute(String hash, String username){
+        TakeSharedQuizInputData inputData =
+                new TakeSharedQuizInputData(hash, username);
         takeSharedQuizInputBoundary.execute(inputData);
     }
 

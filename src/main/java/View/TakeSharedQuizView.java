@@ -52,7 +52,7 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
         this.add(hashErrorField);
         this.add(buttons);
 
-        hashInputField.getDocument().addDocumentListener(new DocumentListener() {
+        hashInputField.getDocument().addDocumentListener(new DocumentListener(){
 
             private void documentListenerHelper() {
                 final TakeSharedQuizState currentState = viewModel.getState();
@@ -83,7 +83,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
                                 null) {
                             final TakeSharedQuizState currentState =
                                     viewModel.getState();
-                            controller.execute(currentState.getHash());
+                            controller.execute(currentState.getHash(),
+                                    currentState.getUsername());
                         }
                     }
                 }
@@ -105,7 +106,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(backButton) &&
                                 viewManagerModel != null) {
-                            TakeSharedQuizState currentState = viewModel.getState();
+                            TakeSharedQuizState currentState =
+                                    viewModel.getState();
                             currentState.setHash("");
                             currentState.setErrorMessage(null);
                             viewModel.setState(currentState);

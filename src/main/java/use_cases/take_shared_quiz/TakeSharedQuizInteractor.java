@@ -20,7 +20,8 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
         String hash = InputData.getHash();
 
         if (hash == null || hash.isBlank()) {
-            takeSharedQuizOutputBoundary.prepareFailureView("Please enter hash");
+            takeSharedQuizOutputBoundary.prepareFailureView(
+                    "Please enter hash");
             return;
         }
 
@@ -31,6 +32,7 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
             return;
         }
 
-        takeSharedQuizOutputBoundary.prepareSuccessView(new TakeSharedQuizOutputData(quiz));
+        takeSharedQuizOutputBoundary.prepareSuccessView(
+                new TakeSharedQuizOutputData(quiz));
     }
 }
