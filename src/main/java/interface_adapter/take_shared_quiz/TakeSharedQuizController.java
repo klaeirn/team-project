@@ -32,7 +32,7 @@ public class TakeSharedQuizController {
     /**
      * Switches the UI to the Take Shared Quiz view
      * Updates the view manager state and fires a property change so
-     * that the GUI can react and show the correct screen.
+     * that it correctly switches to take shared quiz view.
      */
 
     public void switchToTakeSharedQuizView() {
