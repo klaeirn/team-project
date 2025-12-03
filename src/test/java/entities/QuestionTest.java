@@ -34,14 +34,14 @@ public class QuestionTest {
 
     @Test
     public void testValidateAnswerCorrect() {
-        assertTrue(question.validate_answer("Option B"));
+        assertTrue(question.validateAnswer("Option B"));
     }
 
     @Test
     public void testValidateAnswerIncorrect() {
-        assertFalse(question.validate_answer("Option A"));
-        assertFalse(question.validate_answer("Option C"));
-        assertFalse(question.validate_answer("Wrong Answer"));
+        assertFalse(question.validateAnswer("Option A"));
+        assertFalse(question.validateAnswer("Option C"));
+        assertFalse(question.validateAnswer("Wrong Answer"));
     }
 
     @Test
@@ -70,8 +70,8 @@ public class QuestionTest {
 
     @Test
     public void testValidateAnswerCaseSensitive() {
-        assertFalse(question.validate_answer("option b"));
-        assertFalse(question.validate_answer("OPTION B"));
+        assertFalse(question.validateAnswer("option b"));
+        assertFalse(question.validateAnswer("OPTION B"));
     }
 }
 

@@ -45,7 +45,7 @@ public class ViewResultsInteractor implements ViewResultsInputBoundary {
             Question question = questions.get(i);
             String userAnswer = userAnswers.get(i);
 
-            if (userAnswer != null && question.validate_answer(userAnswer)) {
+            if (userAnswer != null && question.validateAnswer(userAnswer)) {
                 score++;
             }
         }

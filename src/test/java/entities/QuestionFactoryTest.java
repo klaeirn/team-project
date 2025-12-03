@@ -59,7 +59,7 @@ public class QuestionFactoryTest {
         Question question = factory.createQuestion("Question?", singleOption, "Only Option");
 
         assertEquals(1, question.getOptions().size());
-        assertTrue(question.validate_answer("Only Option"));
+        assertTrue(question.validateAnswer("Only Option"));
     }
 }
 
