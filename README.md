@@ -111,6 +111,11 @@ The application integrates with the **Open Trivia Database API** for generating 
 3. Login with existing credentials 
 4. Start creating or taking quizzes!
 
+## Solid principles:
+
+1. Our first exemplary example of how we implemented SOLID is our ValidateQuestionInteractor, which shows the SRP. Rather than being used for the entire use case including things such as UI rendering, state management or view navigation, it is only responsible for validating the question and updating the DAO
+2. Our second exemplary example of how we implemented SOLID is our ShareQuizInteractor's DataAccessInterface field. Rather than having a high level module depend directly on a DAO increasing coupling, we have both of them depend on high-level rules in a data access interface, showing DIP
+
 =======
 In this project, we use the Open Trivia Database Api. The link can be found here:
 http://opentdb.com/api_config.php
