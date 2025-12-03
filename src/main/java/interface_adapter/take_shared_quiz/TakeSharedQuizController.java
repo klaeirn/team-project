@@ -11,17 +11,31 @@ public class TakeSharedQuizController {
 
     public TakeSharedQuizController(TakeSharedQuizInputBoundary
                                             takeSharedQuizInputBoundary,
-                                    ViewManagerModel viewManagerModel){
+                                    ViewManagerModel viewManagerModel) {
         this.takeSharedQuizInputBoundary = takeSharedQuizInputBoundary;
         this.viewManagerModel = viewManagerModel;
     }
 
-    public void execute(String hash){
-        TakeSharedQuizInputData inputData = new TakeSharedQuizInputData(hash);
+    /**
+     * This method handles the user request to take a shared quiz
+     * Creates an input data object from the given hash and username
+     * and passes it to the use case interactor through the input boundary.
+     * @param hash     the shared quiz code entered by the user
+     * @param username the username of the current user
+     */
+    public void execute(String hash, String username) {
+        final TakeSharedQuizInputData inputData =
+                new TakeSharedQuizInputData(hash, username);
         takeSharedQuizInputBoundary.execute(inputData);
     }
 
-    public void switchToTakeSharedQuizView (){
+    /**
+     * Switches the UI to the Take Shared Quiz view
+     * Updates the view manager state and fires a property change so
+     * that it correctly switches to take shared quiz view.
+     */
+
+    public void switchToTakeSharedQuizView() {
         viewManagerModel.setState("take shared quiz");
         viewManagerModel.firePropertyChange();
     }

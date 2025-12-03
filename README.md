@@ -111,3 +111,9 @@ The application integrates with the **Open Trivia Database API** for generating 
 3. Login with existing credentials 
 4. Start creating or taking quizzes!
 
+=======
+In this project, we use the Open Trivia Database Api. The link can be found here:
+http://opentdb.com/api_config.php
+
+Here's how to use all the different features in our app:
+
