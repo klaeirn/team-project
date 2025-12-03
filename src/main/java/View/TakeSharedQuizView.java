@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.take_shared_quiz.TakeSharedQuizController;
 import interface_adapter.take_shared_quiz.TakeSharedQuizState;
 import interface_adapter.take_shared_quiz.TakeSharedQuizViewModel;
@@ -14,24 +15,40 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
+/**
+ * View where the user enters a shared quiz code and starts the quiz.
+ * Talks to the TakeSharedQuizController and is updated by TakeSharedQuizViewModel.
+ */
+
 public class TakeSharedQuizView extends JPanel implements ActionListener,
         PropertyChangeListener {
 
     private final String viewName = "take shared quiz";
+
+    // viewModel for take shared quiz screen.
     private final TakeSharedQuizViewModel viewModel;
+
+    // this is View Model for the logged-in user, need this so i can get the
+    // username from the logged-in.
+    private final LoggedInViewModel loggedInViewModel;
 
     private final JTextField hashInputField = new JTextField(15);
     private final JLabel hashErrorField = new JLabel();
 
+    // Controller wcich calls use case (take shared quiz).
     private TakeSharedQuizController controller;
+
+    // Switch between thr views.
     private ViewManagerModel viewManagerModel;
 
     private final JButton startButton;
     private final JButton backButton;
 
-    public TakeSharedQuizView(TakeSharedQuizViewModel viewModel) {
+    public TakeSharedQuizView(TakeSharedQuizViewModel viewModel,
+                              LoggedInViewModel loggedInViewModel) {
         this.viewModel = viewModel;
         this.viewModel.addPropertyChangeListener(this);
+        this.loggedInViewModel = loggedInViewModel;
 
         final JLabel title = new JLabel("Take Shared Quiz");
         title.setAlignmentX(CENTER_ALIGNMENT);
@@ -76,6 +93,7 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
             }
         });
 
+        // Start button, call the Controller with hash + current username
         startButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -84,8 +102,9 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
                                 null) {
                             final TakeSharedQuizState currentState =
                                     viewModel.getState();
+
                             controller.execute(currentState.getHash(),
-                                    currentState.getUsername());
+                                    loggedInViewModel.getState().getUsername());
                         }
                     }
                 }
@@ -102,6 +121,8 @@ public class TakeSharedQuizView extends JPanel implements ActionListener,
         //                    }
         //                }
         //        );
+
+        // Back button clears the state and switches view
         backButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
