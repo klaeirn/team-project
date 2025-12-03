@@ -294,8 +294,10 @@ public class TakeSharedQuizTest {
                 new ArrayList<>()
         );
 
+        String username = quiz.getCreatorUsername();
+
         TakeSharedQuizOutputData outputData =
-                new TakeSharedQuizOutputData(quiz);
+                new TakeSharedQuizOutputData(quiz, username);
 
         assertEquals(quiz, outputData.getQuiz());
     }
