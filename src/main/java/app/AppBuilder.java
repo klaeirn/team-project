@@ -218,7 +218,8 @@ public class AppBuilder {
 
     public AppBuilder addTakeSharedQuizView() {
         takeSharedQuizViewModel = new TakeSharedQuizViewModel();
-        takeSharedQuizView = new TakeSharedQuizView(takeSharedQuizViewModel);
+        takeSharedQuizView = new TakeSharedQuizView(takeSharedQuizViewModel,
+                loggedInViewModel);
         cardPanel.add(takeSharedQuizView, takeSharedQuizView.getViewName());
         return this;
     }

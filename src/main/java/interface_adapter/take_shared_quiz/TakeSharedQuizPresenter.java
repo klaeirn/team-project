@@ -34,7 +34,8 @@ public class TakeSharedQuizPresenter implements TakeSharedQuizOutputBoundary {
         viewManagerModel.firePropertyChange();
 
         if (takeQuizController != null) {
-            takeQuizController.execute(outputData.getQuiz(), "");
+            takeQuizController.execute(outputData.getQuiz(),
+                    outputData.getUsername());
         }
     }
 

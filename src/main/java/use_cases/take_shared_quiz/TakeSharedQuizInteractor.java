@@ -16,8 +16,9 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
     }
 
     @Override
-    public void execute(TakeSharedQuizInputData InputData) {
-        final String hash = InputData.getHash();
+    public void execute(TakeSharedQuizInputData inputData) {
+        final String hash = inputData.getHash();
+        final String username = inputData.getUsername();
 
         if (hash == null || hash.isBlank()) {
             takeSharedQuizOutputBoundary.prepareFailureView(
@@ -33,6 +34,6 @@ public class TakeSharedQuizInteractor implements TakeSharedQuizInputBoundary {
         }
 
         takeSharedQuizOutputBoundary.prepareSuccessView(
-                new TakeSharedQuizOutputData(quiz));
+                new TakeSharedQuizOutputData(quiz, username));
     }
 }

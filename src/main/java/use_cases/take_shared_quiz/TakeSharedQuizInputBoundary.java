@@ -4,8 +4,8 @@ public interface TakeSharedQuizInputBoundary {
 
     /**
      * Executes the login use case.
-     * @param InputData the input data
+     * @param inputData the input data
      */
 
-    void execute(TakeSharedQuizInputData InputData);
+    void execute(TakeSharedQuizInputData inputData);
 }
